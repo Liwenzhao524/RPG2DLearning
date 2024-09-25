@@ -23,7 +23,7 @@ public class PlayerMoveState : PlayerGroundState
         base.Update();
 
         _player.SetVelocity(_xinput * _player.moveSpeed, _rb.velocity.y);
-        if(_xinput == 0)
+        if(_xinput == 0 || _player.IsWallDetected())
         {
             _playerStateMachine.ChangeState(_player.idleState);
         }
