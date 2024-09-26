@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 玩家状态父类
+/// </summary>
 public class PlayerState
 {
     protected Player _player;
@@ -10,10 +13,10 @@ public class PlayerState
 
     protected float _xinput;
     protected float _yinput;
-    private string _aniBoolName;
-    protected bool _animTrigger;
+    private string _aniBoolName;  // 动画状态对应变量名
+    protected bool _animTrigger;  // 动画事件触发
 
-    protected float stateTimer;
+    protected float stateTimer;  // 某些状态持续时间
 
     public PlayerState(Player player, PlayerStateMachine playerStateMachine, string aniBoolName)
     {

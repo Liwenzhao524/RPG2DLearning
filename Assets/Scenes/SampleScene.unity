@@ -686,6 +686,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff14baf75741209428211e61ab9cef03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBusy: 0
+  attackMove:
+  - {x: 2, y: 1}
+  - {x: 1, y: 2}
+  - {x: 3, y: 3}
   moveSpeed: 5
   jumpForce: 10
   dashCoolDown: 1

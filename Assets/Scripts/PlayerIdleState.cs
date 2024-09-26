@@ -12,7 +12,7 @@ public class PlayerIdleState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        _player.SetVelocity(0, 0);
+        _player.SetZeroVelocity();
     }
 
     public override void Update()
@@ -21,7 +21,7 @@ public class PlayerIdleState : PlayerGroundState
 
         if (_xinput == _player.faceDir && _player.IsWallDetected()) return;
 
-        if (_xinput != 0)
+        if (_xinput != 0 && !_player.isBusy)
         {
            _playerStateMachine.ChangeState(_player.moveState); 
         }

@@ -5,6 +5,12 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : MonoBehaviour
 {
+    public bool isBusy;
+
+    [Header("Attack Detail")]
+    public Vector2[] attackMove;
+    public float attackSpeed = 1;
+
     [Header("Move Info")]
     public float moveSpeed = 5;
     public float jumpForce = 10;
@@ -73,12 +79,16 @@ public class Player : MonoBehaviour
         CheckDashInput();
     }
 
-    public void SetVelocity(float x, float y)
+    public IEnumerator BusyFor(float seconds)
     {
-        rb.velocity = new Vector2(x, y);
-        FlipController(x);
+        isBusy = true;
+        yield return new WaitForSeconds(seconds);
+        isBusy = false;
     }
 
+    /// <summary>
+    /// 由挂载到Animator物体上的脚本调用
+    /// </summary>
     public void AnimTrigger() => stateMachine.currentState.AnimFinishTrigger();
 
     /// <summary>
@@ -100,15 +110,27 @@ public class Player : MonoBehaviour
             
     }
 
+    #region Velocity
+    public void SetVelocity(float x, float y)
+    {
+        rb.velocity = new Vector2(x, y);
+        FlipController(x);
+    }
+
+    public void SetZeroVelocity() => rb.velocity = Vector2.zero;
+    #endregion
+
+    #region Collision
     public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDis, GroundLayer);
     public bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * faceDir, wallCheckDis, GroundLayer);
+    #endregion
 
+    #region Flip
     private void Flip()
     {
         faceDir *= -1;
         transform.Rotate(0, 180, 0);
     }
-
     public void FlipController(float x)
     {
         if(x * faceDir < 0)
@@ -116,6 +138,7 @@ public class Player : MonoBehaviour
             Flip();
         }
     }
+    #endregion
 
     private void OnDrawGizmos()
     {
