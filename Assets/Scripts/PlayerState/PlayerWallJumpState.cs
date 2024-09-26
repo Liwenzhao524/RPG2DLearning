@@ -12,8 +12,9 @@ public class PlayerWallJumpState : PlayerState
     {
         base.Enter();
 
-        stateTimer = 0.5f;
+        stateTimer = 0.2f;
         
+        // ÌøÔ¾·½Ïò
         if(_xinput * _player.faceDir > 0)
             _player.SetVelocity(0, 1.2f * _player.jumpForce);
         else _player.SetVelocity(5 * -_player.faceDir, _player.jumpForce);
@@ -29,12 +30,9 @@ public class PlayerWallJumpState : PlayerState
         base.Update();
 
         if(stateTimer < 0)
-        {
             _player.stateMachine.ChangeState(_player.airState);
-        }
+
         if (_player.IsGroundDetected())
-        {
             _player.stateMachine.ChangeState(_player.idleState);
-        }
     }
 }

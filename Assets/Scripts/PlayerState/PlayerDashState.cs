@@ -11,7 +11,7 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        stateTimer = _player.dashDuraTime;
+        stateTimer = _player.dashDuraTime;  // 冲刺持续时间
     }
 
     public override void Exit()
@@ -29,10 +29,8 @@ public class PlayerDashState : PlayerState
         if(stateTimer < 0) 
             _player.stateMachine.ChangeState(_player.idleState);
 
+        // 空中冲刺到墙可以滑墙
         if(_player.IsWallDetected() && !_player.IsGroundDetected())
-        {
             _player.stateMachine.ChangeState(_player.wallSlideState);
-        }
-        
     }
 }

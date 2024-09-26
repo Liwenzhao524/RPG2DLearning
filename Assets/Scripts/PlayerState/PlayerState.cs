@@ -14,7 +14,7 @@ public class PlayerState
     protected float _xinput;
     protected float _yinput;
     private string _aniBoolName;  // 动画状态对应变量名
-    protected bool _animTrigger;  // 动画事件触发
+    protected bool _aniTrigger;  // 动画事件触发
 
     protected float stateTimer;  // 某些状态持续时间
 
@@ -29,7 +29,7 @@ public class PlayerState
     {
         _player.anim.SetBool(_aniBoolName, true);
         _rb = _player.rb;
-        _animTrigger = false;
+        _aniTrigger = false;
     }
 
     public virtual void Update()
@@ -48,6 +48,6 @@ public class PlayerState
 
     public virtual void AnimFinishTrigger()
     {
-        _animTrigger = true;
+        _aniTrigger = true;
     }
 }
