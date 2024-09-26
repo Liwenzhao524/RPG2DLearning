@@ -24,10 +24,10 @@ public class ParallaxBackGround : MonoBehaviour
         float movedDis = cam.transform.position.x * (1 - parallaxEffect);
         float moveDis = cam.transform.position.x * parallaxEffect;
 
-        transform.position = new Vector2(xPosition + moveDis, transform.position.y);
+        transform.position = new Vector3(xPosition + moveDis, transform.position.y);
 
         // 实现背景跟随玩家移动
         if (movedDis > xPosition + length) xPosition += length;
-        else if(movedDis < xPosition + length) xPosition -= length;
+        else if(movedDis < xPosition - length) xPosition -= length;
     }
 }
