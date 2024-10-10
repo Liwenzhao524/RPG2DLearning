@@ -74,7 +74,7 @@ public class Player : Entity
     /// <summary>
     /// 由挂载到Animator物体上的脚本调用
     /// </summary>
-    public void AnimTrigger() => stateMachine.currentState.AnimFinishTrigger();
+    public virtual void AnimTrigger() => stateMachine.currentState.AnimFinishTrigger();
 
     /// <summary>
     /// 保证冲刺高优先级，否则应写在PlayerGroundState

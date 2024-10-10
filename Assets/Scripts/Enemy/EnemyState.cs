@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class EnemyState
 {
-    protected Enemy _enemy;
+    protected Enemy _enemyBase;
     protected EnemyStateMachine _enemyStateMachine;
     protected Rigidbody2D _rb;
 
@@ -16,9 +16,9 @@ public class EnemyState
 
     protected float stateTimer;
 
-    public EnemyState(Enemy enemy, EnemyStateMachine enemyStateMachine, string aniBoolName)
+    public EnemyState(Enemy enemyBase, EnemyStateMachine enemyStateMachine, string aniBoolName)
     {
-        _enemy = enemy;
+        _enemyBase = enemyBase;
         _enemyStateMachine = enemyStateMachine;
         _aniBoolName = aniBoolName;
     }
@@ -26,8 +26,8 @@ public class EnemyState
     public virtual void Enter()
     {
         _anitrigger = false;
-        _rb = _enemy.rb;
-        _enemy.anim.SetBool(_aniBoolName, true);
+        _rb = _enemyBase.rb;
+        _enemyBase.anim.SetBool(_aniBoolName, true);
     }
 
     public virtual void Update()
@@ -37,7 +37,7 @@ public class EnemyState
 
     public virtual void Exit()
     {
-        _enemy.anim.SetBool(_aniBoolName, false);
+        _enemyBase.anim.SetBool(_aniBoolName, false);
     }
 
     public virtual void AnimFinishTrigger()
