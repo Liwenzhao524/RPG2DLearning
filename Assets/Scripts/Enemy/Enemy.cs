@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
-    [SerializeField] protected LayerMask playerLayer;
 
     [Header("Move Info")]
     public float moveSpeed = 1.5f;
@@ -15,6 +14,7 @@ public class Enemy : Entity
     public float attackDistance = 2f;
     public float attackCoolDown = 0.5f;
     [HideInInspector] public float lastAttackTime = 0;
+    [SerializeField] protected LayerMask playerLayer;
 
     public EnemyStateMachine stateMachine { get; private set; }
 
@@ -54,4 +54,5 @@ public class Enemy : Entity
     }
 
     public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * faceDir, 5, playerLayer);
+
 }

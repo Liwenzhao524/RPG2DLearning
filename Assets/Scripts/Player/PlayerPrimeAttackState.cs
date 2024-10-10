@@ -21,9 +21,9 @@ public class PlayerPrimeAttackState : PlayerState
             comboCounter = 0;
 
         #region Attack Direction
-        attackDir = _player.faceDir;
+        
         if (_xinput != 0) attackDir = _xinput;
-
+        else attackDir = _player.faceDir;
         #endregion
 
         // 攻击动作小位移

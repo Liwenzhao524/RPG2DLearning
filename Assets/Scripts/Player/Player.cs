@@ -5,7 +5,6 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : Entity
 {
-    public bool isBusy;
 
     [Header("Attack Detail")]
     public Vector2[] attackMove;
@@ -21,6 +20,9 @@ public class Player : Entity
     public float dashSpeed = 25;
     public float dashDuraTime = 0.2f;
     public float dashDir {  get; private set; }
+
+    [Header("Others")]
+    public bool isBusy;
 
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
