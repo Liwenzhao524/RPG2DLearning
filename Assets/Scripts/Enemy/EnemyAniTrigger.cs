@@ -2,16 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyTrigger : MonoBehaviour
+/// <summary>
+/// 敌人 动画事件 基类
+/// </summary>
+public class EnemyAniTrigger : MonoBehaviour
 {
-    private Enemy _enemy => GetComponentInParent<Enemy>();
+    protected Enemy _enemy;
 
-    private void AniTrigger()
+    protected virtual void Start()
+    {
+        _enemy = GetComponentInParent<Enemy>();
+    }
+
+    protected virtual void AniTrigger()
     {
         _enemy.AnimTrigger();
     }
 
-    private void AttackTrigger()
+    protected virtual void AttackTrigger()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(_enemy.attackCheck.position, _enemy.attackRadius);
         foreach (var hit in colliders)

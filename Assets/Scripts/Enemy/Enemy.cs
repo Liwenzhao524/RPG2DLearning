@@ -1,9 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
+/// <summary>
+/// 敌人 基类
+/// </summary>
 public class Enemy : Entity
 {
+    [Header("Stunned Info")]
+    public float stunDuration = 1;
+    public Vector2 stunDirection;
+    [HideInInspector]public bool canBeStunned;
+    [SerializeField] protected GameObject counterImage; 
 
     [Header("Move Info")]
     public float moveSpeed = 1.5f;
@@ -28,6 +37,7 @@ public class Enemy : Entity
     protected override void Start()
     {
         base.Start();
+        counterImage.SetActive(false);
     }
 
     protected override void Update()
@@ -45,6 +55,33 @@ public class Enemy : Entity
     {
         return Time.time > lastAttackTime + attackCoolDown;
     }
+
+    public virtual void OpenCounterAttackWindow()
+    {
+        canBeStunned = true;
+        counterImage.SetActive(true);
+    }
+
+    public virtual void CloseCounterAttackWindow()
+    {
+        canBeStunned = false;
+        counterImage.SetActive(false);
+    }
+
+    /// <summary>
+    /// 用于查询该敌人此刻能否被弹反
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool CanBeStunned()
+    {
+        if (canBeStunned)
+        {
+            CloseCounterAttackWindow();
+            return true;
+        }
+        return false;
+    }
+
 
     protected override void OnDrawGizmos()
     {

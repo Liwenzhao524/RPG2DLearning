@@ -8,6 +8,7 @@ using UnityEngine;
 public class EnemyState
 {
     protected Enemy _enemyBase;
+
     protected EnemyStateMachine _enemyStateMachine;
     protected Rigidbody2D _rb;
 

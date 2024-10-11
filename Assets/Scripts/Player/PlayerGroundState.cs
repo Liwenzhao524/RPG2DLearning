@@ -22,6 +22,9 @@ public class PlayerGroundState : PlayerState
     {
         base.Update();
 
+        if(Input.GetKeyDown(KeyCode.Q)) 
+            _player.stateMachine.ChangeState(_player.counterAttackState);
+
         if(Input.GetMouseButton(0)) // Á¬°´
             _player.stateMachine.ChangeState(_player.primeAttackState);
         
