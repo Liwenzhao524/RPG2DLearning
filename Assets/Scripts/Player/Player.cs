@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : Entity
 {
@@ -14,6 +12,7 @@ public class Player : Entity
     [Header("Move Info")]
     public float moveSpeed = 5;
     public float jumpForce = 10;
+    public float swordReturnForce = 3;
 
     [Header("Dash Info")]
     public float dashSpeed = 25;
@@ -21,6 +20,8 @@ public class Player : Entity
     public float dashDir {  get; private set; }
 
     [HideInInspector]public bool isBusy;
+    public SkillManager skill {  get; private set; }
+    public GameObject sword { get; private set; }
 
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
@@ -35,6 +36,9 @@ public class Player : Entity
 
     public PlayerPrimeAttackState primeAttackState { get; private set; }
     public PlayerCounterAttackState counterAttackState { get; private set; }
+
+    public PlayerAimSwordState aimSwordState { get; private set; }
+    public PlayerCatchSwordState catchSwordState { get; private set; }
     #endregion
 
     protected override void Awake()
@@ -50,6 +54,8 @@ public class Player : Entity
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "WallJump");
         primeAttackState = new PlayerPrimeAttackState(this, stateMachine, "Attack");
         counterAttackState = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
+        aimSwordState = new PlayerAimSwordState(this, stateMachine, "AimSword");
+        catchSwordState = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
     }
 
     protected override void Start()
@@ -64,6 +70,16 @@ public class Player : Entity
         base.Update();
         stateMachine.currentState.Update();
         CheckDashInput();
+    }
+
+    public void AssignSword(GameObject newSword)
+    {
+        sword = newSword;
+    }
+    public void CatchSword()
+    {
+        stateMachine.ChangeState(catchSwordState);
+        Destroy(sword);
     }
 
     public IEnumerator BusyFor(float seconds)

@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerState
 {
     protected Player _player;
-    protected PlayerStateMachine _playerStateMachine;
+    protected PlayerStateMachine _stateMachine;
     protected Rigidbody2D _rb;
 
     protected float _xinput;
@@ -21,7 +21,7 @@ public class PlayerState
     public PlayerState(Player player, PlayerStateMachine playerStateMachine, string aniBoolName)
     {
         _player = player;
-        _playerStateMachine = playerStateMachine;
+        _stateMachine = playerStateMachine;
         _aniBoolName = aniBoolName;
     }
 

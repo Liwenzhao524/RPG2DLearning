@@ -24,7 +24,7 @@ public class PlayerIdleState : PlayerGroundState
 
         // 有移动输入 且 玩家状态不被占用 可以移动
         if (_xinput != 0 && !_player.isBusy)
-           _playerStateMachine.ChangeState(_player.moveState); 
+           _stateMachine.ChangeState(_player.moveState); 
     }
 
     public override void Exit() 

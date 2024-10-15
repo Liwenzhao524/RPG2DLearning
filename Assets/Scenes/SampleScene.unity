@@ -526,6 +526,37 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &532576635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 532576636}
+  m_Layer: 7
+  m_Name: AimDotsParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &532576636
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532576635}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1291229255}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &538905825
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,6 +836,7 @@ GameObject:
   - component: {fileID: 628884512}
   - component: {fileID: 628884514}
   - component: {fileID: 628884515}
+  - component: {fileID: 628884516}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -868,6 +900,26 @@ MonoBehaviour:
   newClonePrefab: {fileID: 141409661363275469, guid: fbfba9d93bdc2db4dad6f84a24221576, type: 3}
   cloneDuration: 0.8
   canAttack: 1
+--- !u!114 &628884516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628884511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d83b8efbdc20fc24485294c1a6ac2a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDown: 0
+  swordPrefab: {fileID: 3091619538611565225, guid: e9be5bb560cd46c4fa4255730829985a, type: 3}
+  launchDir: {x: 20, y: 15}
+  swordGravity: 3
+  numOfDots: 20
+  dotsBetweenDis: 0.1
+  dotsPrefab: {fileID: 2524552720247718531, guid: beecceefb39dfe749bfeea46bbeaf854, type: 3}
+  dotsParent: {fileID: 532576635}
 --- !u!1 &662638783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,6 +1367,7 @@ Transform:
   - {fileID: 1188697226}
   - {fileID: 861086167}
   - {fileID: 1745536540}
+  - {fileID: 532576636}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1291229256

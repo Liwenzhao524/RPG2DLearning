@@ -22,6 +22,9 @@ public class PlayerGroundState : PlayerState
     {
         base.Update();
 
+        if(Input.GetMouseButtonDown(1) && HasNoSword())
+            _player.stateMachine.ChangeState(_player.aimSwordState);
+
         if(Input.GetKeyDown(KeyCode.Q)) 
             _player.stateMachine.ChangeState(_player.counterAttackState);
 
@@ -33,5 +36,17 @@ public class PlayerGroundState : PlayerState
 
         if(Input.GetKeyDown(KeyCode.Space) && _player.IsGroundDetected())
             _player.stateMachine.ChangeState(_player.jumpState);
+    }
+
+    /// <summary>
+    /// 检查是否无剑 有则触发返回
+    /// </summary>
+    /// <returns>无则返回true</returns>
+    private bool HasNoSword()
+    {
+        if (!_player.sword) return true;
+
+        _player.sword.GetComponent<Skill_Sword_Controller>().ReturnSword();
+        return false;
     }
 }
