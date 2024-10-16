@@ -23,6 +23,8 @@ public class Skill_Sword : Skill
     [SerializeField] GameObject swordPrefab;
     [SerializeField] Vector2 launchDir;
     [SerializeField] float swordGravity;
+    [SerializeField] float freezeDuration;
+    [SerializeField] float returnSpeed;
 
     [Header("AimLine Info")]
     int numOfDots = 20;
@@ -34,7 +36,8 @@ public class Skill_Sword : Skill
 
     [Header("Bounce Info")]
     [SerializeField] int bounceCount;
-    [SerializeField] float bounceGravityScale = 0.8f;  
+    [SerializeField] float bounceGravityScale = 0.8f;
+    [SerializeField] float bounceSpeed;
 
     [Header("Pierce Info")]
     [SerializeField] int pierceCount;
@@ -92,12 +95,12 @@ public class Skill_Sword : Skill
     {
         GameObject newSword = Instantiate(swordPrefab, _player.transform.position, transform.rotation);
         Skill_Sword_Controller ctrl = newSword.GetComponent<Skill_Sword_Controller>();
-        ctrl.SetUpSword(finalDir, swordGravity, _player);
+        ctrl.SetUpSword(finalDir, swordGravity, _player, freezeDuration, returnSpeed);
 
         switch (swordType)
         {
             case Sword_Type.Regular: break;
-            case Sword_Type.Bounce: ctrl.SetupBounce(true, bounceCount); break;
+            case Sword_Type.Bounce: ctrl.SetupBounce(true, bounceCount, bounceSpeed); break;
             case Sword_Type.Pierce: ctrl.SetupPierce(pierceCount);  break;
             case Sword_Type.Spinning: ctrl.SetupSpin(true, maxDistance, spinDuration, hitCoolDown);  break;
         }

@@ -18,6 +18,7 @@ public class Enemy : Entity
     public float moveSpeed = 1.5f;
     public float idleTime = 1f;
     public float battleTime = 5f;
+    float defaultMoveSpeed;
 
     [Header("Attack Info")]
     public float attackDistance = 2f;
@@ -31,7 +32,7 @@ public class Enemy : Entity
     {
         base.Awake();
         stateMachine = new EnemyStateMachine();
-
+        defaultMoveSpeed = moveSpeed;
     }
 
     protected override void Start()
@@ -46,6 +47,30 @@ public class Enemy : Entity
         stateMachine.currentState.Update();
     }
 
+    #region FreezeTime
+    public void FreezeTime(bool isFreeze)
+    {
+        if (isFreeze)
+        {
+            moveSpeed = 0;
+            anim.speed = 0;
+        }
+        else
+        {
+            moveSpeed = defaultMoveSpeed;
+            anim.speed = 1;
+        }
+    }
+
+    public virtual IEnumerator FreezeTimerFor(float time)
+    {
+        FreezeTime(true);
+        yield return new WaitForSeconds(time);
+        FreezeTime(false);
+    }
+
+    #endregion
+
     /// <summary>
     /// 由挂载到Animator物体上的脚本调用
     /// </summary>
@@ -56,6 +81,7 @@ public class Enemy : Entity
         return Time.time > lastAttackTime + attackCoolDown;
     }
 
+    #region Counter Attack
     public virtual void OpenCounterAttackWindow()
     {
         canBeStunned = true;
@@ -82,14 +108,14 @@ public class Enemy : Entity
         return false;
     }
 
+    #endregion
 
+    public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * faceDir, 5, playerLayer);
+    
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + attackDistance * faceDir, transform.position.y));
     }
-
-    public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * faceDir, 5, playerLayer);
-
 }

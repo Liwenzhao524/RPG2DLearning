@@ -10,17 +10,19 @@ public class Skill_Sword_Controller : MonoBehaviour
 
     bool canRotate = true;  // 碰撞时 正确处理 剑插入敌人的方向为飞行方向
 
+    float freezeDuration;
+
     [Header("Return Info")]
     bool isReturn;
-    [SerializeField] float returnSpeed = 20;
+    float returnSpeed;
 
     [Header("Bounce Info")]
     bool canBounce;
     int bounceCount;
+    float bounceSpeed;
     List<Transform> bounceTarget;
     int targetIndex;
-    [SerializeField] float bounceSpeed = 15;
-
+    
     [Header("Pierce Info")]
     int pierceCount;
 
@@ -45,18 +47,30 @@ public class Skill_Sword_Controller : MonoBehaviour
         _col = GetComponent<Collider2D>();
     }
 
+    /// <summary>
+    /// 用于定时销毁
+    /// </summary>
+    public void DestroySword()
+    {
+        Destroy(gameObject);
+    }
+
     // 外部调用 初始化
-    public void SetUpSword(Vector2 dir, float gravity, Player player)
+    public void SetUpSword(Vector2 dir, float gravity, Player player, float _freezeDuration, float _returnSpeed)
     {
         _player = player;
         _rb.velocity = dir;
         _rb.gravityScale = gravity;
+        freezeDuration = _freezeDuration;
+        returnSpeed = _returnSpeed;
 
         _anim.SetBool("Rotate", true);
 
         spinDirection = Mathf.Clamp(_rb.velocity.x, -1, 1);
 
         bounceTarget = new List<Transform>();  // Debug: public和[serializeField]会自动new，private默认不new，需要手动 
+
+        Invoke("DestroySword", 7);
     }
 
     private void FixedUpdate()
@@ -74,7 +88,7 @@ public class Skill_Sword_Controller : MonoBehaviour
         // 剑旋转
         SpinLogic();
     }
-
+    
     #region Return
     /// <summary>
     /// 触发 剑收回
@@ -103,10 +117,11 @@ public class Skill_Sword_Controller : MonoBehaviour
     #endregion
 
     #region Bounce
-    public void SetupBounce(bool _canBounce, int _bounceTime)
+    public void SetupBounce(bool _canBounce, int _bounceTime, float _bounceSpeed)
     {
         canBounce = _canBounce;
         bounceCount = _bounceTime;
+        bounceSpeed = _bounceSpeed;
     }
 
     private void BounceLogic()
@@ -231,7 +246,12 @@ public class Skill_Sword_Controller : MonoBehaviour
     {
         if (isReturn) return;
 
-        collision.GetComponent<Enemy>()?.Damage();
+        if (collision.GetComponent<Enemy>())
+        {
+            Enemy enemy = collision.GetComponent<Enemy>();
+            enemy.Damage();
+            enemy.StartCoroutine("FreezeTimerFor", freezeDuration);
+        }
         
         SetTargetForBounce(collision);
 
