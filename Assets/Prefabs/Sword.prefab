@@ -110,6 +110,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   returnSpeed: 35
+  bounceTime: 3
+  bounceSpeed: 20
+  bounceTarget: []
+  targetIndex: 0
 --- !u!1 &7951376201742850909
 GameObject:
   m_ObjectHideFlags: 0

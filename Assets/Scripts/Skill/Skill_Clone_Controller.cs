@@ -34,7 +34,13 @@ public class Skill_Clone_Controller : MonoBehaviour
                 Destroy(gameObject);
         }
     }
-
+    
+    /// <summary>
+    /// 残影具体设置
+    /// </summary>
+    /// <param name="targetPos">残影位置</param>
+    /// <param name="cloneDuration">持续时间</param>
+    /// <param name="canAttack">能否攻击</param>
     public void SetClone(Transform targetPos, float cloneDuration, bool canAttack)
     {
         if(canAttack)
@@ -62,11 +68,15 @@ public class Skill_Clone_Controller : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 面朝最近敌人
+    /// </summary>
     private void FaceToEnemy()
     {
         float minDistance = Mathf.Infinity;
         Transform target = transform;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 20);
+        // 获取所有近处敌人
         foreach (var hit in colliders)
         {
             if (hit.GetComponent<Enemy>() != null)

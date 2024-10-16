@@ -28,6 +28,7 @@ public class PlayerAimSwordState : PlayerState
         if(Input.GetMouseButtonUp(1))
             _player.stateMachine.ChangeState(_player.idleState);
 
+        // 瞄准时人物转向
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         _player.FlipController(mousePos.x - _player.transform.position.x);
     }

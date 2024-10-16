@@ -19,9 +19,9 @@ public class Player : Entity
     public float dashDuraTime = 0.2f;
     public float dashDir {  get; private set; }
 
-    [HideInInspector]public bool isBusy;
+    [HideInInspector]public bool isBusy;  // 占用符 锁滑步之类
     public SkillManager skill {  get; private set; }
-    public GameObject sword { get; private set; }
+    public GameObject sword { get; private set; }  // 飞剑技能 限制只有一把
 
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
@@ -72,16 +72,29 @@ public class Player : Entity
         CheckDashInput();
     }
 
+    /// <summary>
+    /// 当前飞剑位 空则创建
+    /// </summary>
+    /// <param name="newSword"></param>
     public void AssignSword(GameObject newSword)
     {
         sword = newSword;
     }
+
+    /// <summary>
+    /// 改变状态 并销毁飞剑物体
+    /// </summary>
     public void CatchSword()
     {
         stateMachine.ChangeState(catchSwordState);
         Destroy(sword);
     }
 
+    /// <summary>
+    /// 死锁一定时间
+    /// </summary>
+    /// <param name="seconds">死锁秒数</param>
+    /// <returns></returns>
     public IEnumerator BusyFor(float seconds)
     {
         isBusy = true;

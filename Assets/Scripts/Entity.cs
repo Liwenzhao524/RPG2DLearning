@@ -50,6 +50,10 @@ public class Entity : MonoBehaviour
         StartCoroutine("HitKnock");
     }
 
+    /// <summary>
+    /// 受击硬直击退
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator HitKnock()
     {
         isKnocked = true;
@@ -60,6 +64,12 @@ public class Entity : MonoBehaviour
     }
 
     #region Velocity
+
+   /// <summary>
+   /// 设置速度 包含翻转控制
+   /// </summary>
+   /// <param name="x"></param>
+   /// <param name="y"></param>
     public virtual void SetVelocity(float x, float y)
     {
         if (isKnocked) return;
@@ -88,11 +98,20 @@ public class Entity : MonoBehaviour
     #endregion
 
     #region Flip
+
+    /// <summary>
+    /// 翻转180
+    /// </summary>
     protected virtual void Flip()
     {
         faceDir *= -1;
         transform.Rotate(0, 180, 0);
     }
+
+    /// <summary>
+    /// 根据传入的值与当前面朝向 决定是否翻转
+    /// </summary>
+    /// <param name="x"></param>
     public virtual void FlipController(float x)
     {
         if (x * faceDir < 0)

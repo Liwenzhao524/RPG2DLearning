@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 特效
+/// </summary>
 public class EntityFX : MonoBehaviour
 {
     private SpriteRenderer sr;
@@ -18,6 +21,10 @@ public class EntityFX : MonoBehaviour
         originMat = sr.material;
     }
 
+    /// <summary>
+    /// 闪烁特效 切换材质实现
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator FlashFX()
     {
         sr.material = flashMat;
