@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Player : Entity
 {
-
     [Header("Attack Detail")]
     public Vector2[] attackMove;
     public float attackSpeed = 1;

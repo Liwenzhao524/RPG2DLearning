@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -18,31 +19,54 @@ public class Skill_Sword : Skill
 {
     public Sword_Type swordType = Sword_Type.Regular;
 
-    [Header("Bounce Info")]
-    [SerializeField] private int bounceTime;
-    
-    [Tooltip("相对刻度")]
-    [SerializeField] private float bounceGravityScale;  // *= 改变重力刻度
-
     [Header("Skill Info")]
-    [SerializeField] private GameObject swordPrefab;
-    [SerializeField] private Vector2 launchDir;
-    [SerializeField] private float swordGravity;
-
-    private Vector2 finalDir;
+    [SerializeField] GameObject swordPrefab;
+    [SerializeField] Vector2 launchDir;
+    [SerializeField] float swordGravity;
 
     [Header("AimLine Info")]
-    private int numOfDots = 20;
-    private float dotsBetweenDis = 0.1f;
-    private GameObject[] dots;
-    [SerializeField] private GameObject dotsPrefab;
-    [SerializeField] private GameObject dotsParent;
+    int numOfDots = 20;
+    float dotsBetweenDis = 0.1f;
+    GameObject[] dots;
+    [SerializeField] GameObject dotsPrefab;
+    [SerializeField] GameObject dotsParent;
+    Vector2 finalDir;
+
+    [Header("Bounce Info")]
+    [SerializeField] int bounceCount;
+    [SerializeField] float bounceGravityScale = 0.8f;  
+
+    [Header("Pierce Info")]
+    [SerializeField] int pierceCount;
+    [SerializeField] float pierceGravityScale = 0.03f;
+
+    [Header("Spin Info")]
+    [SerializeField] float maxDistance = 10;
+    [SerializeField] float spinDuration = 1;
+    [SerializeField] float spinGravityScale = 0.5f;
+    [SerializeField] float hitCoolDown = 0.34f;
 
     protected override void Start()
     {
         base.Start();
-        GenerateDots();
+        SetSwordGravity();
+        GenerateDots();    
     }
+
+    /// <summary>
+    /// 根据类型设定重力
+    /// </summary>
+    private void SetSwordGravity()
+    {
+        switch (swordType)
+        {
+            default:
+            case Sword_Type.Bounce: swordGravity *= bounceGravityScale; break;
+            case Sword_Type.Pierce: swordGravity *= pierceGravityScale; break;
+            case Sword_Type.Spinning: swordGravity *= spinGravityScale; break;
+        }
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -70,9 +94,12 @@ public class Skill_Sword : Skill
         Skill_Sword_Controller ctrl = newSword.GetComponent<Skill_Sword_Controller>();
         ctrl.SetUpSword(finalDir, swordGravity, _player);
 
-        if(swordType == Sword_Type.Bounce)
+        switch (swordType)
         {
-            ctrl.SetupBounce(true, bounceTime, bounceGravityScale);
+            case Sword_Type.Regular: break;
+            case Sword_Type.Bounce: ctrl.SetupBounce(true, bounceCount); break;
+            case Sword_Type.Pierce: ctrl.SetupPierce(pierceCount);  break;
+            case Sword_Type.Spinning: ctrl.SetupSpin(true, maxDistance, spinDuration, hitCoolDown);  break;
         }
 
         _player.AssignSword(newSword);
