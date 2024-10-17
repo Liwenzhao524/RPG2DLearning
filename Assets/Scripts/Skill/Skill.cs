@@ -40,4 +40,22 @@ public class Skill : MonoBehaviour
     {
         // 技能执行
     }
+
+    public virtual Transform FindClosestEnemy()
+    {
+        float minDistance = Mathf.Infinity;
+        Transform target = transform;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 20);
+        // 获取所有近处敌人
+        foreach (var hit in colliders)
+        {
+            if (hit.GetComponent<Enemy>() != null)
+                if (Vector2.Distance(hit.transform.position, transform.position) < minDistance)
+                {
+                    minDistance = Vector2.Distance(hit.transform.position, transform.position);
+                    target = hit.transform;
+                }
+        }
+        return target;
+    }
 }

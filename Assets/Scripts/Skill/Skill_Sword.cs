@@ -22,9 +22,9 @@ public class Skill_Sword : Skill
     [Header("Skill Info")]
     [SerializeField] GameObject swordPrefab;
     [SerializeField] Vector2 launchDir;
-    [SerializeField] float swordGravity;
-    [SerializeField] float freezeDuration;
-    [SerializeField] float returnSpeed;
+    [SerializeField] float swordGravity = 2;
+    [SerializeField] float freezeDuration = 1;
+    [SerializeField] float returnSpeed = 30;
 
     [Header("AimLine Info")]
     int numOfDots = 20;
@@ -35,12 +35,12 @@ public class Skill_Sword : Skill
     Vector2 finalDir;
 
     [Header("Bounce Info")]
-    [SerializeField] int bounceCount;
+    [SerializeField] int bounceCount = 4;
     [SerializeField] float bounceGravityScale = 0.8f;
-    [SerializeField] float bounceSpeed;
+    [SerializeField] float bounceSpeed = 20;
 
     [Header("Pierce Info")]
-    [SerializeField] int pierceCount;
+    [SerializeField] int pierceCount = 1;
     [SerializeField] float pierceGravityScale = 0.03f;
 
     [Header("Spin Info")]

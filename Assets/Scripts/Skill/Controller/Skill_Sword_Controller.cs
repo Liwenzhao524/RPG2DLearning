@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill_Sword_Controller : MonoBehaviour
+public class Skill_Sword_Controller : Skill_Controller
 {
-    Animator _anim;
-    Rigidbody2D _rb;
+    
     Collider2D _col;
     Player _player;
 
@@ -40,11 +39,11 @@ public class Skill_Sword_Controller : MonoBehaviour
     float spinDirection;
 
 
-    private void Awake()
+    protected override void Awake()
     {
-        _anim = GetComponentInChildren<Animator>();
-        _rb = GetComponent<Rigidbody2D>();
+        base.Awake();
         _col = GetComponent<Collider2D>();
+
     }
 
     /// <summary>
@@ -73,8 +72,9 @@ public class Skill_Sword_Controller : MonoBehaviour
         Invoke("DestroySword", 7);
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
+
         // 保证剑本体的飞行方向 朝向目标
         if (canRotate)
             transform.right = _rb.velocity;
@@ -104,6 +104,7 @@ public class Skill_Sword_Controller : MonoBehaviour
     {
         if (isReturn)
         {
+            Debug.Log(transform.position);
             // 直接修改坐标
             transform.position = Vector2.MoveTowards(transform.position, _player.transform.position,
                                                      returnSpeed * Time.deltaTime);

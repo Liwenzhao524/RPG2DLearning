@@ -1,36 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 
-public class Skill_Clone_Controller : MonoBehaviour
+public class Skill_Clone_Controller : Skill_Controller
 {
-    [SerializeField] private float cloneTimer;
-    [SerializeField] private float exitSpeed = 1f;
+    [SerializeField] float cloneTimer;
+    [SerializeField] float exitSpeed = 1f;
 
-    [SerializeField] private Transform attackCheck;
-    [SerializeField] private float attackRadius = 0.7f;
+    [SerializeField] Transform attackCheck;
+    [SerializeField] float attackRadius = 0.7f;
 
-    private Animator anim;
-    private SpriteRenderer sr;
-    
+    SpriteRenderer _sr;
+
     private float cloneDuration;
     // Start is called before the first frame update
-    void Awake()
+    protected override void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
+        base.Awake();
+        _sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         cloneTimer -= Time.deltaTime;
 
         if (cloneTimer < 0)
         {
-            sr.color = new Color(1, 1, 1, sr.color.a - Time.deltaTime * exitSpeed);
-            if(sr.color.a < 0)
+            _sr.color = new Color(1, 1, 1, _sr.color.a - Time.deltaTime * exitSpeed);
+            if (_sr.color.a < 0)
                 Destroy(gameObject);
         }
     }
@@ -44,9 +41,9 @@ public class Skill_Clone_Controller : MonoBehaviour
     /// <param name="offset">位置偏移</param>
     public void SetClone(Transform targetPos, float cloneDuration, bool canAttack, Vector3 offset)
     {
-        if(canAttack)
+        if (canAttack)
         {
-            anim.SetInteger("AttackNum", Random.Range(1, 4));
+            _anim.SetInteger("AttackNum", Random.Range(1, 4));
         }
 
         cloneTimer = cloneDuration;
@@ -85,20 +82,8 @@ public class Skill_Clone_Controller : MonoBehaviour
     /// </summary>
     private void FaceToEnemy()
     {
-        float minDistance = Mathf.Infinity;
-        Transform target = transform;
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 20);
-        // 获取所有近处敌人
-        foreach (var hit in colliders)
-        {
-            if (hit.GetComponent<Enemy>() != null)
-                if(Vector2.Distance(hit.transform.position, transform.position) < minDistance)
-                {
-                    minDistance = Vector2.Distance(hit.transform.position, transform.position);
-                    target = hit.transform;
-                }
-        }
-
+        Transform target = FindClosestEnemy();
+        
         if (target.position.x < transform.position.x)
             transform.Rotate(0, 180, 0);
     }

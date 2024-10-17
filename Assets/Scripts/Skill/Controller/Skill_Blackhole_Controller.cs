@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill_Blackhole_Controller : MonoBehaviour
+public class Skill_Blackhole_Controller : Skill_Controller
 {
     [SerializeField] GameObject hotKeyPrefab;
     [SerializeField] List<KeyCode> hotKeyList;
@@ -47,8 +47,9 @@ public class Skill_Blackhole_Controller : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         cloneAttackTimer -= Time.deltaTime;
         blackholeTimer -= Time.deltaTime;
 

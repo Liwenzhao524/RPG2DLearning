@@ -1138,6 +1138,7 @@ GameObject:
   - component: {fileID: 628884515}
   - component: {fileID: 628884516}
   - component: {fileID: 628884517}
+  - component: {fileID: 628884518}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -1214,17 +1215,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coolDown: 0
-  swordType: 1
+  swordType: 0
   swordPrefab: {fileID: 3091619538611565225, guid: e9be5bb560cd46c4fa4255730829985a, type: 3}
   launchDir: {x: 30, y: 20}
   swordGravity: 2
   freezeDuration: 1
-  returnSpeed: 0
+  returnSpeed: 30
   dotsPrefab: {fileID: 2524552720247718531, guid: beecceefb39dfe749bfeea46bbeaf854, type: 3}
   dotsParent: {fileID: 532576635}
   bounceCount: 4
   bounceGravityScale: 0.8
-  bounceSpeed: 0
+  bounceSpeed: 20
   pierceCount: 1
   pierceGravityScale: 0.03
   maxDistance: 5
@@ -1251,6 +1252,28 @@ MonoBehaviour:
   shrinkSpeed: 5
   cloneAttackCount: 8
   cloneAttackCoolDown: 0.3
+--- !u!114 &628884518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628884511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b41b6fcd1157745bccec5d6b6d5256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDown: 0
+  crystalPrefab: {fileID: 6085833630941172643, guid: 067cb367b57c0a14bb181b9db8678aa5, type: 3}
+  crystalDuration: 3
+  canExplode: 1
+  canMove: 1
+  moveSpeed: 3
+  canUseMuti: 1
+  crystalCount: 3
+  mutiCoolDown: 3
+  crystalList: []
 --- !u!1 &662638783
 GameObject:
   m_ObjectHideFlags: 0

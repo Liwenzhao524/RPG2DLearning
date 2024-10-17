@@ -44,6 +44,7 @@ public class Player : Entity
     protected override void Awake()
     {
         base.Awake();
+        skill = SkillManager.instance;
         stateMachine = new PlayerStateMachine();
         idleState = new PlayerIdleState(this, stateMachine, "Idle");
         moveState = new PlayerMoveState(this, stateMachine, "Move");
@@ -57,6 +58,7 @@ public class Player : Entity
         aimSwordState = new PlayerAimSwordState(this, stateMachine, "AimSword");
         catchSwordState = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
         blackholeState = new PlayerBlackholeState(this, stateMachine, "Jump");
+        
     }
 
     protected override void Start()
@@ -71,6 +73,11 @@ public class Player : Entity
         base.Update();
         stateMachine.currentState.Update();
         CheckDashInput();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            skill.crystal.CanUseSkill();
+        }
     }
 
     /// <summary>

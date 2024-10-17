@@ -10,6 +10,7 @@ public class SkillManager : MonoBehaviour
     public Skill_Clone clone { get; private set; }
     public Skill_Sword sword { get; private set; }
     public Skill_Blackhole blackhole { get; private set; }
+    public Skill_Crystal crystal { get; private set; }
     private void Awake()
     {
         if (instance == null)
@@ -22,6 +23,7 @@ public class SkillManager : MonoBehaviour
         clone = GetComponent<Skill_Clone>();
         sword = GetComponent<Skill_Sword>();
         blackhole = GetComponent<Skill_Blackhole>();
+        crystal = GetComponent<Skill_Crystal>();
     }
 
     // Update is called once per frame
