@@ -34,14 +34,15 @@ public class Skill_Clone_Controller : MonoBehaviour
                 Destroy(gameObject);
         }
     }
-    
+
     /// <summary>
     /// 残影具体设置
     /// </summary>
     /// <param name="targetPos">残影位置</param>
     /// <param name="cloneDuration">持续时间</param>
     /// <param name="canAttack">能否攻击</param>
-    public void SetClone(Transform targetPos, float cloneDuration, bool canAttack)
+    /// <param name="offset">位置偏移</param>
+    public void SetClone(Transform targetPos, float cloneDuration, bool canAttack, Vector3 offset)
     {
         if(canAttack)
         {
@@ -49,8 +50,19 @@ public class Skill_Clone_Controller : MonoBehaviour
         }
 
         cloneTimer = cloneDuration;
-        transform.position = targetPos.position;
+        transform.position = targetPos.position + offset;
         FaceToEnemy();
+    }
+
+    /// <summary>
+    /// 残影具体设置 无位置偏移
+    /// </summary>
+    /// <param name="targetPos"></param>
+    /// <param name="cloneDuration"></param>
+    /// <param name="canAttack"></param>
+    public void SetClone(Transform targetPos, float cloneDuration, bool canAttack)
+    {
+        SetClone(targetPos, cloneDuration, canAttack, new Vector3(0, 0, 0));
     }
 
     private void AnimTrigger()

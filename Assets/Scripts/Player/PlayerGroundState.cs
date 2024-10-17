@@ -22,6 +22,9 @@ public class PlayerGroundState : PlayerState
     {
         base.Update();
 
+        if(Input.GetKeyDown(KeyCode.R)) 
+            _player.stateMachine.ChangeState(_player.blackholeState);
+
         if(Input.GetMouseButtonDown(1) && HasNoSword())
             _player.stateMachine.ChangeState(_player.aimSwordState);
 

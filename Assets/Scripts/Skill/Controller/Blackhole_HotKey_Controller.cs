@@ -12,6 +12,12 @@ public class Blackhole_HotKey_Controller : MonoBehaviour
     Transform enemy;
     Skill_Blackhole_Controller blackhole;
 
+    /// <summary>
+    /// 初始化位置 UI
+    /// </summary>
+    /// <param name="_hotKey"></param>
+    /// <param name="_enemy"></param>
+    /// <param name="_blackhole"></param>
     public void SetUpHotKey(KeyCode _hotKey, Transform _enemy, Skill_Blackhole_Controller _blackhole)
     {
         sr = GetComponent<SpriteRenderer>();
@@ -25,6 +31,7 @@ public class Blackhole_HotKey_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 按下对应按键 UI消失 敌人加入List
         if(Input.GetKeyDown(hotKey))
         {
             blackhole.AddEnemyToList(enemy);

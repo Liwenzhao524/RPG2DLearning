@@ -46,4 +46,16 @@ public class EntityFX : MonoBehaviour
         CancelInvoke();
         sr.color = Color.white;
     }
+
+    public void MakeTransparent(bool istransparent)
+    {
+        if (istransparent)
+        {
+            sr.color = Color.clear;
+        }
+        else
+        {
+            sr.color = Color.white;
+        }
+    }
 }
