@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SkillManager : MonoBehaviour
 {
-    public static SkillManager instance;
+    public static SkillManager _instance;
 
     public Skill_Dash dash {  get; private set; }
     public Skill_Clone clone { get; private set; }
@@ -13,8 +13,8 @@ public class SkillManager : MonoBehaviour
     public Skill_Crystal crystal { get; private set; }
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (_instance == null)
+            _instance = this;
     }
     // Start is called before the first frame update
     void Start()

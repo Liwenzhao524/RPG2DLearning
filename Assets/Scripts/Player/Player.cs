@@ -39,12 +39,14 @@ public class Player : Entity
     public PlayerAimSwordState aimSwordState { get; private set; }
     public PlayerCatchSwordState catchSwordState { get; private set; }
     public PlayerBlackholeState blackholeState { get; private set; }
+
+    public PlayerDeadState deadState { get; private set; }
     #endregion
 
     protected override void Awake()
     {
         base.Awake();
-        skill = SkillManager.instance;
+        skill = SkillManager._instance;
         stateMachine = new PlayerStateMachine();
         idleState = new PlayerIdleState(this, stateMachine, "Idle");
         moveState = new PlayerMoveState(this, stateMachine, "Move");
@@ -58,6 +60,7 @@ public class Player : Entity
         aimSwordState = new PlayerAimSwordState(this, stateMachine, "AimSword");
         catchSwordState = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
         blackholeState = new PlayerBlackholeState(this, stateMachine, "Jump");
+        deadState = new PlayerDeadState(this, stateMachine, "Die");
         
     }
 
@@ -80,6 +83,7 @@ public class Player : Entity
         }
     }
 
+    #region Skill Ctrl
     /// <summary>
     /// 当前飞剑位 空则创建
     /// </summary>
@@ -103,6 +107,8 @@ public class Player : Entity
     {
         stateMachine.ChangeState(airState);
     }
+
+    #endregion
 
     /// <summary>
     /// 死锁一定时间
@@ -128,7 +134,7 @@ public class Player : Entity
     {
         if (IsWallDetected() && !IsGroundDetected()) return;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill())
+        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager._instance.dash.CanUseSkill())
         {
 
             dashDir = Input.GetAxisRaw("Horizontal");
@@ -138,4 +144,11 @@ public class Player : Entity
             stateMachine.ChangeState(dashState);
         }
     }
+
+    public override void Die()
+    {
+        base.Die();
+        stateMachine.ChangeState(deadState);
+    }
+
 }

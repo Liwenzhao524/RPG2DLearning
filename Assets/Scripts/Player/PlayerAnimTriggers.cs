@@ -7,25 +7,28 @@ using UnityEngine;
 /// </summary>
 public class PlayerAnimTriggers : MonoBehaviour
 {
-    Player player => GetComponentInParent<Player>();
+    Player _player => GetComponentInParent<Player>();
 
     private void AnimTrigger()
     {
-        player.AnimTrigger();
+        _player.AnimTrigger();
     }
 
     private void AttackTrigger()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(player.attackCheck.position, player.attackRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(_player.attackCheck.position, _player.attackRadius);
         foreach(var hit in colliders)
         {
             if (hit.GetComponent<Enemy>() != null)
-                hit.GetComponent<Enemy>().Damage();
+            {
+                EnemyStats target = hit.GetComponent<EnemyStats>(); 
+                _player.GetComponent<CharacterStats>().DoDamageTo(target);
+            }
         }
     }
 
     private void ThrowSword()
     {
-        SkillManager.instance.sword.CreateSword();
+        SkillManager._instance.sword.CreateSword();
     }
 }

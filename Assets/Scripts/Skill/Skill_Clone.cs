@@ -32,7 +32,7 @@ public class Skill_Clone : Skill
     {
         if (crystalInsteadClone)
         {
-            SkillManager.instance.crystal.CreateCrystal(targetPos);
+            SkillManager._instance.crystal.CreateCrystal(targetPos);
             return;
         }
         GameObject clone = Instantiate(newClonePrefab);
@@ -107,7 +107,7 @@ public class Skill_Clone : Skill
             duplicateChance = Mathf.Clamp(duplicateChance, 0, 100);
             if (Random.Range(0, 100) < duplicateChance)
             {
-                SkillManager.instance.clone.CreateClone(targetPos.transform, new Vector3(1.5f * faceDir, 0));
+                SkillManager._instance.clone.CreateClone(targetPos.transform, new Vector3(1.5f * faceDir, 0));
             }
         }
     }

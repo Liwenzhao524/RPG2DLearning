@@ -47,10 +47,10 @@ public class PlayerBlackholeState : PlayerState
             _rb.velocity = new Vector2(0, -0.1f);
             if (!skillUsed)
             {
-                if (SkillManager.instance.blackhole.CanUseSkill())
+                if (SkillManager._instance.blackhole.CanUseSkill())
                     skillUsed = true;
             }
-            else if (SkillManager.instance.blackhole.BlackholeEnd())
+            else if (SkillManager._instance.blackhole.BlackholeEnd())
                 _player.stateMachine.ChangeState(_player.airState);
         }
     }

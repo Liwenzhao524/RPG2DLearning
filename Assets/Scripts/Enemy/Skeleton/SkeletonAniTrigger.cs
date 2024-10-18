@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SkeletonAniTrigger : EnemyAniTrigger
 {
-    private Enemy_Skeleton enemy; 
+    Enemy_Skeleton enemy; 
     
     protected override void Start()
     {

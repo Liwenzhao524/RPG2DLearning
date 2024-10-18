@@ -13,7 +13,7 @@ public class Skill : MonoBehaviour
 
     protected virtual void Start()
     {
-        _player = PlayerManager.instance.player;
+        _player = PlayerManager._instance._player;
     }
 
     protected virtual void Update()
@@ -27,13 +27,14 @@ public class Skill : MonoBehaviour
     /// <returns></returns>
     public virtual bool CanUseSkill()
     {
-        if(coolDownTimer < 0)
+        if(coolDownTimer > 0 || _player.stateMachine.currentState == _player.deadState)
         {
-            UseSkill();
-            coolDownTimer = coolDown;
-            return true;
+            return false;
         }
-        return false;
+
+        UseSkill();
+        coolDownTimer = coolDown;
+        return true;
     }
 
     public virtual void UseSkill()

@@ -24,7 +24,9 @@ public class Entity : MonoBehaviour
     #region Components
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
+    public Collider2D col { get; private set; }
     public EntityFX fx { get; private set; }
+    public CharacterStats stats { get; private set; }
     #endregion
 
     protected virtual void Awake()
@@ -36,7 +38,9 @@ public class Entity : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
         fx = GetComponent<EntityFX>(); 
+        stats = GetComponent<CharacterStats>();
     }
 
     protected virtual void Update()
@@ -44,7 +48,7 @@ public class Entity : MonoBehaviour
 
     }
 
-    public virtual void Damage()
+    public virtual void DamageEffect()
     {
         fx.StartCoroutine("FlashFX");
         StartCoroutine("HitKnock");
@@ -120,4 +124,10 @@ public class Entity : MonoBehaviour
         }
     }
     #endregion
+
+    public virtual void Die()
+    {
+
+    }
+
 }

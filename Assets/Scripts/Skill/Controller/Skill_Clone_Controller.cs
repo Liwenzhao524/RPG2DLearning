@@ -75,8 +75,8 @@ public class Skill_Clone_Controller : Skill_Controller
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<Enemy>().Damage();
-                SkillManager.instance.clone.CloneDuplicate(hit.transform, faceDir);
+                hit.GetComponent<Enemy>().DamageEffect();
+                SkillManager._instance.clone.CloneDuplicate(hit.transform, faceDir);
             }
         }
     }

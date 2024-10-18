@@ -28,6 +28,8 @@ public class Enemy : Entity
 
     public EnemyStateMachine stateMachine { get; private set; }
 
+    public string lastAniName {  get; private set; }
+
     protected override void Awake()
     {
         base.Awake();
@@ -109,6 +111,15 @@ public class Enemy : Entity
     }
 
     #endregion
+
+    /// <summary>
+    /// 记录死前动画 死时保持不动
+    /// </summary>
+    /// <param name="aniBoolName"></param>
+    public virtual void AssignLastAniName(string aniBoolName)
+    {
+        lastAniName = aniBoolName;
+    }
 
     public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * faceDir, 5, playerLayer);
     

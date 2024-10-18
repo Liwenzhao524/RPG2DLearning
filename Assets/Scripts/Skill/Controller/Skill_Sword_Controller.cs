@@ -131,7 +131,7 @@ public class Skill_Sword_Controller : Skill_Controller
             transform.position = Vector2.MoveTowards(transform.position, bounceTarget[targetIndex].position, bounceSpeed * Time.deltaTime);
             if (Vector2.Distance(transform.position, bounceTarget[targetIndex].position) < 0.1f)
             {
-                bounceTarget[targetIndex].GetComponent<Enemy>()?.Damage();
+                bounceTarget[targetIndex].GetComponent<Enemy>()?.DamageEffect();
                 targetIndex++;
                 if (targetIndex >= bounceTarget.Count)
                     targetIndex = 0;
@@ -222,7 +222,7 @@ public class Skill_Sword_Controller : Skill_Controller
                     hitTimer = hitCoolDown;
                     Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2);
                     foreach (var hit in colliders)
-                        hit.GetComponent<Enemy>()?.Damage();
+                        hit.GetComponent<Enemy>()?.DamageEffect();
                 }
             }
         }
@@ -249,7 +249,7 @@ public class Skill_Sword_Controller : Skill_Controller
         if (collision.GetComponent<Enemy>())
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.Damage();
+            enemy.DamageEffect();
             enemy.StartCoroutine("FreezeTimerFor", freezeDuration);
         }
         
