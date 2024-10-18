@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,31 +20,46 @@ public class Skill_Crystal : Skill
     [SerializeField] int crystalCount = 3;
     [SerializeField] float mutiCoolDown = 3;
     List<GameObject> crystalList = new List<GameObject>();
-    
+
     public override void UseSkill()
     {
         base.UseSkill();
 
         if (canUseMuti)
         {
-            if(crystalList.Count <= 0) FillCrystalList();
+            if (crystalList.Count <= 0) FillCrystalList();
             UseMutiCrystal();
             return;
         }
 
+        SingleLogic();
+    }
+
+    /// <summary>
+    /// 创建并设置水晶
+    /// </summary>
+    public void CreateCrystal(Transform targetPos)
+    {
+        currentCrystal = Instantiate(crystalPrefab, targetPos.position, Quaternion.identity);
+        Skill_Crystal_Controller ctrl = currentCrystal.GetComponent<Skill_Crystal_Controller>();
+        ctrl.SetUpCrystal(crystalDuration, canExplode, canMove, moveSpeed);
+    }
+
+    private void SingleLogic()
+    {
         if (currentCrystal == null)
         {
-            currentCrystal = Instantiate(crystalPrefab, _player.transform.position, Quaternion.identity);
-            Skill_Crystal_Controller ctrl = currentCrystal.GetComponent<Skill_Crystal_Controller>();
-            ctrl.SetUpCrystal(crystalDuration, canExplode, canMove, moveSpeed);
-        }  
+            CreateCrystal(_player.transform);
+        }
+        // 再按下 互换位置
         else
         {
             //if (canMove) return;
-            if(Vector2.Distance(currentCrystal.transform.position, _player.transform.position) < 25)
+            if (Vector2.Distance(currentCrystal.transform.position, _player.transform.position) < 25)
             {
                 Vector2 playerPos = _player.transform.position;
 
+                _player.skill.clone.CloneCrystalMirage();  // 技能分支
                 _player.transform.position = currentCrystal.transform.position;
                 currentCrystal.transform.position = playerPos;
 
@@ -54,11 +68,14 @@ public class Skill_Crystal : Skill
             }
         }
     }
+    
+    
 
     private void UseMutiCrystal()
     {
         if (crystalList.Count > 0)
         {
+            // 重置时间窗
             if (crystalList.Count == crystalCount)
                 Invoke("ResetAbility", useSkillWindow);
 
@@ -70,6 +87,7 @@ public class Skill_Crystal : Skill
             Skill_Crystal_Controller ctrl = newCrystal.GetComponent<Skill_Crystal_Controller>();
             ctrl.SetUpCrystal(crystalDuration, canExplode, canMove, moveSpeed);
         }
+        // 冷却再装填
         if (crystalList.Count <= 0)
         {
             coolDown = mutiCoolDown;
@@ -88,7 +106,7 @@ public class Skill_Crystal : Skill
 
     private void ResetAbility()
     {
-        if(coolDownTimer <= 0)
+        if (coolDownTimer <= 0)
         {
             coolDownTimer = mutiCoolDown;
             FillCrystalList();

@@ -11,7 +11,7 @@ public class Enemy : Entity
     [Header("Stunned Info")]
     public float stunDuration = 1;
     public Vector2 stunDirection;
-    [HideInInspector]public bool canBeStunned;
+    [HideInInspector] public bool canBeStunned;
     [SerializeField] protected GameObject counterImage; 
 
     [Header("Move Info")]

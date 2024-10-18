@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class Skill_Clone_Controller : Skill_Controller
 {
+    SpriteRenderer _sr;
+    
     [SerializeField] float cloneTimer;
     [SerializeField] float exitSpeed = 1f;
 
     [SerializeField] Transform attackCheck;
     [SerializeField] float attackRadius = 0.7f;
 
-    SpriteRenderer _sr;
+    int faceDir = 1;
 
-    private float cloneDuration;
     // Start is called before the first frame update
     protected override void Awake()
     {
@@ -73,7 +74,10 @@ public class Skill_Clone_Controller : Skill_Controller
         foreach (var hit in colliders)
         {
             if (hit.GetComponent<Enemy>() != null)
+            {
                 hit.GetComponent<Enemy>().Damage();
+                SkillManager.instance.clone.CloneDuplicate(hit.transform, faceDir);
+            }
         }
     }
 
@@ -85,6 +89,9 @@ public class Skill_Clone_Controller : Skill_Controller
         Transform target = FindClosestEnemy();
         
         if (target.position.x < transform.position.x)
+        {
+            faceDir *= -1;
             transform.Rotate(0, 180, 0);
+        }
     }
 }

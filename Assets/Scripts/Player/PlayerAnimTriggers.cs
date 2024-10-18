@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerAnimTriggers : MonoBehaviour
 {
-    private Player player => GetComponentInParent<Player>();
+    Player player => GetComponentInParent<Player>();
 
     private void AnimTrigger()
     {

@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCounterAttackState : PlayerState
 {
+    bool createSingleClone;
     public PlayerCounterAttackState(Player player, PlayerStateMachine playerStateMachine, string aniBoolName) : base(player, playerStateMachine, aniBoolName)
     {
     }
@@ -17,6 +16,7 @@ public class PlayerCounterAttackState : PlayerState
     {
         base.Enter();
         _player.SetZeroVelocity();
+        createSingleClone = true;
         stateTimer = _player.counterAttackDuration;
         _player.anim.SetBool("SuccessfulCA", false);
     }
@@ -37,10 +37,15 @@ public class PlayerCounterAttackState : PlayerState
                 {
                     stateTimer = 100;
                     _player.anim.SetBool("SuccessfulCA", true);
+                    if(createSingleClone)
+                    {
+                        createSingleClone = false;
+                        _player.skill.clone.CloneCounterAttack(hit.transform);
+                    }
                 }
         }
 
-        if(stateTimer < 0 || _aniTrigger)
+        if (stateTimer < 0 || _aniTrigger)
         {
             _player.stateMachine.ChangeState(_player.idleState);
         }

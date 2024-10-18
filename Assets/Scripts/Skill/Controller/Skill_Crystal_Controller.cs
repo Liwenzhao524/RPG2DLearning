@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Skill_Crystal_Controller : Skill_Controller
 {
     CircleCollider2D _col;
-    
+
     float crystalTimer;
 
     bool canGrow;
@@ -40,34 +38,53 @@ public class Skill_Crystal_Controller : Skill_Controller
             CrystalEnd();
         }
 
+        // 增强爆炸视觉
         if (canGrow)
         {
-            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(2,2), growSpeed * Time.deltaTime);
+            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(3, 3), growSpeed * Time.deltaTime);
         }
 
-        if(canMove)
+        MoveLogic();
+    }
+    
+    /// <summary>
+    /// 可移动水晶
+    /// </summary>
+    private void MoveLogic()
+    {
+        if (canMove)
         {
             Transform target = FindClosestEnemy();
             transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
 
+            // 靠近时 执行爆炸或消失
             if (Vector2.Distance(transform.position, target.position) < _col.radius)
             {
                 CrystalEnd();
-                canMove = false;
+                canMove = false;  // 避免爆炸时滑动
             }
         }
     }
 
+    /// <summary>
+    /// 动画事件 触发爆炸伤害
+    /// </summary>
     public void AnimExplodeEvent()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _col.radius);
         foreach (var hit in colliders)
         {
             if (hit.GetComponent<Enemy>() != null)
+            {
                 hit.GetComponent<Enemy>().Damage();
+                SkillManager.instance.clone.CloneDuplicate(hit.transform);
+            }
         }
     }
 
+    /// <summary>
+    /// 决定水晶消失方式
+    /// </summary>
     public void CrystalEnd()
     {
         if (canExplode)

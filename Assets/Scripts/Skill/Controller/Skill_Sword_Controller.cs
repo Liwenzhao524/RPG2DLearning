@@ -104,7 +104,6 @@ public class Skill_Sword_Controller : Skill_Controller
     {
         if (isReturn)
         {
-            Debug.Log(transform.position);
             // 直接修改坐标
             transform.position = Vector2.MoveTowards(transform.position, _player.transform.position,
                                                      returnSpeed * Time.deltaTime);

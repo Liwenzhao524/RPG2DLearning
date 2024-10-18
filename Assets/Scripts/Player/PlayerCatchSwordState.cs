@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCatchSwordState : PlayerState
 {
-    private Transform _sword;
+    Transform _sword;
     public PlayerCatchSwordState(Player player, PlayerStateMachine playerStateMachine, string aniBoolName) : base(player, playerStateMachine, aniBoolName)
     {
     }

@@ -5,11 +5,13 @@ using UnityEngine;
 public class Skill_Blackhole : Skill
 {
     [SerializeField] GameObject blackholePrefab;
+    [Header("Basic Info")]
     [SerializeField] float blackholeDuration;
     [SerializeField] float maxSize;
     [SerializeField] float growSpeed;
     [SerializeField] float shrinkSpeed;
-    [Space]
+
+    [Header("Attack Info")]
     [SerializeField] int cloneAttackCount;
     [SerializeField] float cloneAttackCoolDown;
 

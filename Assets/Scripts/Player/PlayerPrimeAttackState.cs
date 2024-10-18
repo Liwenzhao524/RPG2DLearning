@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerPrimeAttackState : PlayerState
 {
-    private int comboCounter;  // 连击计数器
-    private float attackDir;
-    private float lastAttackTime;
-    private float comboWindow = 1;  // 连击最大间隔
+    int comboCounter;  // 连击计数器
+    float attackDir;
+    float lastAttackTime;
+    float comboWindow = 1;  // 连击最大间隔
     public PlayerPrimeAttackState(Player player, PlayerStateMachine playerStateMachine, string aniBoolName) : base(player, playerStateMachine, aniBoolName)
     {
     }

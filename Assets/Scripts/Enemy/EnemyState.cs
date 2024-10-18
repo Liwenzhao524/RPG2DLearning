@@ -12,7 +12,7 @@ public class EnemyState
     protected EnemyStateMachine _enemyStateMachine;
     protected Rigidbody2D _rb;
 
-    private string _aniBoolName;
+    string _aniBoolName;
     protected bool _anitrigger;
 
     protected float stateTimer;

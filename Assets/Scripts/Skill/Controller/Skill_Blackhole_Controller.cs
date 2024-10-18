@@ -16,7 +16,7 @@ public class Skill_Blackhole_Controller : Skill_Controller
     bool canGrow = true;
     
     bool canCreateHotKey = true;
-    List<Transform> targets = new List<Transform>();
+    [SerializeField]List<Transform> targets = new List<Transform>();
     List<GameObject> createdHotKey = new List<GameObject>();
 
     bool canCloneAttack;
@@ -24,7 +24,7 @@ public class Skill_Blackhole_Controller : Skill_Controller
     float cloneAttackCoolDown = 0.4f;
     float cloneAttackTimer;
 
-    public bool playerCanExitSkill;
+    [HideInInspector] public bool playerCanExitSkill;
     bool playerCanTransparent = true;
 
     /// <summary>

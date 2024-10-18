@@ -7,11 +7,11 @@ using UnityEngine;
 /// </summary>
 public class ParallaxBackGround : MonoBehaviour
 {
-    private GameObject cam;
-    private float xPosition;
-    private float length;  // ±³¾°Í¼Æ¬³¤¶È
+    GameObject cam;
+    float xPosition;
+    float length;  // ±³¾°Í¼Æ¬³¤¶È
 
-    [SerializeField] private float parallaxEffect;
+    [SerializeField] float parallaxEffect;
     private void Start()
     {
         cam = GameObject.Find("Main Camera");

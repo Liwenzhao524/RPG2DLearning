@@ -24,6 +24,10 @@ public class Skill_Controller : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// 获取最近敌人
+    /// </summary>
+    /// <returns>返回Transform</returns>
     protected virtual Transform FindClosestEnemy()
     {
         float minDistance = Mathf.Infinity;

@@ -100,6 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hotKeyPrefab: {fileID: 173209307828615956, guid: 5afb5ce695d043f42b09ebf259ce67c5, type: 3}
   hotKeyList: 7100000065000000770000006600000074000000
+  targets: []
+  playerCanExitSkill: 0
 --- !u!58 &2083867808386200095
 CircleCollider2D:
   m_ObjectHideFlags: 0
