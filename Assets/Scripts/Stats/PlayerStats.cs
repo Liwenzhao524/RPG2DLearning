@@ -15,14 +15,19 @@ public class PlayerStats : CharacterStats
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        
+        base.Update();
     }
-    
+
     public override void DoDamageTo(CharacterStats target)
     {
         base.DoDamageTo(target);
+    }
+
+    public override void DoMagicDamageTo(CharacterStats target)
+    {
+        base.DoMagicDamageTo(target);
     }
 
     public override void TakeDamage(float damage)
@@ -36,4 +41,6 @@ public class PlayerStats : CharacterStats
         base.Die();
         _player.Die();
     }
+
+    
 }

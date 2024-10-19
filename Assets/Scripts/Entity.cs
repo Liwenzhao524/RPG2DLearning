@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
@@ -28,6 +29,8 @@ public class Entity : MonoBehaviour
     public EntityFX fx { get; private set; }
     public CharacterStats stats { get; private set; }
     #endregion
+
+    public Action OnFlip;
 
     protected virtual void Awake()
     {
@@ -110,6 +113,8 @@ public class Entity : MonoBehaviour
     {
         faceDir *= -1;
         transform.Rotate(0, 180, 0);
+
+        OnFlip?.Invoke();
     }
 
     /// <summary>

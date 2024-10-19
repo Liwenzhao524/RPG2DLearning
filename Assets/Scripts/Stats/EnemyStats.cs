@@ -13,9 +13,19 @@ public class EnemyStats : CharacterStats
         _enemy = GetComponent<Enemy>();
     }
 
+    protected override void Update()
+    {
+        base.Update();
+    }
+
     public override void DoDamageTo(CharacterStats target)
     {
         base.DoDamageTo(target);
+    }
+
+    public override void DoMagicDamageTo(CharacterStats target)
+    {
+        base.DoMagicDamageTo(target);
     }
 
     public override void TakeDamage(float damage)

@@ -23,6 +23,8 @@ public class PlayerAnimTriggers : MonoBehaviour
             {
                 EnemyStats target = hit.GetComponent<EnemyStats>(); 
                 _player.GetComponent<CharacterStats>().DoDamageTo(target);
+                _player.GetComponent<CharacterStats>().DoMagicDamageTo(target);
+                
             }
         }
     }

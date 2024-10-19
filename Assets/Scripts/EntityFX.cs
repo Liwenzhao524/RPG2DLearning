@@ -14,6 +14,11 @@ public class EntityFX : MonoBehaviour
     [SerializeField] private float flashDuration = 0.2f;
     private Material originMat;
 
+    [Header("Ailment Color")]
+    [SerializeField] Color[] igniteColor;
+    [SerializeField] Color chillColor;
+    [SerializeField] Color shockColor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,18 +39,47 @@ public class EntityFX : MonoBehaviour
         sr.material = originMat;
     }
 
-    private void RedBlink()
+    public void RedBlink()
     {
         if(sr.color != Color.white)
             sr.color = Color.white;
         else sr.color = Color.red;
     }
 
-    private void CancelRedBlink()
+    public void CancelColorChange()
     {
         CancelInvoke();
         sr.color = Color.white;
     }
+
+    #region Ailment Color
+
+    public void ChangeToIgniteFX(float second)
+    {
+        InvokeRepeating("IgniteColor", 0, 0.3f);
+        Invoke("CancelColorChange", second);
+    }
+
+    public void ChangeToChillFX(float second)
+    {
+        sr.color = chillColor;
+        Invoke("CancelColorChange", second);
+    }
+
+    public void ChangeToShockFX(float second)
+    {
+        sr.color = shockColor;
+        Invoke("CancelColorChange", second);
+    }
+
+    private void IgniteColor()
+    {
+        if (sr.color != igniteColor[0])
+            sr.color = igniteColor[0];
+        else sr.color = igniteColor[1];
+    }
+
+    #endregion
 
     public void MakeTransparent(bool istransparent)
     {
