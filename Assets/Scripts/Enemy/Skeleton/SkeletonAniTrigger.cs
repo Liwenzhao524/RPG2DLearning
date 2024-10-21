@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class SkeletonAniTrigger : EnemyAniTrigger
 {
-    Enemy_Skeleton enemy; 
+    Enemy_Skeleton _enemy;
     
     protected override void Start()
     {
         base.Start();
-        enemy = _enemy as Enemy_Skeleton;
+        _enemy = enemy as Enemy_Skeleton;
     }
 
     protected override void AniTrigger()
@@ -22,6 +22,6 @@ public class SkeletonAniTrigger : EnemyAniTrigger
         base.AttackTrigger();
     }
 
-    private void OpenCounterAttackWindow() => enemy.OpenCounterAttackWindow();
-    private void CloseCounterAttackWindow() => enemy.CloseCounterAttackWindow();
+    private void OpenCounterAttackWindow() => _enemy.OpenCounterAttackWindow();
+    private void CloseCounterAttackWindow() => _enemy.CloseCounterAttackWindow();
 }

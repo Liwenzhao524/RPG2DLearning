@@ -10,7 +10,7 @@ public class Skill_Clone_Controller : Skill_Controller
     [SerializeField] Transform attackCheck;
     [SerializeField] float attackRadius = 0.7f;
 
-    int faceDir = 1;
+    int _faceDir = 1;
 
     // Start is called before the first frame update
     protected override void Awake()
@@ -44,7 +44,7 @@ public class Skill_Clone_Controller : Skill_Controller
     {
         if (canAttack)
         {
-            _anim.SetInteger("AttackNum", Random.Range(1, 4));
+            anim.SetInteger("AttackNum", Random.Range(1, 4));
         }
 
         cloneTimer = cloneDuration;
@@ -75,8 +75,8 @@ public class Skill_Clone_Controller : Skill_Controller
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                _player.stats.DoDamageTo(hit.GetComponent<CharacterStats>());
-                SkillManager._instance.clone.CloneDuplicate(hit.transform, faceDir);
+                player.stats.DoDamageTo(hit.GetComponent<CharacterStats>());
+                SkillManager.instance.clone.CloneDuplicate(hit.transform, _faceDir);
             }
         }
     }
@@ -90,7 +90,7 @@ public class Skill_Clone_Controller : Skill_Controller
         
         if (target.position.x < transform.position.x)
         {
-            faceDir *= -1;
+            _faceDir *= -1;
             transform.Rotate(0, 180, 0);
         }
     }

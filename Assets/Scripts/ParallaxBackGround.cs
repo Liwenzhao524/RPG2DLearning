@@ -7,27 +7,27 @@ using UnityEngine;
 /// </summary>
 public class ParallaxBackGround : MonoBehaviour
 {
-    GameObject cam;
-    float xPosition;
-    float length;  // ±³¾°Í¼Æ¬³¤¶È
+    GameObject _cam;
+    float _xPosition;
+    float _length;  // ±³¾°Í¼Æ¬³¤¶È
 
     [SerializeField] float parallaxEffect;
     private void Start()
     {
-        cam = GameObject.Find("Main Camera");
-        xPosition = transform.position.x;
-        length = GetComponent<SpriteRenderer>().bounds.size.x;
+        _cam = GameObject.Find("Main Camera");
+        _xPosition = transform.position.x;
+        _length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
     private void Update()
     {
-        float movedDis = cam.transform.position.x * (1 - parallaxEffect);
-        float moveDis = cam.transform.position.x * parallaxEffect;
+        float movedDis = _cam.transform.position.x * (1 - parallaxEffect);
+        float moveDis = _cam.transform.position.x * parallaxEffect;
 
-        transform.position = new Vector3(xPosition + moveDis, transform.position.y);
+        transform.position = new Vector3(_xPosition + moveDis, transform.position.y);
 
         // ÊµÏÖ±³¾°¸úËæÍæ¼ÒÒÆ¶¯
-        if (movedDis > xPosition + length) xPosition += length;
-        else if(movedDis < xPosition - length) xPosition -= length;
+        if (movedDis > _xPosition + _length) _xPosition += _length;
+        else if(movedDis < _xPosition - _length) _xPosition -= _length;
     }
 }

@@ -11,7 +11,7 @@ public class Skill_Clone : Skill
     [Header("Clone Info")]
     [SerializeField] GameObject newClonePrefab;
     [SerializeField] float cloneDuration;
-    [SerializeField] bool canAttack = true;
+    [SerializeField] bool canAttack;
 
     [Header("Skill Branch Info")]
     [SerializeField] bool canCloneDashStart;
@@ -32,7 +32,7 @@ public class Skill_Clone : Skill
     {
         if (crystalInsteadClone)
         {
-            SkillManager._instance.crystal.CreateCrystal(targetPos);
+            SkillManager.instance.crystal.CreateCrystal(targetPos);
             return;
         }
         GameObject clone = Instantiate(newClonePrefab);
@@ -57,7 +57,7 @@ public class Skill_Clone : Skill
     {
         if(canCloneDashStart)
         {
-            CreateClone(_player.transform, new Vector3(0, 0, 0));
+            CreateClone(player.transform, new Vector3(0, 0, 0));
         }
     }
 
@@ -68,7 +68,7 @@ public class Skill_Clone : Skill
     {
         if (canCloneDashEnd)
         {
-            CreateClone(_player.transform, new Vector3(0, 0, 0));
+            CreateClone(player.transform, new Vector3(0, 0, 0));
         }
     }
 
@@ -80,7 +80,7 @@ public class Skill_Clone : Skill
     {
         if (canCloneCounterAttack)
         {
-            StartCoroutine(CreateCloneDelay(targetPos, new Vector3(1.5f * _player.faceDir, 0), 0.4f));
+            StartCoroutine(CreateCloneDelay(targetPos, new Vector3(1.5f * player.faceDir, 0), 0.4f));
         }
     }
 
@@ -91,7 +91,7 @@ public class Skill_Clone : Skill
     {
         if(canCloneCrystalMirage)
         {
-            CreateClone(_player.transform, new Vector3(0, 0, 0));
+            CreateClone(player.transform, new Vector3(0, 0, 0));
         }
     }
 
@@ -107,7 +107,7 @@ public class Skill_Clone : Skill
             duplicateChance = Mathf.Clamp(duplicateChance, 0, 100);
             if (Random.Range(0, 100) < duplicateChance)
             {
-                SkillManager._instance.clone.CreateClone(targetPos.transform, new Vector3(1.5f * faceDir, 0));
+                SkillManager.instance.clone.CreateClone(targetPos.transform, new Vector3(1.5f * faceDir, 0));
             }
         }
     }

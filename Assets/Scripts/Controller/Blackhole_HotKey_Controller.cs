@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class Blackhole_HotKey_Controller : MonoBehaviour
 {
-    SpriteRenderer sr;
-    KeyCode hotKey;
-    TextMeshProUGUI tmpUI;
+    SpriteRenderer _sr;
+    KeyCode _hotKey;
+    TextMeshProUGUI _tmpUI;
 
-    Transform enemy;
-    Skill_Blackhole_Controller blackhole;
+    Transform _enemy;
+    Skill_Blackhole_Controller _blackhole;
 
     /// <summary>
     /// 初始化位置 UI
@@ -20,23 +20,23 @@ public class Blackhole_HotKey_Controller : MonoBehaviour
     /// <param name="_blackhole"></param>
     public void SetUpHotKey(KeyCode _hotKey, Transform _enemy, Skill_Blackhole_Controller _blackhole)
     {
-        sr = GetComponent<SpriteRenderer>();
-        tmpUI = GetComponentInChildren<TextMeshProUGUI>();
+        _sr = GetComponent<SpriteRenderer>();
+        _tmpUI = GetComponentInChildren<TextMeshProUGUI>();
 
-        hotKey = _hotKey;
-        enemy = _enemy;
-        blackhole = _blackhole;
-        tmpUI.text = hotKey.ToString();
+        this._hotKey = _hotKey;
+        this._enemy = _enemy;
+        this._blackhole = _blackhole;
+        _tmpUI.text = this._hotKey.ToString();
     }
     // Update is called once per frame
     void Update()
     {
         // 按下对应按键 UI消失 敌人加入List
-        if(Input.GetKeyDown(hotKey))
+        if(Input.GetKeyDown(_hotKey))
         {
-            blackhole.AddEnemyToList(enemy);
-            tmpUI.color = Color.clear;
-            sr.color = Color.clear;
+            _blackhole.AddEnemyToList(_enemy);
+            _tmpUI.color = Color.clear;
+            _sr.color = Color.clear;
         }
     }
 }

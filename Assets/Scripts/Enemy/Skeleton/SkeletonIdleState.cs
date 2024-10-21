@@ -6,14 +6,14 @@ public class SkeletonIdleState : SkeletonGroundState
 {
     public SkeletonIdleState(Enemy enemyBase, EnemyStateMachine enemyStateMachine, string aniBoolName) : base(enemyBase, enemyStateMachine, aniBoolName)
     {
-        _enemy = enemyBase as Enemy_Skeleton;
+        enemy = enemyBase as Enemy_Skeleton;
     }
 
     public override void Enter()
     {
         base.Enter();
-        _enemy.SetZeroVelocity();
-        stateTimer = _enemy.idleTime;
+        enemy.SetZeroVelocity();
+        stateTimer = enemy.idleTime;
     }
 
     public override void Exit()
@@ -25,7 +25,7 @@ public class SkeletonIdleState : SkeletonGroundState
     {
         base.Update();
         if (stateTimer < 0f)
-            _enemyStateMachine.ChangeState(_enemy.moveState);
+            enemyStateMachine.ChangeState(enemy.moveState);
     }
 }
     

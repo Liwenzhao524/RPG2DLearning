@@ -12,23 +12,23 @@ public class PlayerCatchSwordState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        _sword = _player.sword.transform;
+        _sword = player.sword.transform;
 
         // 反震
-        _rb.velocity = new Vector2(_player.swordReturnForce * -_player.faceDir, _rb.velocity.y);
+        rb.velocity = new Vector2(player.swordReturnForce * -player.faceDir, rb.velocity.y);
     }
 
     public override void Exit()
     {
         base.Exit();
-        _player.StartCoroutine("BusyFor", 0.05f);  // 避免 动画未结束时移动指令导致的滑步
+        player.StartCoroutine("BusyFor", 0.05f);  // 避免 动画未结束时移动指令导致的滑步
     }
 
     public override void Update()
     {
         base.Update();
 
-        if(_aniTrigger)
-            _stateMachine.ChangeState(_player.idleState);
+        if(aniTrigger)
+            stateMachine.ChangeState(player.idleState);
     }
 }

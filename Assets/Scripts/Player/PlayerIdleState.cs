@@ -12,7 +12,7 @@ public class PlayerIdleState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        _player.SetZeroVelocity();
+        player.SetZeroVelocity();
     }
 
     public override void Update()
@@ -20,11 +20,11 @@ public class PlayerIdleState : PlayerGroundState
         base.Update();
 
         // 面对墙 不移动
-        if (_xinput == _player.faceDir && _player.IsWallDetected()) return;
+        if (xinput == player.faceDir && player.IsWallDetected()) return;
 
         // 有移动输入 且 玩家状态不被占用 可以移动
-        if (_xinput != 0 && !_player.isBusy)
-           _stateMachine.ChangeState(_player.moveState); 
+        if (xinput != 0 && !player.isBusy)
+           stateMachine.ChangeState(player.moveState); 
     }
 
     public override void Exit() 

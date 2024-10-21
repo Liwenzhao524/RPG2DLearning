@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerCounterAttackState : PlayerState
 {
-    bool createSingleClone;
+    bool _createSingleClone;
     public PlayerCounterAttackState(Player player, PlayerStateMachine playerStateMachine, string aniBoolName) : base(player, playerStateMachine, aniBoolName)
     {
     }
@@ -15,10 +15,10 @@ public class PlayerCounterAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        _player.SetZeroVelocity();
-        createSingleClone = true;
-        stateTimer = _player.counterAttackDuration;
-        _player.anim.SetBool("SuccessfulCA", false);
+        player.SetZeroVelocity();
+        _createSingleClone = true;
+        stateTimer = player.counterAttackDuration;
+        player.anim.SetBool("SuccessfulCA", false);
     }
 
     public override void Exit()
@@ -29,25 +29,25 @@ public class PlayerCounterAttackState : PlayerState
     public override void Update()
     {
         base.Update();
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(_player.attackCheck.position, _player.attackRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(player.attackCheck.position, player.attackRadius);
         foreach (var hit in colliders)
         {
             if (hit.GetComponent<Enemy>() != null)
                 if (hit.GetComponent<Enemy>().CanBeStunned())
                 {
                     stateTimer = 100;
-                    _player.anim.SetBool("SuccessfulCA", true);
-                    if(createSingleClone)
+                    player.anim.SetBool("SuccessfulCA", true);
+                    if(_createSingleClone)
                     {
-                        createSingleClone = false;
-                        _player.skill.clone.CloneCounterAttack(hit.transform);
+                        _createSingleClone = false;
+                        player.skill.clone.CloneCounterAttack(hit.transform);
                     }
                 }
         }
 
-        if (stateTimer < 0 || _aniTrigger)
+        if (stateTimer < 0 || aniTrigger)
         {
-            _player.stateMachine.ChangeState(_player.idleState);
+            player.stateMachine.ChangeState(player.idleState);
         }
     }
 }

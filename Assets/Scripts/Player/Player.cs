@@ -12,16 +12,16 @@ public class Player : Entity
     public float moveSpeed = 5;
     public float jumpForce = 10;
     public float swordReturnForce = 3;
-    float defaultMoveSpeed;
-    float defaultJumpForce;
-    float defaultDashSpeed;
+    float _defaultMoveSpeed;
+    float _defaultJumpForce;
+    float _defaultDashSpeed;
 
     [Header("Dash Info")]
     public float dashSpeed = 25;
     public float dashDuraTime = 0.2f;
     public float dashDir {  get; private set; }
 
-    [HideInInspector]public bool isBusy;  // 占用符 锁滑步之类
+    [HideInInspector] public bool isBusy;  // 占用符 锁滑步之类
     public SkillManager skill {  get; private set; }
     public GameObject sword { get; private set; }  // 飞剑技能 限制只有一把
 
@@ -49,7 +49,7 @@ public class Player : Entity
     protected override void Awake()
     {
         base.Awake();
-        skill = SkillManager._instance;
+        skill = SkillManager.instance;
         stateMachine = new PlayerStateMachine();
         idleState = new PlayerIdleState(this, stateMachine, "Idle");
         moveState = new PlayerMoveState(this, stateMachine, "Move");
@@ -72,9 +72,9 @@ public class Player : Entity
         base.Start();
         stateMachine.Init(idleState);
 
-        defaultMoveSpeed = moveSpeed;
-        defaultJumpForce = jumpForce;
-        defaultDashSpeed = dashSpeed;
+        _defaultMoveSpeed = moveSpeed;
+        _defaultJumpForce = jumpForce;
+        _defaultDashSpeed = dashSpeed;
     }
 
     // Update is called once per frame
@@ -105,9 +105,9 @@ public class Player : Entity
     public override void ReturnDefaultSpeed()
     {
         base.ReturnDefaultSpeed();
-        moveSpeed = defaultMoveSpeed;
-        jumpForce = defaultJumpForce;
-        dashSpeed = defaultDashSpeed;
+        moveSpeed = _defaultMoveSpeed;
+        jumpForce = _defaultJumpForce;
+        dashSpeed = _defaultDashSpeed;
     }
 
     #region Skill Ctrl
@@ -161,7 +161,7 @@ public class Player : Entity
     {
         if (IsWallDetected() && !IsGroundDetected()) return;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager._instance.dash.CanUseSkill())
+        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill())
         {
 
             dashDir = Input.GetAxisRaw("Horizontal");

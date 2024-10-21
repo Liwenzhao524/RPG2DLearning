@@ -7,55 +7,55 @@ public class Skill_Blackhole_Controller : Skill_Controller
     [SerializeField] GameObject hotKeyPrefab;
     [SerializeField] List<KeyCode> hotKeyList;
 
-    float blackholeTimer;
-    float maxSize;
-    float growSpeed;
-    float shrinkSpeed;
+    float _blackholeTimer;
+    float _maxSize;
+    float _growSpeed;
+    float _shrinkSpeed;
     
-    bool canShrink;
-    bool canGrow = true;
+    bool _canShrink;
+    readonly bool _canGrow = true;
     
-    bool canCreateHotKey = true;
+    bool _canCreateHotKey = true;
     [SerializeField]List<Transform> targets = new List<Transform>();
-    List<GameObject> createdHotKey = new List<GameObject>();
+    List<GameObject> _createdHotKey = new List<GameObject>();
 
-    bool canCloneAttack;
-    int cloneAttackCount = 8;
-    float cloneAttackCoolDown = 0.4f;
-    float cloneAttackTimer;
+    bool _canCloneAttack;
+    int _cloneAttackCount = 8;
+    float _cloneAttackCoolDown = 0.4f;
+    float _cloneAttackTimer;
 
     [HideInInspector] public bool playerCanExitSkill;
-    bool playerCanTransparent = true;
+    bool _playerCanTransparent = true;
 
     /// <summary>
     /// 初始化
     /// </summary>
-    /// <param name="_maxSize">最大大小</param>
-    /// <param name="_growSpeed">变大速度</param>
-    /// <param name="_shrinkSpeed">缩小速度</param>
-    /// <param name="_cloneAttackCount">攻击次数</param>
-    /// <param name="_cloneAttackCoolDown">攻击间隔</param>
-    /// <param name="_blackholeDuration">时间窗口</param>
-    public void SetUpBlackhole(float _maxSize, float _growSpeed, float _shrinkSpeed, int _cloneAttackCount, float _cloneAttackCoolDown, float _blackholeDuration)
+    /// <param name="maxSize">最大大小</param>
+    /// <param name="growSpeed">变大速度</param>
+    /// <param name="shrinkSpeed">缩小速度</param>
+    /// <param name="cloneAttackCount">攻击次数</param>
+    /// <param name="cloneAttackCoolDown">攻击间隔</param>
+    /// <param name="blackholeDuration">时间窗口</param>
+    public void SetUpBlackhole(float maxSize, float growSpeed, float shrinkSpeed, int cloneAttackCount, float cloneAttackCoolDown, float blackholeDuration)
     {
-        maxSize = _maxSize;
-        growSpeed = _growSpeed;
-        shrinkSpeed = _shrinkSpeed;
-        cloneAttackCount = _cloneAttackCount;
-        cloneAttackCoolDown = _cloneAttackCoolDown;
-        blackholeTimer = _blackholeDuration;
+        _maxSize = maxSize;
+        _growSpeed = growSpeed;
+        _shrinkSpeed = shrinkSpeed;
+        _cloneAttackCount = cloneAttackCount;
+        _cloneAttackCoolDown = cloneAttackCoolDown;
+        _blackholeTimer = blackholeDuration;
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        cloneAttackTimer -= Time.deltaTime;
-        blackholeTimer -= Time.deltaTime;
+        _cloneAttackTimer -= Time.deltaTime;
+        _blackholeTimer -= Time.deltaTime;
 
-        if (blackholeTimer < 0)
+        if (_blackholeTimer < 0)
         {
-            blackholeTimer = Mathf.Infinity;
+            _blackholeTimer = Mathf.Infinity;
             if (targets.Count > 0)
                 CloneAttackStart();
             else
@@ -67,14 +67,14 @@ public class Skill_Blackhole_Controller : Skill_Controller
 
         CloneAttackLogic();
 
-        if (canGrow && !canShrink)
+        if (_canGrow && !_canShrink)
         {
-            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(maxSize, maxSize), growSpeed * Time.deltaTime);
+            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(_maxSize, _maxSize), _growSpeed * Time.deltaTime);
 
         }
-        if (canShrink)
+        if (_canShrink)
         {
-            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(-1, -1), shrinkSpeed * Time.deltaTime);
+            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(-1, -1), _shrinkSpeed * Time.deltaTime);
             if (transform.localScale.x < 0)
             {
                 Destroy(gameObject);
@@ -88,31 +88,31 @@ public class Skill_Blackhole_Controller : Skill_Controller
     private void CloneAttackStart()
     {
         DestroyHotKey();
-        canCloneAttack = true;
-        canCreateHotKey = false;
+        _canCloneAttack = true;
+        _canCreateHotKey = false;
 
-        if(playerCanTransparent)
+        if(_playerCanTransparent)
         {
-            playerCanTransparent = false; 
-            PlayerManager._instance._player.fx.MakeTransparent(true);
+            _playerCanTransparent = false; 
+            PlayerManager.instance.player.fx.MakeTransparent(true);
         }
     }
 
     private void CloneAttackLogic()
     {
-        if (cloneAttackTimer < 0 && canCloneAttack && cloneAttackCount > 0)
+        if (_cloneAttackTimer < 0 && _canCloneAttack && _cloneAttackCount > 0)
         {
-            cloneAttackTimer = cloneAttackCoolDown;
+            _cloneAttackTimer = _cloneAttackCoolDown;
 
             int randomIndex = Random.Range(0, targets.Count);
             float xOffset = Random.Range(0, 100) > 50 ? 1 : -1;
 
-            SkillManager._instance.clone.CreateClone(targets[randomIndex], new Vector2(xOffset, 0));
+            SkillManager.instance.clone.CreateClone(targets[randomIndex], new Vector2(xOffset, 0));
 
-            cloneAttackCount--;
-            if (cloneAttackCount <= 0)
+            _cloneAttackCount--;
+            if (_cloneAttackCount <= 0)
             {
-                canCloneAttack = false;
+                _canCloneAttack = false;
                 Invoke(nameof(EndBlackholeSkill), 0.5f); 
             }
         }
@@ -120,9 +120,9 @@ public class Skill_Blackhole_Controller : Skill_Controller
 
     private void EndBlackholeSkill()
     {
-        canShrink = true;
+        _canShrink = true;
         playerCanExitSkill = true;
-        PlayerManager._instance._player.fx.MakeTransparent(false);
+        PlayerManager.instance.player.fx.MakeTransparent(false);
         DestroyHotKey();
     }
 
@@ -146,14 +146,14 @@ public class Skill_Blackhole_Controller : Skill_Controller
     #region HotKey
     private void DestroyHotKey()
     {
-        if (createdHotKey.Count <= 0) return;
+        if (_createdHotKey.Count <= 0) return;
 
-        for(int i = 0; i < createdHotKey.Count; i++)
+        for(int i = 0; i < _createdHotKey.Count; i++)
         {
-            Destroy(createdHotKey[i]);
+            Destroy(_createdHotKey[i]);
         }
 
-        createdHotKey.Clear();
+        _createdHotKey.Clear();
     }
 
     /// <summary>
@@ -168,12 +168,12 @@ public class Skill_Blackhole_Controller : Skill_Controller
             return;
         }
 
-        if(!canCreateHotKey) return;
+        if(!_canCreateHotKey) return;
 
         collision.GetComponent<Enemy>().FreezeTime(true);
 
         GameObject newHotKey = Instantiate(hotKeyPrefab, collision.transform.position + new Vector3(0, 2), Quaternion.identity);
-        createdHotKey.Add(newHotKey);
+        _createdHotKey.Add(newHotKey);
 
         // 随机选择一个键 生成对应热键
         KeyCode chooseKey = hotKeyList[Random.Range(0, hotKeyList.Count)];

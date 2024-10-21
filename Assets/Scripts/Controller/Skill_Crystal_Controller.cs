@@ -4,14 +4,14 @@ public class Skill_Crystal_Controller : Skill_Controller
 {
     CircleCollider2D _col;
 
-    float crystalTimer;
+    float _crystalTimer;
 
-    bool canGrow;
-    float growSpeed = 5;
-    bool canExplode;
+    bool _canGrow;
+    float _growSpeed = 5;
+    bool _canExplode;
 
-    bool canMove;
-    float moveSpeed;
+    bool _canMove;
+    float _moveSpeed;
 
     protected override void Awake()
     {
@@ -19,12 +19,12 @@ public class Skill_Crystal_Controller : Skill_Controller
         _col = GetComponent<CircleCollider2D>();
     }
 
-    public void SetUpCrystal(float _crystalDuration, bool _canExplode, bool _canMove, float _moveSpeed)
+    public void SetUpCrystal(float crystalDuration, bool canExplode, bool canMove, float moveSpeed)
     {
-        crystalTimer = _crystalDuration;
-        canExplode = _canExplode;
-        canMove = _canMove;
-        moveSpeed = _moveSpeed;
+        _crystalTimer = crystalDuration;
+        _canExplode = canExplode;
+        _canMove = canMove;
+        _moveSpeed = moveSpeed;
     }
 
     // Update is called once per frame
@@ -32,16 +32,16 @@ public class Skill_Crystal_Controller : Skill_Controller
     {
         base.Update();
 
-        crystalTimer -= Time.deltaTime;
-        if (crystalTimer < 0)
+        _crystalTimer -= Time.deltaTime;
+        if (_crystalTimer < 0)
         {
             CrystalEnd();
         }
 
         // 增强爆炸视觉
-        if (canGrow)
+        if (_canGrow)
         {
-            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(3, 3), growSpeed * Time.deltaTime);
+            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(3, 3), _growSpeed * Time.deltaTime);
         }
 
         MoveLogic();
@@ -52,16 +52,16 @@ public class Skill_Crystal_Controller : Skill_Controller
     /// </summary>
     private void MoveLogic()
     {
-        if (canMove)
+        if (_canMove)
         {
             Transform target = FindClosestEnemy();
-            transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, target.position, _moveSpeed * Time.deltaTime);
 
             // 靠近时 执行爆炸或消失
             if (Vector2.Distance(transform.position, target.position) < _col.radius)
             {
                 CrystalEnd();
-                canMove = false;  // 避免爆炸时滑动
+                _canMove = false;  // 避免爆炸时滑动
             }
         }
     }
@@ -76,8 +76,8 @@ public class Skill_Crystal_Controller : Skill_Controller
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                _player.stats.DoMagicDamageTo(hit.GetComponent<CharacterStats>());
-                SkillManager._instance.clone.CloneDuplicate(hit.transform);
+                player.stats.DoMagicDamageTo(hit.GetComponent<CharacterStats>());
+                SkillManager.instance.clone.CloneDuplicate(hit.transform);
             }
         }
     }
@@ -87,10 +87,10 @@ public class Skill_Crystal_Controller : Skill_Controller
     /// </summary>
     public void CrystalEnd()
     {
-        if (canExplode)
+        if (_canExplode)
         {
-            canGrow = true;
-            _anim.SetTrigger("Explode");
+            _canGrow = true;
+            anim.SetTrigger("Explode");
         }
         else SelfDestroy();
     }

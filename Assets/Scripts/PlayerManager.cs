@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    public static PlayerManager _instance;
-    public Player _player;
+    public static PlayerManager instance;
+    public Player player;
 
     private void Awake()
     {
-        if (_instance == null)
-            _instance = this;
+        if (instance == null)
+            instance = this;
     }
     // Start is called before the first frame update
     void Start()

@@ -10,14 +10,14 @@ public class Stats
 {
     [SerializeField] float baseValue;
 
-    List<float> modifiers = new List<float>();
+    List<float> _modifiers = new List<float>();
     
     public float GetValue() 
     {
         float finalValue = baseValue;
-        if (modifiers != null)
+        if (_modifiers != null)
         {
-            foreach (float modifier in modifiers)
+            foreach (float modifier in _modifiers)
             {
                 finalValue += modifier;
             }
@@ -30,7 +30,7 @@ public class Stats
         baseValue = value;
     }
 
-    public void AddModifer(float modifier) { modifiers.Add(modifier);}
+    public void AddModifer(float modifier) { _modifiers.Add(modifier);}
 
-    public void RemoveModifer(float modifier) { modifiers.Remove(modifier);}
+    public void RemoveModifer(float modifier) { _modifiers.Remove(modifier);}
 }

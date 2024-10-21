@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SkeletonBattleState : EnemyState
 {
-    private Transform _player;
-    private Enemy_Skeleton _enemy;
-    private int _moveDir;
+    Transform _player;
+    Enemy_Skeleton _enemy;
+    int _moveDir;
     public SkeletonBattleState(Enemy enemyBase, EnemyStateMachine enemyStateMachine, string aniBoolName) : base(enemyBase, enemyStateMachine, aniBoolName)
     {
         _enemy = enemyBase as Enemy_Skeleton;
@@ -15,7 +15,7 @@ public class SkeletonBattleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        _player = PlayerManager._instance._player.transform;
+        _player = PlayerManager.instance.player.transform;
     }
 
     public override void Exit()
@@ -27,12 +27,12 @@ public class SkeletonBattleState : EnemyState
     {
         base.Update();
 
-        if (_player.position.x > _rb.position.x)
+        if (_player.position.x > rb.position.x)
             _moveDir = 1;
-        else if(_player.position.x < _rb.position.x)
+        else if(_player.position.x < rb.position.x)
             _moveDir = -1;
 
-        _enemy.SetVelocity(_enemy.moveSpeed * _moveDir, _rb.velocity.y);
+        _enemy.SetVelocity(_enemy.moveSpeed * _moveDir, rb.velocity.y);
         
         if (_enemy.IsPlayerDetected())
         {

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Skill_Crystal : Skill
 {
-    GameObject currentCrystal;
+    GameObject _currentCrystal;
     [SerializeField] GameObject crystalPrefab;
     [SerializeField] float crystalDuration;
 
@@ -19,7 +19,7 @@ public class Skill_Crystal : Skill
     [SerializeField] float useSkillWindow = 5;
     [SerializeField] int crystalCount = 3;
     [SerializeField] float mutiCoolDown = 3;
-    List<GameObject> crystalList = new List<GameObject>();
+    List<GameObject> _crystalList = new List<GameObject>();
 
     public override void UseSkill()
     {
@@ -27,7 +27,7 @@ public class Skill_Crystal : Skill
 
         if (canUseMuti)
         {
-            if (crystalList.Count <= 0) FillCrystalList();
+            if (_crystalList.Count <= 0) FillCrystalList();
             UseMutiCrystal();
             return;
         }
@@ -40,31 +40,31 @@ public class Skill_Crystal : Skill
     /// </summary>
     public void CreateCrystal(Transform targetPos)
     {
-        currentCrystal = Instantiate(crystalPrefab, targetPos.position, Quaternion.identity);
-        Skill_Crystal_Controller ctrl = currentCrystal.GetComponent<Skill_Crystal_Controller>();
+        _currentCrystal = Instantiate(crystalPrefab, targetPos.position, Quaternion.identity);
+        Skill_Crystal_Controller ctrl = _currentCrystal.GetComponent<Skill_Crystal_Controller>();
         ctrl.SetUpCrystal(crystalDuration, canExplode, canMove, moveSpeed);
     }
 
     private void SingleLogic()
     {
-        if (currentCrystal == null)
+        if (_currentCrystal == null)
         {
-            CreateCrystal(_player.transform);
+            CreateCrystal(player.transform);
         }
         // 再按下 互换位置
         else
         {
-            //if (canMove) return;
-            if (Vector2.Distance(currentCrystal.transform.position, _player.transform.position) < 25)
+            //if (_canMove) return;
+            if (Vector2.Distance(_currentCrystal.transform.position, player.transform.position) < 25)
             {
-                Vector2 playerPos = _player.transform.position;
+                Vector2 playerPos = player.transform.position;
 
-                _player.skill.clone.CloneCrystalMirage();  // 技能分支
-                _player.transform.position = currentCrystal.transform.position;
-                currentCrystal.transform.position = playerPos;
+                player.skill.clone.CloneCrystalMirage();  // 技能分支
+                player.transform.position = _currentCrystal.transform.position;
+                _currentCrystal.transform.position = playerPos;
 
-                currentCrystal.GetComponent<Skill_Crystal_Controller>().CrystalEnd();
-                currentCrystal = null;
+                _currentCrystal.GetComponent<Skill_Crystal_Controller>().CrystalEnd();
+                _currentCrystal = null;
             }
         }
     }
@@ -73,22 +73,22 @@ public class Skill_Crystal : Skill
 
     private void UseMutiCrystal()
     {
-        if (crystalList.Count > 0)
+        if (_crystalList.Count > 0)
         {
             // 重置时间窗
-            if (crystalList.Count == crystalCount)
+            if (_crystalList.Count == crystalCount)
                 Invoke(nameof(ResetAbility), useSkillWindow);
 
             coolDown = 0;
-            GameObject chosen = crystalList[crystalList.Count - 1];
-            GameObject newCrystal = Instantiate(chosen, _player.transform.position, Quaternion.identity);
-            crystalList.Remove(chosen);
+            GameObject chosen = _crystalList[_crystalList.Count - 1];
+            GameObject newCrystal = Instantiate(chosen, player.transform.position, Quaternion.identity);
+            _crystalList.Remove(chosen);
 
             Skill_Crystal_Controller ctrl = newCrystal.GetComponent<Skill_Crystal_Controller>();
             ctrl.SetUpCrystal(crystalDuration, canExplode, canMove, moveSpeed);
         }
         // 冷却再装填
-        if (crystalList.Count <= 0)
+        if (_crystalList.Count <= 0)
         {
             coolDown = mutiCoolDown;
             FillCrystalList();
@@ -97,10 +97,10 @@ public class Skill_Crystal : Skill
 
     private void FillCrystalList()
     {
-        crystalList.Clear();
+        _crystalList.Clear();
         for (int i = 0; i < crystalCount; i++)
         {
-            crystalList.Add(crystalPrefab);
+            _crystalList.Add(crystalPrefab);
         }
     }
 

@@ -25,20 +25,20 @@ public class CharacterStats : MonoBehaviour
     public Stats iceATK;
     public Stats lightningATK;
 
-    float AilmentDuration = 4;
-    bool isignited;  // DOT
-    bool ischilled;  // 减防
-    bool isshocked;  // 减命中
+    float _ailmentDuration = 4;
+    bool _isignited;  // DOT
+    bool _ischilled;  // 减防
+    bool _isshocked;  // 减命中
 
-    float ignitedTimer;
-    float chillTimer;
-    float shockTimer;
+    float _ignitedTimer;
+    float _chillTimer;
+    float _shockTimer;
 
-    float ignitedDamageTimer;
-    readonly float ignitedDamageCoolDown = 0.3f;
-    float ignitedDamage;
+    float _ignitedDamageTimer;
+    readonly float _ignitedDamageCoolDown = 0.3f;
+    float _ignitedDamage;
 
-    float thunderDamage;
+    float _thunderDamage;
 
     public float currentHP;
 
@@ -47,15 +47,15 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     public Action HPChange;
 
-    protected Entity _entity;
-    protected EntityFX _fx;
-    [SerializeField] GameObject _shockThunderPrefab;
+    protected Entity entity;
+    protected EntityFX fx;
+    [SerializeField] GameObject shockThunderPrefab;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        _fx = GetComponent<EntityFX>();
-        _entity = GetComponent<Entity>();
+        fx = GetComponent<EntityFX>();
+        entity = GetComponent<Entity>();
         critChance.SetDefaultValue(0.05f);
         critDamage.SetDefaultValue(0.5f);
         currentHP = GetMaxHP();  // 此处可能要注意Start的执行顺序 可在Setting调整
@@ -73,19 +73,19 @@ public class CharacterStats : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        ignitedTimer -= Time.deltaTime;
-        chillTimer -= Time.deltaTime;
-        shockTimer -= Time.deltaTime;
-        ignitedDamageTimer -= Time.deltaTime;
+        _ignitedTimer -= Time.deltaTime;
+        _chillTimer -= Time.deltaTime;
+        _shockTimer -= Time.deltaTime;
+        _ignitedDamageTimer -= Time.deltaTime;
 
-        if (ignitedTimer < 0)
-            isignited = false;
+        if (_ignitedTimer < 0)
+            _isignited = false;
 
-        if (chillTimer < 0)
-            ischilled = false;
+        if (_chillTimer < 0)
+            _ischilled = false;
 
-        if (shockTimer < 0)
-            isshocked = false;
+        if (_shockTimer < 0)
+            _isshocked = false;
 
         TakeIgniteDamage();
     }
@@ -196,33 +196,33 @@ public class CharacterStats : MonoBehaviour
     public void TakeWhichAilment(bool ignite, bool chill, bool shock)
     {
         // 有不同条件 不能用
-        //if (isshocked || isignited || ischilled) return;
+        //if (_isshocked || _isignited || _ischilled) return;
 
-        bool canGetIgnite = !isignited && !ischilled && !isshocked;
-        bool canGetChill = !isignited && !ischilled && !isshocked;
-        bool canGetShock = !isignited && !ischilled;
+        bool canGetIgnite = !_isignited && !_ischilled && !_isshocked;
+        bool canGetChill = !_isignited && !_ischilled && !_isshocked;
+        bool canGetShock = !_isignited && !_ischilled;
 
         if (ignite && canGetIgnite)
         {
-            isignited = ignite;
-            ignitedTimer = AilmentDuration;
-            _fx.ChangeToIgniteFX(AilmentDuration);
+            _isignited = ignite;
+            _ignitedTimer = _ailmentDuration;
+            fx.ChangeToIgniteFX(_ailmentDuration);
         }
 
         if (chill && canGetChill)
         {
-            ischilled = chill;
-            chillTimer = AilmentDuration;
-            _fx.ChangeToChillFX(AilmentDuration);
+            _ischilled = chill;
+            _chillTimer = _ailmentDuration;
+            fx.ChangeToChillFX(_ailmentDuration);
 
             float slowPersentage = 0.2f;
-            _entity.SlowEntitySpeed(slowPersentage, AilmentDuration);
+            entity.SlowEntitySpeed(slowPersentage, _ailmentDuration);
         }
 
         if (shock && canGetShock)
         {
             // 主目标
-            if(!isshocked)
+            if(!_isshocked)
             {
                 ApplyShock(shock);
             }
@@ -241,10 +241,10 @@ public class CharacterStats : MonoBehaviour
     /// <param name="shock"></param>
     public void ApplyShock(bool shock)
     {
-        if (isshocked) return;
-        isshocked = shock;
-        shockTimer = AilmentDuration;
-        _fx.ChangeToShockFX(AilmentDuration);
+        if (_isshocked) return;
+        _isshocked = shock;
+        _shockTimer = _ailmentDuration;
+        fx.ChangeToShockFX(_ailmentDuration);
     }
 
     /// <summary>
@@ -252,15 +252,15 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     private void ThunderOnNearEnemy()
     {
-        GameObject thunder = Instantiate(_shockThunderPrefab, transform.position, Quaternion.identity);
+        GameObject thunder = Instantiate(shockThunderPrefab, transform.position, Quaternion.identity);
         Thunder_Controller ctrl = thunder.GetComponent<Thunder_Controller>();
         Transform target = ctrl.FindClosestEnemy();
 
-        ctrl.SetUp(thunderDamage, target.GetComponent<CharacterStats>());
+        ctrl.SetUp(_thunderDamage, target.GetComponent<CharacterStats>());
     }
 
-    public void SetIgniteDamage(float damage) => ignitedDamage = damage;
-    public void SetThunderDamage(float damage) => thunderDamage = damage;
+    public void SetIgniteDamage(float damage) => _ignitedDamage = damage;
+    public void SetThunderDamage(float damage) => _thunderDamage = damage;
 
     #endregion
 
@@ -304,11 +304,11 @@ public class CharacterStats : MonoBehaviour
     {
         float oringinArmor = target.armor.GetValue();
 
-        if (ischilled) target.armor.AddModifer(-oringinArmor * 0.2f);
+        if (_ischilled) target.armor.AddModifer(-oringinArmor * 0.2f);
 
         totalDamage -= target.armor.GetValue();
 
-        if (ischilled) target.armor.RemoveModifer(-oringinArmor * 0.2f);
+        if (_ischilled) target.armor.RemoveModifer(-oringinArmor * 0.2f);
 
         if (totalDamage < 1) totalDamage = 1;
         return totalDamage;
@@ -321,11 +321,11 @@ public class CharacterStats : MonoBehaviour
     /// <returns>受击对象能否回避伤害</returns>
     protected virtual bool DoEvasion(CharacterStats target)
     {
-        if (isshocked) target.evasion.AddModifer(-20);
+        if (_isshocked) target.evasion.AddModifer(-20);
 
         float totalEvasion = target.evasion.GetValue() + target.agility.GetValue();
 
-        if (isshocked) target.evasion.RemoveModifer(-20);
+        if (_isshocked) target.evasion.RemoveModifer(-20);
 
         if (UnityEngine.Random.Range(0, 100) < totalEvasion)
         {
@@ -356,7 +356,7 @@ public class CharacterStats : MonoBehaviour
             Die();
         }
 
-        _entity.DamageEffect();
+        entity.DamageEffect();
     }
 
     /// <summary>
@@ -364,11 +364,11 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     private void TakeIgniteDamage()
     {
-        if (ignitedDamageTimer < 0 && isignited)
+        if (_ignitedDamageTimer < 0 && _isignited)
         {
-            ignitedDamageTimer = ignitedDamageCoolDown;
+            _ignitedDamageTimer = _ignitedDamageCoolDown;
 
-            DecreaseHP(ignitedDamage);
+            DecreaseHP(_ignitedDamage);
 
             if (currentHP < 0) 
                 Die();
@@ -377,8 +377,8 @@ public class CharacterStats : MonoBehaviour
 
     protected virtual void Die()
     {
-        isignited = false;
-        ischilled = false;
-        isshocked = false;
+        _isignited = false;
+        _ischilled = false;
+        _isshocked = false;
     }
 }

@@ -7,28 +7,28 @@ using UnityEngine;
 /// </summary>
 public class EnemyAniTrigger : MonoBehaviour
 {
-    protected Enemy _enemy;
+    protected Enemy enemy;
 
     protected virtual void Start()
     {
-        _enemy = GetComponentInParent<Enemy>();
+        enemy = GetComponentInParent<Enemy>();
     }
 
     protected virtual void AniTrigger()
     {
-        _enemy.AnimTrigger();
+        enemy.AnimTrigger();
     }
 
     protected virtual void AttackTrigger()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(_enemy.attackCheck.position, _enemy.attackRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(enemy.attackCheck.position, enemy.attackRadius);
         foreach (var hit in colliders)
         {
             if (hit.GetComponent<Player>() != null)
             {
                 PlayerStats target = hit.GetComponent<PlayerStats>();
-                _enemy.GetComponent<CharacterStats>().DoDamageTo(target);
-                _enemy.GetComponent<CharacterStats>().DoMagicDamageTo(target);
+                enemy.GetComponent<CharacterStats>().DoDamageTo(target);
+                enemy.GetComponent<CharacterStats>().DoMagicDamageTo(target);
             }
         }
     }

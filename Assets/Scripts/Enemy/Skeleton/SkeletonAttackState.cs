@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SkeletonAttackState : EnemyState
 {
-    private Enemy_Skeleton _enemy;
+    Enemy_Skeleton _enemy;
     public SkeletonAttackState(Enemy enemyBase, EnemyStateMachine enemyStateMachine, string aniBoolName) : base(enemyBase, enemyStateMachine, aniBoolName)
     {
         _enemy = enemyBase as Enemy_Skeleton;
@@ -30,7 +30,7 @@ public class SkeletonAttackState : EnemyState
     {
         base.Update();
         _enemy.SetZeroVelocity();
-        if(_anitrigger)
+        if(anitrigger)
             _enemy.stateMachine.ChangeState(_enemy.battleState);
 
     }

@@ -7,7 +7,7 @@ public class SkeletonDeadState : EnemyState
     Enemy_Skeleton _enemy;
     public SkeletonDeadState(Enemy enemyBase, EnemyStateMachine enemyStateMachine, string aniBoolName) : base(enemyBase, enemyStateMachine, aniBoolName)
     {
-        _enemy = _enemyBase as Enemy_Skeleton;
+        _enemy = enemyBase as Enemy_Skeleton;
     }
 
     public override void AnimFinishTrigger()
@@ -38,7 +38,7 @@ public class SkeletonDeadState : EnemyState
 
         if(stateTimer > 0)
         {
-            _rb.velocity = new Vector2(0, 10);
+            rb.velocity = new Vector2(0, 10);
         }
     }
 }

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Skill_Controller : MonoBehaviour
 {
-    protected Animator _anim;
-    protected Rigidbody2D _rb;
-    protected Player _player;
+    protected Animator anim;
+    protected Rigidbody2D rb;
+    protected Player player;
 
     protected virtual void Awake()
     {
-        _anim = GetComponentInChildren<Animator>();
-        _rb = GetComponent<Rigidbody2D>();
-        _player = PlayerManager._instance._player;
+        anim = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        player = PlayerManager.instance.player;
     }
     // Start is called before the first frame update
     protected virtual void Start()

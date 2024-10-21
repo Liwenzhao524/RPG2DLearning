@@ -8,7 +8,7 @@ public class Thunder_Controller : Skill_Controller
     [SerializeField] float speed;
 
     CharacterStats _targetstats;
-    bool triggered;
+    bool _triggered;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -27,22 +27,22 @@ public class Thunder_Controller : Skill_Controller
     {
         base.Update();
 
-        if (triggered || !_targetstats) return;
+        if (_triggered || !_targetstats) return;
 
         transform.position = Vector2.MoveTowards(transform.position, _targetstats.transform.position, speed * Time.deltaTime);
         transform.right = transform.position - _targetstats.transform.position;
 
         if(Vector2.Distance(transform.position, _targetstats.transform.position) < 0.1f)
         {
-            _anim.transform.localRotation = Quaternion.identity;
-            _anim.transform.localPosition = new Vector2(0, 0.3f);
+            anim.transform.localRotation = Quaternion.identity;
+            anim.transform.localPosition = new Vector2(0, 0.3f);
             
             transform.localRotation = Quaternion.identity;
             transform.localScale = new Vector3(2, 2, 2);
 
             Invoke(nameof(DamageAndDestory), 0.2f);
-            triggered = true;
-            _anim.SetTrigger("Hit");
+            _triggered = true;
+            anim.SetTrigger("Hit");
             
         }
     }

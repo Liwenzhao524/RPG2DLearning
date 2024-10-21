@@ -23,22 +23,22 @@ public class PlayerGroundState : PlayerState
         base.Update();
 
         if(Input.GetKeyDown(KeyCode.R)) 
-            _player.stateMachine.ChangeState(_player.blackholeState);
+            player.stateMachine.ChangeState(player.blackholeState);
 
         if(Input.GetMouseButtonDown(1) && HasNoSword())
-            _player.stateMachine.ChangeState(_player.aimSwordState);
+            player.stateMachine.ChangeState(player.aimSwordState);
 
         if(Input.GetKeyDown(KeyCode.Q)) 
-            _player.stateMachine.ChangeState(_player.counterAttackState);
+            player.stateMachine.ChangeState(player.counterAttackState);
 
         if(Input.GetMouseButton(0)) // 连按
-            _player.stateMachine.ChangeState(_player.primeAttackState);
+            player.stateMachine.ChangeState(player.primeAttackState);
         
-        if(!_player.IsGroundDetected())
-            _player.stateMachine.ChangeState(_player.airState);
+        if(!player.IsGroundDetected())
+            player.stateMachine.ChangeState(player.airState);
 
-        if(Input.GetKeyDown(KeyCode.Space) && _player.IsGroundDetected())
-            _player.stateMachine.ChangeState(_player.jumpState);
+        if(Input.GetKeyDown(KeyCode.Space) && player.IsGroundDetected())
+            player.stateMachine.ChangeState(player.jumpState);
     }
 
     /// <summary>
@@ -47,9 +47,9 @@ public class PlayerGroundState : PlayerState
     /// <returns>无则返回true</returns>
     private bool HasNoSword()
     {
-        if (!_player.sword) return true;
+        if (!player.sword) return true;
 
-        _player.sword.GetComponent<Skill_Sword_Controller>().ReturnSword();
+        player.sword.GetComponent<Skill_Sword_Controller>().ReturnSword();
         return false;
     }
 }

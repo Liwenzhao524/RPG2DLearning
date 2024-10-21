@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class EntityFX : MonoBehaviour
 {
-    SpriteRenderer sr;
+    SpriteRenderer _sr;
 
     [Header("Flash FX")]
     [SerializeField] Material flashMat;
@@ -22,8 +22,8 @@ public class EntityFX : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sr = GetComponentInChildren<SpriteRenderer>();
-        originMat = sr.material;
+        _sr = GetComponentInChildren<SpriteRenderer>();
+        originMat = _sr.material;
     }
 
     /// <summary>
@@ -32,27 +32,27 @@ public class EntityFX : MonoBehaviour
     /// <returns></returns>
     public IEnumerator FlashFX()
     {
-        sr.material = flashMat;
-        //Color temp = sr.color;
-        //sr.color = Color.white;
+        _sr.material = flashMat;
+        //Color temp = _sr.color;
+        //_sr.color = Color.white;
 
         yield return new WaitForSeconds(flashDuration);
 
-        sr.material = originMat;
-        //sr.color = temp;
+        _sr.material = originMat;
+        //_sr.color = temp;
     }
 
     public void RedBlink()
     {
-        if(sr.color != Color.white)
-            sr.color = Color.white;
-        else sr.color = Color.red;
+        if(_sr.color != Color.white)
+            _sr.color = Color.white;
+        else _sr.color = Color.red;
     }
 
     public void CancelColorChange()
     {
         CancelInvoke();
-        sr.color = Color.white;
+        _sr.color = Color.white;
     }
 
     #region Ailment Color
@@ -60,13 +60,13 @@ public class EntityFX : MonoBehaviour
 
     public void ChangeToChillFX(float second)
     {
-        sr.color = chillColor;
+        _sr.color = chillColor;
         Invoke(nameof(CancelColorChange), second);
     }
 
     public void ChangeToShockFX(float second)
     {
-        sr.color = shockColor;
+        _sr.color = shockColor;
         Invoke(nameof(CancelColorChange), second);
     }
 
@@ -78,9 +78,9 @@ public class EntityFX : MonoBehaviour
 
     private void IgniteColor()
     {
-        if (sr.color != igniteColor[0])
-            sr.color = igniteColor[0];
-        else sr.color = igniteColor[1];
+        if (_sr.color != igniteColor[0])
+            _sr.color = igniteColor[0];
+        else _sr.color = igniteColor[1];
     }
 
     #endregion
@@ -89,11 +89,11 @@ public class EntityFX : MonoBehaviour
     {
         if (istransparent)
         {
-            sr.color = Color.clear;
+            _sr.color = Color.clear;
         }
         else
         {
-            sr.color = Color.white;
+            _sr.color = Color.white;
         }
     }
 }

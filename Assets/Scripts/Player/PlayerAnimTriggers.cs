@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerAnimTriggers : MonoBehaviour
 {
-    Player _player => GetComponentInParent<Player>();
+    Player _player => PlayerManager.instance.player;
 
     private void AnimTrigger()
     {
@@ -31,6 +31,6 @@ public class PlayerAnimTriggers : MonoBehaviour
 
     private void ThrowSword()
     {
-        SkillManager._instance.sword.CreateSword();
+        SkillManager.instance.sword.CreateSword();
     }
 }

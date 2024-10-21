@@ -22,10 +22,10 @@ public class PlayerMoveState : PlayerGroundState
     {
         base.Update();
 
-        _player.SetVelocity(_xinput * _player.moveSpeed, _rb.velocity.y);
+        player.SetVelocity(xinput * player.moveSpeed, rb.velocity.y);
 
         // 移动指令消失 或 撞墙时停止移动
-        if(_xinput == 0 || _player.IsWallDetected())
-            _stateMachine.ChangeState(_player.idleState);
+        if(xinput == 0 || player.IsWallDetected())
+            stateMachine.ChangeState(player.idleState);
     }
 }

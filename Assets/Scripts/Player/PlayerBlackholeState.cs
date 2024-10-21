@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerBlackholeState : PlayerState
 {
-    bool skillUsed;
-    float flyTime = 0.2f;
+    bool _skillUsed;
+    readonly float _flyTime = 0.2f;
 
-    float defaultGravity;
+    float _defaultGravity;
     public PlayerBlackholeState(Player player, PlayerStateMachine playerStateMachine, string aniBoolName) : base(player, playerStateMachine, aniBoolName)
     {
     }
@@ -20,17 +20,17 @@ public class PlayerBlackholeState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        defaultGravity = _rb.gravityScale;
+        _defaultGravity = rb.gravityScale;
 
-        skillUsed = false;
-        _rb.gravityScale = 0;
-        stateTimer = flyTime;
+        _skillUsed = false;
+        rb.gravityScale = 0;
+        stateTimer = _flyTime;
     }
 
     public override void Exit()
     {
         base.Exit();
-        _rb.gravityScale = defaultGravity;
+        rb.gravityScale = _defaultGravity;
     }
 
     public override void Update()
@@ -39,19 +39,19 @@ public class PlayerBlackholeState : PlayerState
 
         if(stateTimer > 0)
         {
-            _rb.velocity = new Vector2(0, 15);
+            rb.velocity = new Vector2(0, 15);
         }
 
         if(stateTimer < 0)
         {
-            _rb.velocity = new Vector2(0, -0.1f);
-            if (!skillUsed)
+            rb.velocity = new Vector2(0, -0.1f);
+            if (!_skillUsed)
             {
-                if (SkillManager._instance.blackhole.CanUseSkill())
-                    skillUsed = true;
+                if (SkillManager.instance.blackhole.CanUseSkill())
+                    _skillUsed = true;
             }
-            else if (SkillManager._instance.blackhole.BlackholeEnd())
-                _player.stateMachine.ChangeState(_player.airState);
+            else if (SkillManager.instance.blackhole.BlackholeEnd())
+                player.stateMachine.ChangeState(player.airState);
         }
     }
 

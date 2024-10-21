@@ -11,25 +11,25 @@ public class PlayerAimSwordState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        SkillManager._instance.sword.SetDotsActive(true);
+        SkillManager.instance.sword.SetDotsActive(true);
     }
 
     public override void Exit()
     {
         base.Exit();
-        _player.StartCoroutine("BusyFor", 0.2f);
+        player.StartCoroutine("BusyFor", 0.2f);
     }
 
     public override void Update()
     {
         base.Update();
 
-        _player.SetZeroVelocity();
+        player.SetZeroVelocity();
         if(Input.GetMouseButtonUp(1))
-            _player.stateMachine.ChangeState(_player.idleState);
+            player.stateMachine.ChangeState(player.idleState);
 
         // 瞄准时人物转向
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        _player.FlipController(mousePos.x - _player.transform.position.x);
+        player.FlipController(mousePos.x - player.transform.position.x);
     }
 }

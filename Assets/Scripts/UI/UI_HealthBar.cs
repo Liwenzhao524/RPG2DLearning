@@ -3,10 +3,10 @@ using UnityEngine.UI;
 
 public class UI_HealthBar : MonoBehaviour
 {
-    public Entity _entity;
-    public CharacterStats _stat;
-    public RectTransform _rect;
-    public Slider _slider;
+    Entity _entity;
+    CharacterStats _stat;
+    RectTransform _rect;
+    Slider _slider;
     // Start is called before the first frame update
     void Start()
     {

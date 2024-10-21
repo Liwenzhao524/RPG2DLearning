@@ -7,36 +7,36 @@ public class Skill_Sword_Controller : Skill_Controller
     
     Collider2D _col;
 
-    bool canRotate = true;  // 碰撞时 正确处理 剑插入敌人的方向为飞行方向
+    bool _canRotate = true;  // 碰撞时 正确处理 剑插入敌人的方向为飞行方向
 
-    float freezeDuration;
+    float _freezeDuration;
 
     [Header("Return Info")]
-    bool isReturn;
-    float returnSpeed;
+    bool _isReturn;
+    float _returnSpeed;
 
     [Header("Bounce Info")]
-    bool canBounce;
-    int bounceCount;
-    float bounceSpeed;
-    List<Transform> bounceTarget;
-    int targetIndex;
+    bool _canBounce;
+    int _bounceCount;
+    float _bounceSpeed;
+    List<Transform> _bounceTarget;
+    int _targetIndex;
     
     [Header("Pierce Info")]
-    int pierceCount;
+    int _pierceCount;
 
     [Header("Spin Info")]
-    bool canSpin;
-    bool isSpinStopped;
-    float maxDistance;
+    bool _canSpin;
+    bool _isSpinStopped;
+    float _maxDistance;
 
-    float spinDuration;
-    float spinTimer;
+    float _spinDuration;
+    float _spinTimer;
 
-    float hitCoolDown;
-    float hitTimer;
+    float _hitCoolDown;
+    float _hitTimer;
 
-    float spinDirection;
+    float _spinDirection;
 
 
     protected override void Awake()
@@ -55,19 +55,19 @@ public class Skill_Sword_Controller : Skill_Controller
     }
 
     // 外部调用 初始化
-    public void SetUpSword(Vector2 dir, float gravity, Player player, float _freezeDuration, float _returnSpeed)
+    public void SetUpSword(Vector2 dir, float gravity, Player player, float freezeDuration, float returnSpeed)
     {
-        _player = player;
-        _rb.velocity = dir;
-        _rb.gravityScale = gravity;
-        freezeDuration = _freezeDuration;
-        returnSpeed = _returnSpeed;
+        base.player = player;
+        rb.velocity = dir;
+        rb.gravityScale = gravity;
+        _freezeDuration = freezeDuration;
+        _returnSpeed = returnSpeed;
 
-        _anim.SetBool("Rotate", true);
+        anim.SetBool("Rotate", true);
 
-        spinDirection = Mathf.Clamp(_rb.velocity.x, -1, 1);
+        _spinDirection = Mathf.Clamp(rb.velocity.x, -1, 1);
 
-        bounceTarget = new List<Transform>();  // Debug: public和[serializeField]会自动new，private默认不new，需要手动 
+        _bounceTarget = new List<Transform>();  // Debug: public和[serializeField]会自动new，private默认不new，需要手动 
 
         Invoke(nameof(DestroySword), 7);
     }
@@ -76,8 +76,8 @@ public class Skill_Sword_Controller : Skill_Controller
     {
 
         // 保证剑本体的飞行方向 朝向目标
-        if (canRotate)
-            transform.right = _rb.velocity;
+        if (_canRotate)
+            transform.right = rb.velocity;
 
         // 剑返回
         ReturnLogic();
@@ -95,55 +95,55 @@ public class Skill_Sword_Controller : Skill_Controller
     /// </summary>
     public void ReturnSword()
     {
-        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         transform.parent = null;
-        isReturn = true;
+        _isReturn = true;
     }
 
     private void ReturnLogic()
     {
-        if (isReturn)
+        if (_isReturn)
         {
             // 直接修改坐标
-            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position,
-                                                     returnSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position,
+                                                     _returnSpeed * Time.deltaTime);
 
             // 距离足够小时 进入收剑状态
-            if (Vector2.Distance(transform.position, _player.transform.position) < 1)
-                _player.CatchSword();
+            if (Vector2.Distance(transform.position, player.transform.position) < 1)
+                player.CatchSword();
         }
     }
 
     #endregion
 
     #region Bounce
-    public void SetupBounce(bool _canBounce, int _bounceTime, float _bounceSpeed)
+    public void SetupBounce(bool canBounce, int bounceTime, float bounceSpeed)
     {
-        canBounce = _canBounce;
-        bounceCount = _bounceTime;
-        bounceSpeed = _bounceSpeed;
+        _canBounce = canBounce;
+        _bounceCount = bounceTime;
+        _bounceSpeed = bounceSpeed;
     }
 
     private void BounceLogic()
     {
-        if (canBounce && bounceTarget.Count > 0)
+        if (_canBounce && _bounceTarget.Count > 0)
         {
-            transform.position = Vector2.MoveTowards(transform.position, bounceTarget[targetIndex].position, bounceSpeed * Time.deltaTime);
-            if (Vector2.Distance(transform.position, bounceTarget[targetIndex].position) < 0.1f)
+            transform.position = Vector2.MoveTowards(transform.position, _bounceTarget[_targetIndex].position, _bounceSpeed * Time.deltaTime);
+            if (Vector2.Distance(transform.position, _bounceTarget[_targetIndex].position) < 0.1f)
             {
-                if(bounceTarget[targetIndex].GetComponent<Enemy>()){
-                    _player.stats.DoDamageTo(bounceTarget[targetIndex].GetComponent<CharacterStats>());
+                if(_bounceTarget[_targetIndex].GetComponent<Enemy>()){
+                    player.stats.DoDamageTo(_bounceTarget[_targetIndex].GetComponent<CharacterStats>());
                 }
-                targetIndex++;
-                if (targetIndex >= bounceTarget.Count)
-                    targetIndex = 0;
+                _targetIndex++;
+                if (_targetIndex >= _bounceTarget.Count)
+                    _targetIndex = 0;
 
                 // 弹射完自动返回
-                bounceCount--;
-                if (bounceCount <= 0)
+                _bounceCount--;
+                if (_bounceCount <= 0)
                 {
-                    canBounce = false;
-                    isReturn = true;
+                    _canBounce = false;
+                    _isReturn = true;
                 }
             }
         }
@@ -159,74 +159,74 @@ public class Skill_Sword_Controller : Skill_Controller
         if (collision.GetComponent<Enemy>() != null)
         {
 
-            if (canBounce && bounceTarget.Count <= 0)
+            if (_canBounce && _bounceTarget.Count <= 0)
             {
                 // 获取范围内敌人 加入弹射列表
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10);
                 foreach (var hit in colliders)
                 {
                     if (hit.GetComponent<Enemy>() != null)
-                        bounceTarget.Add(hit.transform);
+                        _bounceTarget.Add(hit.transform);
                 }
             }
         }
-        else canBounce = false;
+        else _canBounce = false;
     }
     #endregion
 
     #region Pierce
 
-    public void SetupPierce(int _pierceCount)
+    public void SetupPierce(int pierceCount)
     {
-        pierceCount = _pierceCount;
+        _pierceCount = pierceCount;
     }
 
     #endregion
 
     #region Spin
 
-    public void SetupSpin(bool _canSpin, float _maxDistance, float _spinDuration, float _hitCoolDown)
+    public void SetupSpin(bool canSpin, float maxDistance, float spinDuration, float hitCoolDown)
     {
-        canSpin = _canSpin;
-        spinDuration = _spinDuration;
-        maxDistance = _maxDistance;
-        hitCoolDown = _hitCoolDown;
+        _canSpin = canSpin;
+        _spinDuration = spinDuration;
+        _maxDistance = maxDistance;
+        _hitCoolDown = hitCoolDown;
     }
 
     private void SpinLogic()
     {
-        if (canSpin)
+        if (_canSpin)
         {
             // 超距离且未停止
-            if (!isSpinStopped && Vector2.Distance(transform.position, _player.transform.position) > maxDistance)
+            if (!_isSpinStopped && Vector2.Distance(transform.position, player.transform.position) > _maxDistance)
             {
                 SpinStop();
             }
 
             // 停止过程
-            if (isSpinStopped)
+            if (_isSpinStopped)
             {
                 // 旋转时缓慢前移
-                transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + spinDirection, transform.position.y), 1 * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + _spinDirection, transform.position.y), 1 * Time.deltaTime);
 
                 // 原地旋转
-                spinTimer -= Time.deltaTime;
-                if (spinTimer < 0)
+                _spinTimer -= Time.deltaTime;
+                if (_spinTimer < 0)
                 {
-                    isReturn = true;
-                    canSpin = false;
+                    _isReturn = true;
+                    _canSpin = false;
                 }
 
                 // 定时造成伤害
-                hitTimer -= Time.deltaTime;
-                if(hitTimer < 0)
+                _hitTimer -= Time.deltaTime;
+                if(_hitTimer < 0)
                 {
-                    hitTimer = hitCoolDown;
+                    _hitTimer = _hitCoolDown;
                     Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2);
                     foreach (var hit in colliders)
                         if(hit.GetComponent<Enemy>())
                         {
-                            _player.stats.DoMagicDamageTo(hit.GetComponent<CharacterStats>());
+                            player.stats.DoMagicDamageTo(hit.GetComponent<CharacterStats>());
                         }
                 }
             }
@@ -239,9 +239,9 @@ public class Skill_Sword_Controller : Skill_Controller
     private void SpinStop()
     {
         // 停止 同时旋转计时
-        isSpinStopped = true;
-        _rb.constraints = RigidbodyConstraints2D.FreezePosition;
-        spinTimer = spinDuration;
+        _isSpinStopped = true;
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
+        _spinTimer = _spinDuration;
     }
 
     #endregion
@@ -249,13 +249,13 @@ public class Skill_Sword_Controller : Skill_Controller
     #region Collision
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isReturn) return;
+        if (_isReturn) return;
 
         if (collision.GetComponent<Enemy>())
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.StartCoroutine("FreezeTimerFor", freezeDuration);
-            _player.stats.DoDamageTo(collision.GetComponent<CharacterStats>());
+            enemy.StartCoroutine("FreezeTimerFor", _freezeDuration);
+            player.stats.DoDamageTo(collision.GetComponent<CharacterStats>());
         }
         
         // 可以弹射
@@ -272,28 +272,28 @@ public class Skill_Sword_Controller : Skill_Controller
     private void StuckIn(Collider2D collision)
     {
         // 穿透敌人
-        if (pierceCount > 0 && collision.GetComponent<Enemy>() != null)
+        if (_pierceCount > 0 && collision.GetComponent<Enemy>() != null)
         {
-            pierceCount--;
+            _pierceCount--;
             return;
         }
         
         // 击中第一个 停下并旋转
-        if (canSpin)
+        if (_canSpin)
         {
             SpinStop();  
             return;
         }
 
-        canRotate = false;
+        _canRotate = false;
         _col.enabled = false;
 
-        _rb.isKinematic = true;
-        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        rb.isKinematic = true;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
-        if (canBounce && bounceTarget.Count > 0) return;  // 能弹跳
+        if (_canBounce && _bounceTarget.Count > 0) return;  // 能弹跳
 
-        _anim.SetBool("Rotate", false);
+        anim.SetBool("Rotate", false);
         transform.parent = collision.transform;
     }
 

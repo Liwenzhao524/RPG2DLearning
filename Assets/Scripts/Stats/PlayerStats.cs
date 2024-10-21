@@ -10,7 +10,7 @@ public class PlayerStats : CharacterStats
     protected override void Start()
     {
         base.Start();
-        _player = _entity as Player;
+        _player = entity as Player;
     }
 
     // Update is called once per frame

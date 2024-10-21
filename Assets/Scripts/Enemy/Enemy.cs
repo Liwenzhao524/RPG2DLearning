@@ -18,7 +18,7 @@ public class Enemy : Entity
     public float moveSpeed = 1.5f;
     public float idleTime = 1f;
     public float battleTime = 5f;
-    float defaultMoveSpeed;
+    float _defaultMoveSpeed;
 
     [Header("Attack Info")]
     public float attackDistance = 2f;
@@ -34,7 +34,7 @@ public class Enemy : Entity
     {
         base.Awake();
         stateMachine = new EnemyStateMachine();
-        defaultMoveSpeed = moveSpeed;
+        _defaultMoveSpeed = moveSpeed;
     }
 
     protected override void Start()
@@ -62,7 +62,7 @@ public class Enemy : Entity
     public override void ReturnDefaultSpeed()
     {
         base.ReturnDefaultSpeed();
-        moveSpeed = defaultMoveSpeed;
+        moveSpeed = _defaultMoveSpeed;
     }
 
     public void FreezeTime(bool isFreeze)
@@ -74,7 +74,7 @@ public class Enemy : Entity
         }
         else
         {
-            moveSpeed = defaultMoveSpeed;
+            moveSpeed = _defaultMoveSpeed;
             anim.speed = 1;
         }
     }

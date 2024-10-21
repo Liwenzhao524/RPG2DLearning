@@ -27,12 +27,12 @@ public class Skill_Sword : Skill
     [SerializeField] float returnSpeed = 30;
 
     [Header("AimLine Info")]
-    int numOfDots = 20;
-    float dotsBetweenDis = 0.1f;
-    GameObject[] dots;
+    readonly int _numOfDots = 25;
+    readonly float _dotsBetweenDis = 0.1f;
+    GameObject[] _dots;
     [SerializeField] GameObject dotsPrefab;
     [SerializeField] GameObject dotsParent;
-    Vector2 finalDir;
+    Vector2 _finalDir;
 
     [Header("Bounce Info")]
     [SerializeField] int bounceCount = 4;
@@ -77,15 +77,15 @@ public class Skill_Sword : Skill
         // 按下显示瞄准线
         if (Input.GetMouseButton(1))
         {
-            for(int i = 0; i < dots.Length; i++)
+            for(int i = 0; i < _dots.Length; i++)
             {
-                dots[i].transform.position = DotPosition(i * dotsBetweenDis);
+                _dots[i].transform.position = DotPosition(i * _dotsBetweenDis);
             }
         }
 
         // 抬起时确定最终方向
         if(Input.GetMouseButtonUp(1)) 
-            finalDir = new Vector2(launchDir.x * AimDirection().x, launchDir.y * AimDirection().y);
+            _finalDir = new Vector2(launchDir.x * AimDirection().x, launchDir.y * AimDirection().y);
     }
 
     /// <summary>
@@ -93,9 +93,9 @@ public class Skill_Sword : Skill
     /// </summary>
     public void CreateSword()
     {
-        GameObject newSword = Instantiate(swordPrefab, _player.transform.position, transform.rotation);
+        GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
         Skill_Sword_Controller ctrl = newSword.GetComponent<Skill_Sword_Controller>();
-        ctrl.SetUpSword(finalDir, swordGravity, _player, freezeDuration, returnSpeed);
+        ctrl.SetUpSword(_finalDir, swordGravity, player, freezeDuration, returnSpeed);
 
         switch (swordType)
         {
@@ -105,7 +105,7 @@ public class Skill_Sword : Skill
             case Sword_Type.Spinning: ctrl.SetupSpin(true, maxDistance, spinDuration, hitCoolDown);  break;
         }
 
-        _player.AssignSword(newSword);
+        player.AssignSword(newSword);
         SetDotsActive(false);
     }
 
@@ -116,7 +116,7 @@ public class Skill_Sword : Skill
     /// <returns></returns>
     public Vector2 AimDirection()
     {
-        Vector2 playerPos = _player.transform.position;
+        Vector2 playerPos = player.transform.position;
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 aimPos = (mousePos - playerPos);
         aimPos.Normalize();
@@ -130,9 +130,9 @@ public class Skill_Sword : Skill
     /// <param name="active">传入是否</param>
     public void SetDotsActive(bool active)
     {
-        for (int i = 0; i < dots.Length; i++)
+        for (int i = 0; i < _dots.Length; i++)
         {
-            dots[i].SetActive(active);
+            _dots[i].SetActive(active);
         }
     }
 
@@ -141,11 +141,11 @@ public class Skill_Sword : Skill
     /// </summary>
     private void GenerateDots()
     {
-        dots = new GameObject[numOfDots];
-        for(int i = 0; i < numOfDots; i++)
+        _dots = new GameObject[_numOfDots];
+        for(int i = 0; i < _numOfDots; i++)
         {
-            dots[i] = Instantiate(dotsPrefab, _player.transform.position, Quaternion.identity, dotsParent.transform);
-            dots[i].SetActive(false);
+            _dots[i] = Instantiate(dotsPrefab, player.transform.position, Quaternion.identity, dotsParent.transform);
+            _dots[i].SetActive(false);
         }
     }
 
@@ -156,7 +156,7 @@ public class Skill_Sword : Skill
     /// <returns></returns>
     private Vector2 DotPosition(float t)
     {
-        Vector2 position = (Vector2)_player.transform.position + new Vector2(
+        Vector2 position = (Vector2)player.transform.position + new Vector2(
         AimDirection().x * launchDir.x * t,
         AimDirection().y * launchDir.y * t) + (0.5f * Physics2D.gravity * swordGravity * t * t);
         return position;

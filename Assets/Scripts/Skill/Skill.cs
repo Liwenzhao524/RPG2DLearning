@@ -9,11 +9,11 @@ public class Skill : MonoBehaviour
 {
     [SerializeField] protected float coolDown;
     protected float coolDownTimer;
-    protected Player _player;
+    protected Player player;
 
     protected virtual void Start()
     {
-        _player = PlayerManager._instance._player;
+        player = PlayerManager.instance.player;
     }
 
     protected virtual void Update()
@@ -27,7 +27,7 @@ public class Skill : MonoBehaviour
     /// <returns></returns>
     public virtual bool CanUseSkill()
     {
-        if(coolDownTimer > 0 || _player.stateMachine.currentState == _player.deadState)
+        if(coolDownTimer > 0 || player.stateMachine.currentState == player.deadState)
         {
             return false;
         }

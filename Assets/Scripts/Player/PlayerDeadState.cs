@@ -27,6 +27,6 @@ public class PlayerDeadState : PlayerState
     {
         base.Update();
 
-        _player.SetZeroVelocity();
+        player.SetZeroVelocity();
     }
 }

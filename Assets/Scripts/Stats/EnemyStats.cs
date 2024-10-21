@@ -10,7 +10,7 @@ public class EnemyStats : CharacterStats
     protected override void Start()
     {
         base.Start();
-        _enemy = _entity as Enemy;
+        _enemy = entity as Enemy;
     }
 
     protected override void Update()

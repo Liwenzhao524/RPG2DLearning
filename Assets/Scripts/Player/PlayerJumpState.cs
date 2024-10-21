@@ -11,7 +11,7 @@ public class PlayerJumpState : PlayerAirState
     public override void Enter()
     {
         base.Enter();
-        _player.SetVelocity(_rb.velocity.x, _player.jumpForce);
+        player.SetVelocity(rb.velocity.x, player.jumpForce);
     }
 
     public override void Exit()
@@ -22,9 +22,9 @@ public class PlayerJumpState : PlayerAirState
     public override void Update()
     {
         base.Update();
-        if(_rb.velocity.y < 0)
+        if(rb.velocity.y < 0)
         {
-            _player.stateMachine.ChangeState(_player.airState);
+            player.stateMachine.ChangeState(player.airState);
         }
     }
 }

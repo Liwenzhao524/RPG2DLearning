@@ -6,7 +6,7 @@ public class SkeletonMoveState : SkeletonGroundState
 {
     public SkeletonMoveState(Enemy enemyBase, EnemyStateMachine enemyStateMachine, string aniBoolName) : base(enemyBase, enemyStateMachine, aniBoolName)
     {
-        _enemy = enemyBase as Enemy_Skeleton;
+        enemy = enemyBase as Enemy_Skeleton;
     }
 
     public override void Enter()
@@ -23,12 +23,12 @@ public class SkeletonMoveState : SkeletonGroundState
     {
         base.Update();
 
-        _enemy.SetVelocity(_enemy.moveSpeed * _enemy.faceDir, _rb.velocity.y);
+        enemy.SetVelocity(enemy.moveSpeed * enemy.faceDir, rb.velocity.y);
 
-        if(!_enemy.IsGroundDetected() || _enemy.IsWallDetected())
+        if(!enemy.IsGroundDetected() || enemy.IsWallDetected())
         {
-            _enemy.FlipController(-_enemy.faceDir);
-            _enemyStateMachine.ChangeState(_enemy.idleState);
+            enemy.FlipController(-enemy.faceDir);
+            enemyStateMachine.ChangeState(enemy.idleState);
         }
     }
 }
