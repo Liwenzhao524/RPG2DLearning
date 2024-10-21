@@ -21,13 +21,13 @@ public class SkeletonStunState : EnemyState
 
         stateTimer = _enemy.stunDuration;
         _rb.velocity = new Vector2(_enemy.stunDirection.x * -_enemy.faceDir, _enemy.stunDirection.y);
-        _enemy.fx.InvokeRepeating("RedBlink", 0, 0.1f);
+        _enemy.fx.InvokeRepeating(nameof(_enemy.fx.RedBlink), 0, 0.1f);
     }
 
     public override void Exit()
     {
         base.Exit();
-        _enemy.fx.Invoke("CancelColorChange", 0);
+        _enemy.fx.Invoke(nameof(_enemy.fx.CancelColorChange), 0);
     }
 
     public override void Update()

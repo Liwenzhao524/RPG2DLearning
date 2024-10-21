@@ -113,7 +113,7 @@ public class Skill_Blackhole_Controller : Skill_Controller
             if (cloneAttackCount <= 0)
             {
                 canCloneAttack = false;
-                Invoke("EndBlackholeSkill", 0.5f); 
+                Invoke(nameof(EndBlackholeSkill), 0.5f); 
             }
         }
     }

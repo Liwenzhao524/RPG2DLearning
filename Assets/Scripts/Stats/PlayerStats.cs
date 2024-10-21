@@ -5,13 +5,12 @@ using UnityEngine;
 public class PlayerStats : CharacterStats
 {
     Player _player;
-    
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        _player = GetComponent<Player>();
+        _player = _entity as Player;
     }
 
     // Update is called once per frame
@@ -33,7 +32,6 @@ public class PlayerStats : CharacterStats
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        _player.DamageEffect();
     }
 
     protected override void Die()

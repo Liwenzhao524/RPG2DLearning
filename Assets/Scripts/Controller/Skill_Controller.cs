@@ -6,11 +6,13 @@ public class Skill_Controller : MonoBehaviour
 {
     protected Animator _anim;
     protected Rigidbody2D _rb;
+    protected Player _player;
 
     protected virtual void Awake()
     {
         _anim = GetComponentInChildren<Animator>();
         _rb = GetComponent<Rigidbody2D>();
+        _player = PlayerManager._instance._player;
     }
     // Start is called before the first frame update
     protected virtual void Start()
@@ -28,7 +30,7 @@ public class Skill_Controller : MonoBehaviour
     /// 获取最近敌人
     /// </summary>
     /// <returns>返回Transform</returns>
-    protected virtual Transform FindClosestEnemy()
+    public virtual Transform FindClosestEnemy()
     {
         float minDistance = Mathf.Infinity;
         Transform target = transform;
@@ -36,13 +38,16 @@ public class Skill_Controller : MonoBehaviour
         // 获取所有近处敌人
         foreach (var hit in colliders)
         {
-            if (hit.GetComponent<Enemy>() != null)
+            if (hit.GetComponent<Enemy>() != null && Vector2.Distance(hit.transform.position, transform.position) > 0.5f)
+            {
                 if (Vector2.Distance(hit.transform.position, transform.position) < minDistance)
                 {
                     minDistance = Vector2.Distance(hit.transform.position, transform.position);
                     target = hit.transform;
+                 
                 }
+            }
         }
-        return target;
+        return target;  
     }
 }

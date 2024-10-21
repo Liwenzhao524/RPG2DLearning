@@ -11,8 +11,8 @@ public class Enemy : Entity
     [Header("Stunned Info")]
     public float stunDuration = 1;
     public Vector2 stunDirection;
-    [HideInInspector] public bool canBeStunned;
     [SerializeField] protected GameObject counterImage; 
+    [HideInInspector] public bool canBeStunned;
 
     [Header("Move Info")]
     public float moveSpeed = 1.5f;
@@ -23,8 +23,8 @@ public class Enemy : Entity
     [Header("Attack Info")]
     public float attackDistance = 2f;
     public float attackCoolDown = 0.5f;
-    [HideInInspector] public float lastAttackTime = 0;
     [SerializeField] protected LayerMask playerLayer;
+    [HideInInspector] public float lastAttackTime = 0;
 
     public EnemyStateMachine stateMachine { get; private set; }
 
@@ -49,7 +49,22 @@ public class Enemy : Entity
         stateMachine.currentState.Update();
     }
 
-    #region FreezeTime
+    #region Speed Change
+
+    public override void SlowEntitySpeed(float slowPercentage, float duration)
+    {
+        slowPercentage = Mathf.Clamp01(slowPercentage);
+        moveSpeed *= (1 - slowPercentage);
+
+        Invoke(nameof(ReturnDefaultSpeed), duration);
+    }
+
+    public override void ReturnDefaultSpeed()
+    {
+        base.ReturnDefaultSpeed();
+        moveSpeed = defaultMoveSpeed;
+    }
+
     public void FreezeTime(bool isFreeze)
     {
         if (isFreeze)
@@ -78,6 +93,10 @@ public class Enemy : Entity
     /// </summary>
     public virtual void AnimTrigger() => stateMachine.currentState.AnimFinishTrigger();
 
+    /// <summary>
+    /// ¼ì²é¹¥»÷ÀäÈ´
+    /// </summary>
+    /// <returns></returns>
     public bool CanAttack()
     {
         return Time.time > lastAttackTime + attackCoolDown;

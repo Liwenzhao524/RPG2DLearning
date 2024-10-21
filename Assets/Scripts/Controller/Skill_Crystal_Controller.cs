@@ -76,7 +76,7 @@ public class Skill_Crystal_Controller : Skill_Controller
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<Enemy>().DamageEffect();
+                _player.stats.DoMagicDamageTo(hit.GetComponent<CharacterStats>());
                 SkillManager._instance.clone.CloneDuplicate(hit.transform);
             }
         }

@@ -21,10 +21,11 @@ public class CharacterStats : MonoBehaviour
     public Stats critDamage;
 
     [Header("Magic Stats")]
-    public Stats fireDamage;
-    public Stats iceDamage;
-    public Stats lightningDamage;
+    public Stats fireATK;
+    public Stats iceATK;
+    public Stats lightningATK;
 
+    float AilmentDuration = 4;
     bool isignited;  // DOT
     bool ischilled;  // 减防
     bool isshocked;  // 减命中
@@ -34,21 +35,39 @@ public class CharacterStats : MonoBehaviour
     float shockTimer;
 
     float ignitedDamageTimer;
-    float ignitedDamageCoolDown = 0.3f;
+    readonly float ignitedDamageCoolDown = 0.3f;
     float ignitedDamage;
 
+    float thunderDamage;
+
     public float currentHP;
+
+    /// <summary>
+    /// 仅当HP变化时调用
+    /// </summary>
     public Action HPChange;
 
-    EntityFX _fx;
+    protected Entity _entity;
+    protected EntityFX _fx;
+    [SerializeField] GameObject _shockThunderPrefab;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         _fx = GetComponent<EntityFX>();
+        _entity = GetComponent<Entity>();
         critChance.SetDefaultValue(0.05f);
         critDamage.SetDefaultValue(0.5f);
-        currentHP = GetMaxHP();
+        currentHP = GetMaxHP();  // 此处可能要注意Start的执行顺序 可在Setting调整
+    }
+
+    /// <summary>
+    /// 返回最大HP
+    /// </summary>
+    /// <returns></returns>
+    public float GetMaxHP()
+    {
+        return maxHP.GetValue() + vitality.GetValue() * 5;
     }
 
     // Update is called once per frame
@@ -68,15 +87,10 @@ public class CharacterStats : MonoBehaviour
         if (shockTimer < 0)
             isshocked = false;
 
-        if (ignitedDamageTimer < 0 && isignited)
-        {
-            ignitedDamageTimer = ignitedDamageCoolDown;
-
-            DecreaseHP(ignitedDamage);
-
-            if (currentHP < 0) Die();
-        }
+        TakeIgniteDamage();
     }
+
+    
 
     /// <summary>
     /// 造成物伤
@@ -101,9 +115,9 @@ public class CharacterStats : MonoBehaviour
     /// <param name="target"></param>
     public virtual void DoMagicDamageTo(CharacterStats target)
     {
-        float _fireDamage = fireDamage.GetValue();
-        float _iceDamage = iceDamage.GetValue();
-        float _lightningDamage = lightningDamage.GetValue();
+        float _fireDamage = fireATK.GetValue();
+        float _iceDamage = iceATK.GetValue();
+        float _lightningDamage = lightningATK.GetValue();
 
         float totalMagicDamage = _fireDamage + _iceDamage + _lightningDamage + intelligence.GetValue();
 
@@ -127,9 +141,30 @@ public class CharacterStats : MonoBehaviour
     /// <param name="_lightningDamage">最终雷伤</param>
     private void TakeAilment(CharacterStats target, float _fireDamage, float _iceDamage, float _lightningDamage)
     {
-        bool fireAliment = _fireDamage > _iceDamage && _fireDamage > _lightningDamage;
-        bool iceAliment = _iceDamage > _fireDamage && _iceDamage > _lightningDamage;
-        bool lightningAliment = _lightningDamage > _fireDamage && _lightningDamage > _iceDamage;
+        // 选择一种效果
+        bool fireAliment, iceAliment, lightningAliment;
+        ChooseWhichAilment(_fireDamage, _iceDamage, _lightningDamage, out fireAliment, out iceAliment, out lightningAliment);
+
+        if (fireAliment) target.SetIgniteDamage(_fireDamage * 0.2f);
+        if (lightningAliment) target.SetThunderDamage(_lightningDamage * 0.2f);
+
+        target.TakeWhichAilment(fireAliment, iceAliment, lightningAliment);
+    }
+
+    /// <summary>
+    /// 根据伤害选择一种负面效果
+    /// </summary>
+    /// <param name="_fireDamage"></param>
+    /// <param name="_iceDamage"></param>
+    /// <param name="_lightningDamage"></param>
+    /// <param name="fireAliment"></param>
+    /// <param name="iceAliment"></param>
+    /// <param name="lightningAliment"></param>
+    private void ChooseWhichAilment(float _fireDamage, float _iceDamage, float _lightningDamage, out bool fireAliment, out bool iceAliment, out bool lightningAliment)
+    {
+        fireAliment = _fireDamage > _iceDamage && _fireDamage > _lightningDamage;
+        iceAliment = _iceDamage > _fireDamage && _iceDamage > _lightningDamage;
+        lightningAliment = _lightningDamage > _fireDamage && _lightningDamage > _iceDamage;
 
         // 若有数值相同 则随机取一种
         while (!fireAliment && !iceAliment && !lightningAliment)
@@ -150,40 +185,82 @@ public class CharacterStats : MonoBehaviour
                 continue;
             }
         }
-
-        if (fireAliment) target.SetIgniteDamage(fireDamage.GetValue() * 0.2f);
-        target.TakeWhichAilment(fireAliment, iceAliment, lightningAliment);
     }
 
-
+    /// <summary>
+    /// 造成选定的负面效果
+    /// </summary>
+    /// <param name="ignite"></param>
+    /// <param name="chill"></param>
+    /// <param name="shock"></param>
     public void TakeWhichAilment(bool ignite, bool chill, bool shock)
     {
-        if (isshocked || isignited || ischilled) return;
+        // 有不同条件 不能用
+        //if (isshocked || isignited || ischilled) return;
 
-        if (ignite)
+        bool canGetIgnite = !isignited && !ischilled && !isshocked;
+        bool canGetChill = !isignited && !ischilled && !isshocked;
+        bool canGetShock = !isignited && !ischilled;
+
+        if (ignite && canGetIgnite)
         {
-            ignitedTimer = 3;
-            _fx.ChangeToIgniteFX(ignitedTimer);
+            isignited = ignite;
+            ignitedTimer = AilmentDuration;
+            _fx.ChangeToIgniteFX(AilmentDuration);
         }
 
-        if (chill)
+        if (chill && canGetChill)
         {
-            chillTimer = 10;
-            _fx.ChangeToChillFX(chillTimer);
+            ischilled = chill;
+            chillTimer = AilmentDuration;
+            _fx.ChangeToChillFX(AilmentDuration);
+
+            float slowPersentage = 0.2f;
+            _entity.SlowEntitySpeed(slowPersentage, AilmentDuration);
         }
 
-        if (shock)
+        if (shock && canGetShock)
         {
-            shockTimer = 10;
-            _fx.ChangeToShockFX(shockTimer);
+            // 主目标
+            if(!isshocked)
+            {
+                ApplyShock(shock);
+            }
+            // 找另一目标给雷击
+            else
+            {
+                if (GetComponent<Player>() != null) return;
+                ThunderOnNearEnemy();
+            }
         }
+    }
 
-        ischilled = chill;
-        isignited = ignite;
+    /// <summary>
+    /// 同上面chill等 主要为了Thunder_Controller调用视觉效果
+    /// </summary>
+    /// <param name="shock"></param>
+    public void ApplyShock(bool shock)
+    {
+        if (isshocked) return;
         isshocked = shock;
+        shockTimer = AilmentDuration;
+        _fx.ChangeToShockFX(AilmentDuration);
+    }
+
+    /// <summary>
+    /// 对附近敌人降下落雷
+    /// </summary>
+    private void ThunderOnNearEnemy()
+    {
+        GameObject thunder = Instantiate(_shockThunderPrefab, transform.position, Quaternion.identity);
+        Thunder_Controller ctrl = thunder.GetComponent<Thunder_Controller>();
+        Transform target = ctrl.FindClosestEnemy();
+
+        ctrl.SetUp(thunderDamage, target.GetComponent<CharacterStats>());
     }
 
     public void SetIgniteDamage(float damage) => ignitedDamage = damage;
+    public void SetThunderDamage(float damage) => thunderDamage = damage;
 
     #endregion
 
@@ -193,7 +270,7 @@ public class CharacterStats : MonoBehaviour
     /// 计算法抗
     /// </summary>
     /// <param name="totalMagicDamage">计算前法伤</param>
-    /// <returns></returns>
+    /// <returns>计算后法伤</returns>
     protected virtual float DoMagicResistance(float totalMagicDamage)
     {
         totalMagicDamage -= magicResistence.GetValue() + intelligence.GetValue() * 3;
@@ -222,7 +299,7 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     /// <param name="target">受击对象</param>
     /// <param name="totalDamage">计算前伤害</param>
-    /// <returns></returns>
+    /// <returns>计算后伤害</returns>
     protected virtual float DoDefence(CharacterStats target, float totalDamage)
     {
         float oringinArmor = target.armor.GetValue();
@@ -259,7 +336,17 @@ public class CharacterStats : MonoBehaviour
 
     #endregion
 
+    protected virtual void DecreaseHP(float damage)
+    {
+        currentHP -= damage;
 
+        HPChange?.Invoke();
+    }
+
+    /// <summary>
+    /// 承受伤害
+    /// </summary>
+    /// <param name="damage"></param>
     public virtual void TakeDamage(float damage)
     {
         DecreaseHP(damage);
@@ -268,22 +355,30 @@ public class CharacterStats : MonoBehaviour
         {
             Die();
         }
+
+        _entity.DamageEffect();
     }
 
-    protected virtual void DecreaseHP(float damage)
+    /// <summary>
+    /// 承受燃烧DOT
+    /// </summary>
+    private void TakeIgniteDamage()
     {
-        currentHP -= damage;
+        if (ignitedDamageTimer < 0 && isignited)
+        {
+            ignitedDamageTimer = ignitedDamageCoolDown;
 
-        HPChange?.Invoke();
+            DecreaseHP(ignitedDamage);
+
+            if (currentHP < 0) 
+                Die();
+        }
     }
 
     protected virtual void Die()
     {
-
-    }
-
-    public float GetMaxHP()
-    {
-        return maxHP.GetValue() + vitality.GetValue() * 5;
+        isignited = false;
+        ischilled = false;
+        isshocked = false;
     }
 }

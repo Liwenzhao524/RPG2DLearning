@@ -10,7 +10,7 @@ public class EnemyStats : CharacterStats
     protected override void Start()
     {
         base.Start();
-        _enemy = GetComponent<Enemy>();
+        _enemy = _entity as Enemy;
     }
 
     protected override void Update()
@@ -31,8 +31,6 @@ public class EnemyStats : CharacterStats
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        _enemy.DamageEffect();
-
     }
 
     protected override void Die()

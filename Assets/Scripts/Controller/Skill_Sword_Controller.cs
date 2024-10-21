@@ -1,11 +1,11 @@
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class Skill_Sword_Controller : Skill_Controller
 {
     
     Collider2D _col;
-    Player _player;
 
     bool canRotate = true;  // 碰撞时 正确处理 剑插入敌人的方向为飞行方向
 
@@ -69,7 +69,7 @@ public class Skill_Sword_Controller : Skill_Controller
 
         bounceTarget = new List<Transform>();  // Debug: public和[serializeField]会自动new，private默认不new，需要手动 
 
-        Invoke("DestroySword", 7);
+        Invoke(nameof(DestroySword), 7);
     }
 
     void FixedUpdate()
@@ -131,7 +131,9 @@ public class Skill_Sword_Controller : Skill_Controller
             transform.position = Vector2.MoveTowards(transform.position, bounceTarget[targetIndex].position, bounceSpeed * Time.deltaTime);
             if (Vector2.Distance(transform.position, bounceTarget[targetIndex].position) < 0.1f)
             {
-                bounceTarget[targetIndex].GetComponent<Enemy>()?.DamageEffect();
+                if(bounceTarget[targetIndex].GetComponent<Enemy>()){
+                    _player.stats.DoDamageTo(bounceTarget[targetIndex].GetComponent<CharacterStats>());
+                }
                 targetIndex++;
                 if (targetIndex >= bounceTarget.Count)
                     targetIndex = 0;
@@ -222,7 +224,10 @@ public class Skill_Sword_Controller : Skill_Controller
                     hitTimer = hitCoolDown;
                     Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2);
                     foreach (var hit in colliders)
-                        hit.GetComponent<Enemy>()?.DamageEffect();
+                        if(hit.GetComponent<Enemy>())
+                        {
+                            _player.stats.DoMagicDamageTo(hit.GetComponent<CharacterStats>());
+                        }
                 }
             }
         }
@@ -249,10 +254,11 @@ public class Skill_Sword_Controller : Skill_Controller
         if (collision.GetComponent<Enemy>())
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.DamageEffect();
             enemy.StartCoroutine("FreezeTimerFor", freezeDuration);
+            _player.stats.DoDamageTo(collision.GetComponent<CharacterStats>());
         }
         
+        // 可以弹射
         SetTargetForBounce(collision);
 
         // 不能弹射或不是敌人

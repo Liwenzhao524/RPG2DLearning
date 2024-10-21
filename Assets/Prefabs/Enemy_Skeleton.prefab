@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 754028181789866308}
   - component: {fileID: 5573170566391713676}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -355,7 +355,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entity: {fileID: 0}
+  _stat: {fileID: 0}
   _rect: {fileID: 0}
+  _slider: {fileID: 0}
 --- !u!1 &3345459792110705725
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,21 +753,21 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
-  knockDirection: {x: 2, y: 5}
-  knockDuration: 1
-  stunDuration: 0.5
-  stunDirection: {x: 1, y: 6}
-  canBeStunned: 0
+  knockDirection: {x: 2, y: 2}
+  knockDuration: 0.5
+  stunDuration: 1
+  stunDirection: {x: 3, y: 3}
   counterImage: {fileID: 7289244999103986582}
+  canBeStunned: 0
   moveSpeed: 2
   idleTime: 1
   battleTime: 5
   attackDistance: 1.5
   attackCoolDown: 0.5
-  lastAttackTime: 0
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
+  lastAttackTime: 0
 --- !u!50 &2791898073463347299
 Rigidbody2D:
   serializedVersion: 4
@@ -842,6 +844,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashMat: {fileID: 2100000, guid: 3e90503dcdab03742a88274b5beaf759, type: 2}
   flashDuration: 0.2
+  igniteColor:
+  - {r: 0.69182384, g: 0.33396426, b: 0.11965495, a: 1}
+  - {r: 0.8113208, g: 0.2640056, b: 0.053577673, a: 1}
+  chillColor: {r: 0.41491628, g: 0.603872, b: 0.6981132, a: 1}
+  shockColor: {r: 0.91194963, g: 0.8988419, b: 0.065958545, a: 1}
 --- !u!114 &404200921230451470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,15 +878,16 @@ MonoBehaviour:
   magicResistence:
     baseValue: 0
   ATK:
-    baseValue: 20
+    baseValue: 10
   critChance:
     baseValue: 0
   critDamage:
     baseValue: 0
-  fireDamage:
-    baseValue: 3
-  iceDamage:
-    baseValue: 3
-  lightningDamage:
-    baseValue: 3
+  fireATK:
+    baseValue: 0
+  iceATK:
+    baseValue: 0
+  lightningATK:
+    baseValue: 0
   currentHP: 0
+  _shockThunderPrefab: {fileID: 4979832629735912810, guid: 422b2cbb5dd4a864baf473b618c71035, type: 3}

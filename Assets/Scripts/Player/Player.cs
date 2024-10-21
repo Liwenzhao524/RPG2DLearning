@@ -12,6 +12,9 @@ public class Player : Entity
     public float moveSpeed = 5;
     public float jumpForce = 10;
     public float swordReturnForce = 3;
+    float defaultMoveSpeed;
+    float defaultJumpForce;
+    float defaultDashSpeed;
 
     [Header("Dash Info")]
     public float dashSpeed = 25;
@@ -68,6 +71,10 @@ public class Player : Entity
     {
         base.Start();
         stateMachine.Init(idleState);
+
+        defaultMoveSpeed = moveSpeed;
+        defaultJumpForce = jumpForce;
+        defaultDashSpeed = dashSpeed;
     }
 
     // Update is called once per frame
@@ -81,6 +88,26 @@ public class Player : Entity
         {
             skill.crystal.CanUseSkill();
         }
+    }
+
+    public override void SlowEntitySpeed(float slowPercentage, float duration)
+    {
+        slowPercentage = Mathf.Clamp01(slowPercentage);
+        moveSpeed *= (1 - slowPercentage);
+        jumpForce *= (1 - slowPercentage);
+        dashSpeed *= (1 - slowPercentage);
+
+        anim.speed *= (1 - slowPercentage);
+
+        Invoke(nameof(ReturnDefaultSpeed), duration);
+    }
+
+    public override void ReturnDefaultSpeed()
+    {
+        base.ReturnDefaultSpeed();
+        moveSpeed = defaultMoveSpeed;
+        jumpForce = defaultJumpForce;
+        dashSpeed = defaultDashSpeed;
     }
 
     #region Skill Ctrl

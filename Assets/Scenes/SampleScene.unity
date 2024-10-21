@@ -169,11 +169,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7246616221234833589, guid: a2fca177b2fcbda41a408138bed257ac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.31
+      value: -14.82
       objectReference: {fileID: 0}
     - target: {fileID: 7246616221234833589, guid: a2fca177b2fcbda41a408138bed257ac, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.52
+      value: 1.41
       objectReference: {fileID: 0}
     - target: {fileID: 7246616221234833589, guid: a2fca177b2fcbda41a408138bed257ac, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1592,13 +1592,14 @@ MonoBehaviour:
     baseValue: 0
   critDamage:
     baseValue: 0
-  fireDamage:
+  fireATK:
     baseValue: 0
-  iceDamage:
+  iceATK:
     baseValue: 0
-  lightningDamage:
-    baseValue: 0
+  lightningATK:
+    baseValue: 4
   currentHP: 0
+  _shockThunderPrefab: {fileID: 4979832629735912810, guid: 422b2cbb5dd4a864baf473b618c71035, type: 3}
 --- !u!1 &1307643198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,7 +1859,7 @@ GameObject:
   - component: {fileID: 1523691040}
   - component: {fileID: 1523691041}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

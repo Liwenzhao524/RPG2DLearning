@@ -7,12 +7,12 @@ using UnityEngine;
 /// </summary>
 public class EntityFX : MonoBehaviour
 {
-    private SpriteRenderer sr;
+    SpriteRenderer sr;
 
     [Header("Flash FX")]
-    [SerializeField] private Material flashMat;
-    [SerializeField] private float flashDuration = 0.2f;
-    private Material originMat;
+    [SerializeField] Material flashMat;
+    [SerializeField] float flashDuration = 0.2f;
+    Material originMat;
 
     [Header("Ailment Color")]
     [SerializeField] Color[] igniteColor;
@@ -33,10 +33,13 @@ public class EntityFX : MonoBehaviour
     public IEnumerator FlashFX()
     {
         sr.material = flashMat;
+        //Color temp = sr.color;
+        //sr.color = Color.white;
 
         yield return new WaitForSeconds(flashDuration);
 
         sr.material = originMat;
+        //sr.color = temp;
     }
 
     public void RedBlink()
@@ -54,22 +57,23 @@ public class EntityFX : MonoBehaviour
 
     #region Ailment Color
 
-    public void ChangeToIgniteFX(float second)
-    {
-        InvokeRepeating("IgniteColor", 0, 0.3f);
-        Invoke("CancelColorChange", second);
-    }
 
     public void ChangeToChillFX(float second)
     {
         sr.color = chillColor;
-        Invoke("CancelColorChange", second);
+        Invoke(nameof(CancelColorChange), second);
     }
 
     public void ChangeToShockFX(float second)
     {
         sr.color = shockColor;
-        Invoke("CancelColorChange", second);
+        Invoke(nameof(CancelColorChange), second);
+    }
+
+    public void ChangeToIgniteFX(float second)
+    {
+        InvokeRepeating(nameof(IgniteColor), 0, 0.3f);
+        Invoke(nameof(CancelColorChange), second);
     }
 
     private void IgniteColor()

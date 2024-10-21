@@ -75,7 +75,7 @@ public class Skill_Clone_Controller : Skill_Controller
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<Enemy>().DamageEffect();
+                _player.stats.DoDamageTo(hit.GetComponent<CharacterStats>());
                 SkillManager._instance.clone.CloneDuplicate(hit.transform, faceDir);
             }
         }

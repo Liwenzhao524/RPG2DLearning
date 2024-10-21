@@ -30,6 +30,9 @@ public class Entity : MonoBehaviour
     public CharacterStats stats { get; private set; }
     #endregion
 
+    /// <summary>
+    /// 仅在翻转时调用
+    /// </summary>
     public Action OnFlip;
 
     protected virtual void Awake()
@@ -51,10 +54,20 @@ public class Entity : MonoBehaviour
 
     }
 
+    public virtual void SlowEntitySpeed(float slowPercentage, float duration)
+    {
+
+    }
+
+    public virtual void ReturnDefaultSpeed()
+    {
+        anim.speed = 1;
+    }
+
     public virtual void DamageEffect()
     {
-        fx.StartCoroutine("FlashFX");
-        StartCoroutine("HitKnock");
+        fx.StartCoroutine(fx.FlashFX());
+        StartCoroutine(HitKnock());
     }
 
     /// <summary>

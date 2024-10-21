@@ -15,12 +15,15 @@ public class UI_HealthBar : MonoBehaviour
         _slider = GetComponentInChildren<Slider>();
         _stat = _entity.stats;
 
-        _entity.OnFlip += FlipUI;
-        _stat.HPChange += UpdateHealthUI;
+        _entity.OnFlip += FlipUI;  // 保证UI不反转
+        _stat.HPChange += UpdateHealthUI;  // 仅在HP变动时变化UI
 
         UpdateHealthUI();
     }
-     
+    
+    /// <summary>
+    /// HP变化时更新UI
+    /// </summary>
     private void UpdateHealthUI()
     {
         _slider.maxValue = _entity.stats.GetMaxHP(); 

@@ -77,7 +77,7 @@ public class Skill_Crystal : Skill
         {
             // ÷ÿ÷√ ±º‰¥∞
             if (crystalList.Count == crystalCount)
-                Invoke("ResetAbility", useSkillWindow);
+                Invoke(nameof(ResetAbility), useSkillWindow);
 
             coolDown = 0;
             GameObject chosen = crystalList[crystalList.Count - 1];
