@@ -304,11 +304,11 @@ public class CharacterStats : MonoBehaviour
     {
         float oringinArmor = target.armor.GetValue();
 
-        if (_ischilled) target.armor.AddModifer(-oringinArmor * 0.2f);
+        if (_ischilled) target.armor.AddModifier(-oringinArmor * 0.2f);
 
         totalDamage -= target.armor.GetValue();
 
-        if (_ischilled) target.armor.RemoveModifer(-oringinArmor * 0.2f);
+        if (_ischilled) target.armor.RemoveModifier(-oringinArmor * 0.2f);
 
         if (totalDamage < 1) totalDamage = 1;
         return totalDamage;
@@ -321,11 +321,11 @@ public class CharacterStats : MonoBehaviour
     /// <returns>受击对象能否回避伤害</returns>
     protected virtual bool DoEvasion(CharacterStats target)
     {
-        if (_isshocked) target.evasion.AddModifer(-20);
+        if (_isshocked) target.evasion.AddModifier(-20);
 
         float totalEvasion = target.evasion.GetValue() + target.agility.GetValue();
 
-        if (_isshocked) target.evasion.RemoveModifer(-20);
+        if (_isshocked) target.evasion.RemoveModifier(-20);
 
         if (UnityEngine.Random.Range(0, 100) < totalEvasion)
         {

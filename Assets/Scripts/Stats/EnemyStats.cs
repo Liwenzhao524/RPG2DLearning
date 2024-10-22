@@ -6,16 +6,45 @@ public class EnemyStats : CharacterStats
 {
     Enemy _enemy;
 
+    [Header("Level")]
+    [SerializeField] int level = 1;
+    [SerializeField] float growPercentage;
+
     // Start is called before the first frame update
     protected override void Start()
     {
+        LevelGrowth();
+
         base.Start();
         _enemy = entity as Enemy;
+    }
+
+    private void LevelGrowth ()
+    {
+        ModifyStat(ATK);
+        ModifyStat(critChance);
+        ModifyStat(critDamage);
+
+        ModifyStat(maxHP);
+        ModifyStat(armor);
+        ModifyStat(magicResistence);
+
+        ModifyStat(iceATK);
+        ModifyStat(fireATK);
+        ModifyStat(lightningATK);
     }
 
     protected override void Update()
     {
         base.Update();
+    }
+
+    public void ModifyStat (Stats stats)
+    {
+        for(int i = 1; i < level; i ++)
+        {
+            stats.AddModifier(stats.GetValue() * growPercentage);
+        }
     }
 
     public override void DoDamageTo(CharacterStats target)

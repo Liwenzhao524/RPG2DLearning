@@ -2,31 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// µÀ¾ßGameObject
+/// </summary>
 public class ItemObject : MonoBehaviour
 {
     [SerializeField] ItemData itemData;
 
-    Inventory _inventory;
-    SpriteRenderer _sr;
-    // Start is called before the first frame update
-    void Start()
-    {
-        _inventory = Inventory.instance;
-        _sr = GetComponent<SpriteRenderer>();
-        _sr.sprite = itemData.icon;
-    }
+    //Inventory _inventory = Inventory.instance;
 
-    // Update is called once per frame
-    void Update()
+    private void OnValidate ()
     {
-        
+        GetComponent<SpriteRenderer>().sprite = itemData.icon;
+        gameObject.name = "item - " + itemData.itemName;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Player>())
+        if (collision.GetComponent<Player>() != null)
         {
-            _inventory.AddItem(itemData);
+            Inventory.instance.AddItem(itemData);
+            Destroy(gameObject);
         }
     }
 }
