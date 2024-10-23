@@ -27,10 +27,10 @@ public class Thunder_Controller : Skill_Controller
     {
         base.Update();
 
-        if (_triggered || !_targetstats) return;
-
-        transform.position = Vector2.MoveTowards(transform.position, _targetstats.transform.position, speed * Time.deltaTime);
-        transform.right = transform.position - _targetstats.transform.position;
+        if (_triggered || !_targetstats) 
+        {
+            return;
+        }
 
         if(Vector2.Distance(transform.position, _targetstats.transform.position) < 0.1f)
         {
@@ -43,8 +43,10 @@ public class Thunder_Controller : Skill_Controller
             Invoke(nameof(DamageAndDestory), 0.2f);
             _triggered = true;
             anim.SetTrigger("Hit");
-            
         }
+
+        transform.position = Vector2.MoveTowards(transform.position, _targetstats.transform.position, speed * Time.deltaTime);
+        transform.right = transform.position - _targetstats.transform.position;
     }
 
     public void DamageAndDestory()

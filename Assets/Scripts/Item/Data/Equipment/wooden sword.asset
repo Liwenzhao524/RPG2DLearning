@@ -15,6 +15,7 @@ MonoBehaviour:
   itemType: 1
   itemName: wooden sword
   icon: {fileID: 1025091068, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 100
   equipmentType: 0
   strength: 1
   agility: 1
@@ -30,3 +31,8 @@ MonoBehaviour:
   fireATK: 0
   iceATK: 0
   lightningATK: 0
+  craftMaterials:
+  - itemData: {fileID: 11400000, guid: 634c76e1dc0360d42a5888847e3425cc, type: 2}
+    stackSize: 1
+  - itemData: {fileID: 11400000, guid: bf8ab9b568c945d4c8829cc428d8782d, type: 2}
+    stackSize: 2

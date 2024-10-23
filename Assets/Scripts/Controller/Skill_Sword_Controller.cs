@@ -38,12 +38,10 @@ public class Skill_Sword_Controller : Skill_Controller
 
     float _spinDirection;
 
-
-    protected override void Awake()
+    protected override void Start ()
     {
-        base.Awake();
+        base.Start();
         _col = GetComponent<Collider2D>();
-
     }
 
     /// <summary>

@@ -12,10 +12,9 @@ public class Skill_Clone_Controller : Skill_Controller
 
     int _faceDir = 1;
 
-    // Start is called before the first frame update
-    protected override void Awake()
+    protected override void Start ()
     {
-        base.Awake();
+        base.Start();
         _sr = GetComponent<SpriteRenderer>();
     }
 

@@ -16,6 +16,7 @@ public enum EquipmentType
 public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
+    public List<ItemEffect> equipEffects;
 
     [Header("Major Stats")]
     public float strength;
@@ -37,8 +38,25 @@ public class ItemData_Equipment : ItemData
     [Header("Magic Stats")]
     public float fireATK;
     public float iceATK;
-    public float lightningATK;
+    public float lightningATK; 
 
+    [Header("Craft")]
+    public List<InventoryItem> craftMaterials;
+
+    /// <summary>
+    /// 执行装备上的特殊效果 词条
+    /// </summary>
+    public void ExecuteEffects ()
+    {
+        foreach (var effect in equipEffects)
+        {
+            effect.ExecuteEffect();
+        }
+    }
+
+    /// <summary>
+    /// 向角色面板附加武器面板
+    /// </summary>
     public void AddModifiers ()
     {
         // 获取PlayerStats组件  
@@ -64,6 +82,9 @@ public class ItemData_Equipment : ItemData
 
     }
 
+    /// <summary>
+    /// 从角色面板移除武器面板
+    /// </summary>
     public void RemoveModifiers ()
     {
         PlayerStats playerStats = PlayerManager.instance.player.GetComponent<PlayerStats>();

@@ -5,15 +5,19 @@ using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
-    // inventory存Equipemnt stash存Material
     public static Inventory instance;
 
+    public List<InventoryItem> start = new();
+
+    // 装备库存
     public List<InventoryItem> inventory = new();
     public Dictionary<ItemData, InventoryItem> inventoryDictionary = new();
 
+    // 材料库存
     public List<InventoryItem> stash = new();
     public Dictionary<ItemData, InventoryItem> stashDictionary = new();
 
+    // 装备槽
     public List<InventoryItem> equipment = new();
     public Dictionary<ItemData_Equipment, InventoryItem > equipmentDictionary = new();
 
@@ -21,7 +25,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] Transform inventorySlotParent;
     [SerializeField] Transform stashSlotParent;
     [SerializeField] Transform equipmentSlotParent;
-    //[SerializeField] GameObject itemSlotPrefab;
+
     UI_ItemSlot[] inventorySlots;
     UI_ItemSlot[] stashSlots;
     UI_EquipmentSlot[] equipmentSlots;
@@ -37,6 +41,15 @@ public class Inventory : MonoBehaviour
         inventorySlots = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         stashSlots = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
         equipmentSlots = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>(); 
+
+        foreach(var item in start)
+        {
+            while(item.stackSize > 0)
+            {
+                AddItem(item.itemData);
+                item.RemoveStack();
+            }
+        }
     }
 
     void UpdateAllSlotUI ()
@@ -69,6 +82,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 装备 从inventory到equipment
+    /// </summary>
+    /// <param name="item"></param>
     public void EquipItem(ItemData_Equipment item)
     {
         InventoryItem newEquipment = new(item);
@@ -86,7 +103,7 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// 如果有 卸除旧装备
+    /// 如果有 卸除旧装备 从equipment到inventory
     /// </summary>
     /// <param name="item"></param>
     public void UnequipItem (ItemData_Equipment item)
@@ -104,11 +121,33 @@ public class Inventory : MonoBehaviour
             AddItem(equipmentToRemove);
 
             equipmentToRemove.RemoveModifiers();
+
+            // 已装备槽移除
             equipment.Remove(equipmentDictionary[equipmentToRemove]);
             equipmentDictionary.Remove(equipmentToRemove);
         }
     }
 
+    /// <summary>
+    /// 根据装备类型 返回已装备的该类装备
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public ItemData_Equipment GetEquipmentByType(EquipmentType type)
+    {
+        ItemData_Equipment newEquip = null;
+        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> items in equipmentDictionary)
+        {
+            if (items.Key.equipmentType == type)
+                newEquip = items.Key;
+        }
+        return newEquip;
+    }
+
+    /// <summary>
+    /// 根据物品类型 存到对应位置
+    /// </summary>
+    /// <param name="item"></param>
     public void AddItem(ItemData item)
     {
         if(item.itemType == itemType.Equipment)
@@ -123,33 +162,10 @@ public class Inventory : MonoBehaviour
         UpdateAllSlotUI();
     }
 
-    private void AddToInventory (ItemData item)
-    {
-        if (inventoryDictionary.ContainsKey(item))
-        {
-            inventoryDictionary[item].AddStack();
-        }
-        else
-        {
-            InventoryItem newItem = new InventoryItem(item);
-            inventory.Add(newItem);
-            inventoryDictionary.Add(item, newItem);
-        }
-    }
-    private void AddToStash (ItemData item)
-    {
-        if (stashDictionary.ContainsKey(item))
-        {
-            stashDictionary[item].AddStack();
-        }
-        else
-        {
-            InventoryItem newItem = new InventoryItem(item);
-            stash.Add(newItem);
-            stashDictionary.Add(item, newItem);
-        }
-    }
-
+    /// <summary>
+    /// 查找所有库存 移除物品
+    /// </summary>
+    /// <param name="item"></param>
     public void RemoveItem(ItemData item)
     {
         if (inventoryDictionary.ContainsKey(item))
@@ -175,4 +191,92 @@ public class Inventory : MonoBehaviour
 
         UpdateAllSlotUI();
     }
+
+    /// <summary>
+    /// 新物品 存到inventory
+    /// </summary>
+    /// <param name="item"></param>
+    private void AddToInventory (ItemData item)
+    {
+        if (inventoryDictionary.ContainsKey(item))
+        {
+            inventoryDictionary[item].AddStack();
+        }
+        else
+        {
+            InventoryItem newItem = new InventoryItem(item);
+            inventory.Add(newItem);
+            inventoryDictionary.Add(item, newItem);
+        }
+    }
+
+    /// <summary>
+    /// 新物品 存到stash
+    /// </summary>
+    /// <param name="item"></param>
+    private void AddToStash (ItemData item)
+    {
+        if (stashDictionary.ContainsKey(item))
+        {
+            stashDictionary[item].AddStack();
+        }
+        else
+        {
+            InventoryItem newItem = new InventoryItem(item);
+            stash.Add(newItem);
+            stashDictionary.Add(item, newItem);
+        }
+    }
+
+    /// <summary>
+    /// 如果可以 则制造装备
+    /// </summary>
+    /// <param name="equipToCraft">待造装备</param>
+    /// <param name="requireMaterial">需求列表</param>
+    /// <returns>是否制造成功</returns>
+    public bool CanCraft(ItemData_Equipment equipToCraft, List<InventoryItem> requireMaterial)
+    {
+        // 暂存用到的材料
+        List<InventoryItem> useMaterials = new();
+
+        for (int i = 0; i < requireMaterial.Count; i++)
+        {
+            // 检查有无材料
+            if (stashDictionary.ContainsKey(requireMaterial[i].itemData))
+            {
+                // 检查数量
+                InventoryItem value = stashDictionary[requireMaterial[i].itemData];
+                if (value.stackSize >= requireMaterial[i].stackSize)
+                {
+                    useMaterials.Add(value);
+                }
+                else
+                {
+                    Debug.Log("No Enough Amount");
+                    return false;
+                }
+            }
+            else
+            {
+                Debug.Log("No Enough Type");
+                return false;
+            }
+        }
+
+        // 制造成功 扣除材料
+        for (int i = 0; i < useMaterials.Count; i++)
+        {
+            while (useMaterials[i].stackSize > 0)
+            {
+                RemoveItem(useMaterials[i].itemData);
+                useMaterials[i].RemoveStack();
+            }
+        }
+
+        AddItem(equipToCraft);
+
+        Debug.Log("Craft" + equipToCraft.itemName);
+        return true;
+    }
+
 }

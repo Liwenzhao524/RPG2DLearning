@@ -8,21 +8,23 @@ using UnityEngine;
 public class ItemObject : MonoBehaviour
 {
     [SerializeField] ItemData itemData;
+    Rigidbody2D _rb => GetComponent<Rigidbody2D>();
 
-    //Inventory _inventory = Inventory.instance;
+    Vector2 _dropVelocity;
 
-    private void OnValidate ()
+    public void SetUpItem(ItemData itemData, Vector2 dropVelocity)
     {
+        _dropVelocity = dropVelocity;
+        this.itemData = itemData;
+
         GetComponent<SpriteRenderer>().sprite = itemData.icon;
         gameObject.name = "item - " + itemData.itemName;
+        _rb.velocity = _dropVelocity;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void PickupItem ()
     {
-        if (collision.GetComponent<Player>() != null)
-        {
-            Inventory.instance.AddItem(itemData);
-            Destroy(gameObject);
-        }
+        Inventory.instance.AddItem(itemData);
+        Destroy(gameObject);
     }
 }

@@ -13,9 +13,9 @@ public class Skill_Crystal_Controller : Skill_Controller
     bool _canMove;
     float _moveSpeed;
 
-    protected override void Awake()
+    protected override void Start ()
     {
-        base.Awake();
+        base.Start();
         _col = GetComponent<CircleCollider2D>();
     }
 

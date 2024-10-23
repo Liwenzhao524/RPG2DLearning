@@ -700,6 +700,7 @@ GameObject:
   - component: {fileID: 8501802004549542334}
   - component: {fileID: 4542968857758186457}
   - component: {fileID: 404200921230451470}
+  - component: {fileID: 7013118683640076546}
   m_Layer: 8
   m_Name: Enemy_Skeleton
   m_TagString: Untagged
@@ -866,7 +867,7 @@ MonoBehaviour:
   vitality:
     baseValue: 0
   maxHP:
-    baseValue: 1000
+    baseValue: 100
   armor:
     baseValue: 0
   evasion:
@@ -887,3 +888,26 @@ MonoBehaviour:
     baseValue: 0
   currentHP: 0
   shockThunderPrefab: {fileID: 4979832629735912810, guid: 422b2cbb5dd4a864baf473b618c71035, type: 3}
+  dropAmount: 2
+  possibleDrops:
+  - {fileID: 11400000, guid: 634c76e1dc0360d42a5888847e3425cc, type: 2}
+  - {fileID: 11400000, guid: bf8ab9b568c945d4c8829cc428d8782d, type: 2}
+  - {fileID: 11400000, guid: a58e03625db82fd44a5e445c1d6be65f, type: 2}
+  - {fileID: 11400000, guid: 2d654fce6081d75479ff53a71a68c90f, type: 2}
+  - {fileID: 11400000, guid: 01360ff33c2469e4b90e89047e048cf6, type: 2}
+  level: 1
+  growPercentage: 0
+--- !u!114 &7013118683640076546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8873657345737703373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af8bbd7fac38f1146960278fe7562ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropPrefab: {fileID: 6842104267358004998, guid: 028369769a72f0a4cb91575792c98008, type: 3}
+  item: {fileID: 0}

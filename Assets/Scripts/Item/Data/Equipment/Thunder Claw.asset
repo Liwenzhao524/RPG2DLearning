@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cda9ee2340e454542b58587f3e912cd5, type: 3}
-  m_Name: iron amror
+  m_Name: Thunder Claw
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: iron amror
-  icon: {fileID: -1581127718, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  dropChance: 100
-  equipmentType: 1
+  itemName: Thunder Claw
+  icon: {fileID: 1724600912, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 0
+  equipmentType: 0
+  equipEffects:
+  - {fileID: 11400000, guid: 5081e438d8522bc4bb651c920f6df8b3, type: 2}
   strength: 0
   agility: 0
   intelligence: 0
   vitality: 0
-  maxHP: 20
-  armor: 20
+  maxHP: 0
+  armor: 0
   evasion: 0
   magicResistence: 0
-  ATK: 0
+  ATK: 10
   critChance: 0
   critDamage: 0
   fireATK: 0
   iceATK: 0
-  lightningATK: 0
-  craftMaterials:
-  - itemData: {fileID: 11400000, guid: bf8ab9b568c945d4c8829cc428d8782d, type: 2}
-    stackSize: 1
+  lightningATK: 7.5
+  craftMaterials: []

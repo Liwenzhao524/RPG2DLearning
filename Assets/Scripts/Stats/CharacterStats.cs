@@ -41,7 +41,7 @@ public class CharacterStats : MonoBehaviour
     float _thunderDamage;
 
     public float currentHP;
-
+    public bool isDead {  get; private set; }
     /// <summary>
     /// 仅当HP变化时调用
     /// </summary>
@@ -104,6 +104,8 @@ public class CharacterStats : MonoBehaviour
 
         totalDamage = DoCrit(totalDamage);
         totalDamage = DoDefence(target, totalDamage);
+
+        // 之后取决于武器效果 可能会调用DoMagicDamageTo
 
         target.TakeDamage(totalDamage);
     }
@@ -256,6 +258,10 @@ public class CharacterStats : MonoBehaviour
         Thunder_Controller ctrl = thunder.GetComponent<Thunder_Controller>();
         Transform target = ctrl.FindClosestEnemy();
 
+        // debug: FindClosestEnemy的问题 没有敌人会返回雷击的transform
+        if (target == thunder.transform)
+            target = transform;
+
         ctrl.SetUp(_thunderDamage, target.GetComponent<CharacterStats>());
     }
 
@@ -351,7 +357,7 @@ public class CharacterStats : MonoBehaviour
     {
         DecreaseHP(damage);
 
-        if (currentHP <= 0)
+        if (currentHP <= 0 && !isDead)
         {
             Die();
         }
@@ -370,13 +376,15 @@ public class CharacterStats : MonoBehaviour
 
             DecreaseHP(_ignitedDamage);
 
-            if (currentHP < 0) 
+            if (currentHP <= 0 && !isDead) 
                 Die();
         }
     }
 
     protected virtual void Die()
     {
+        if (isDead) return;
+        isDead = true;
         _isignited = false;
         _ischilled = false;
         _isshocked = false;

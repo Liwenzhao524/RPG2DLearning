@@ -8,16 +8,12 @@ public class Skill_Controller : MonoBehaviour
     protected Rigidbody2D rb;
     protected Player player;
 
-    protected virtual void Awake()
+    // Start is called before the first frame update
+    protected virtual void Start()
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         player = PlayerManager.instance.player;
-    }
-    // Start is called before the first frame update
-    protected virtual void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -29,7 +25,7 @@ public class Skill_Controller : MonoBehaviour
     /// <summary>
     /// 获取最近敌人
     /// </summary>
-    /// <returns>返回Transform</returns>
+    /// <returns></returns>
     public virtual Transform FindClosestEnemy()
     {
         float minDistance = Mathf.Infinity;

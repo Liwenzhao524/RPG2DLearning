@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 /// <summary>
 /// 数据封装类 根据Itemdata创建的可以放进inventory内的物体
+/// 是物体在inventory内的存放形式
 /// </summary>
 public class InventoryItem  
 {

@@ -16,8 +16,8 @@ public class Skill_Blackhole_Controller : Skill_Controller
     readonly bool _canGrow = true;
     
     bool _canCreateHotKey = true;
-    [SerializeField]List<Transform> targets = new List<Transform>();
-    List<GameObject> _createdHotKey = new List<GameObject>();
+    List<Transform> _targets = new();
+    List<GameObject> _createdHotKey = new();
 
     bool _canCloneAttack;
     int _cloneAttackCount = 8;
@@ -56,13 +56,13 @@ public class Skill_Blackhole_Controller : Skill_Controller
         if (_blackholeTimer < 0)
         {
             _blackholeTimer = Mathf.Infinity;
-            if (targets.Count > 0)
+            if (_targets.Count > 0)
                 CloneAttackStart();
             else
                 EndBlackholeSkill();
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && targets.Count > 0)
+        if (Input.GetKeyDown(KeyCode.R) && _targets.Count > 0)
             CloneAttackStart();
 
         CloneAttackLogic();
@@ -104,10 +104,10 @@ public class Skill_Blackhole_Controller : Skill_Controller
         {
             _cloneAttackTimer = _cloneAttackCoolDown;
 
-            int randomIndex = Random.Range(0, targets.Count);
+            int randomIndex = Random.Range(0, _targets.Count);
             float xOffset = Random.Range(0, 100) > 50 ? 1 : -1;
 
-            SkillManager.instance.clone.CreateClone(targets[randomIndex], new Vector2(xOffset, 0));
+            SkillManager.instance.clone.CreateClone(_targets[randomIndex], new Vector2(xOffset, 0));
 
             _cloneAttackCount--;
             if (_cloneAttackCount <= 0)
@@ -185,6 +185,6 @@ public class Skill_Blackhole_Controller : Skill_Controller
 
     #endregion
 
-    public void AddEnemyToList(Transform enemy) => targets.Add(enemy); 
+    public void AddEnemyToList(Transform enemy) => _targets.Add(enemy); 
 
 }
