@@ -126,7 +126,7 @@ public class Skill_Blackhole_Controller : Skill_Controller
         DestroyHotKey();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) 
+   protected override void OnTriggerEnter2D(Collider2D collision) 
     {
         if(collision.GetComponent<Enemy>() != null)
         {

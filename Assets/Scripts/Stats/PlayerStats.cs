@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class PlayerStats : CharacterStats
@@ -21,7 +22,7 @@ public class PlayerStats : CharacterStats
 
     public override void DoDamageTo(CharacterStats target)
     {
-        base.DoDamageTo(target);
+        base.DoDamageTo(target); 
     }
 
     public override void DoMagicDamageTo(CharacterStats target)
@@ -32,6 +33,13 @@ public class PlayerStats : CharacterStats
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
+    }
+
+    protected override void DecreaseHP (float damage)
+    {
+        base.DecreaseHP(damage);
+
+        Inventory.instance.GetEquipmentByType(EquipmentType.Armor)?.ExecuteEffects(transform);
     }
 
     protected override void Die()

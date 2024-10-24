@@ -10,27 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cda9ee2340e454542b58587f3e912cd5, type: 3}
-  m_Name: iron sword
+  m_Name: LifeSteal Sword
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: iron sword
-  icon: {fileID: 1526008332, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  dropChance: 100
+  itemName: LifeSteal Sword
+  icon: {fileID: 1426366811, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 0
   equipmentType: 0
+  equipEffects:
+  - {fileID: 11400000, guid: 72d29a378261db944a0943c0773a753f, type: 2}
+  effectCoolDown: 0
   strength: 0
   agility: 0
   intelligence: 0
   vitality: 0
-  maxHP: 0
+  maxHP: 10
   armor: 0
   evasion: 0
   magicResistence: 0
-  ATK: 20
-  critChance: 0
+  ATK: 10
+  critChance: 10
   critDamage: 0
   fireATK: 0
   iceATK: 0
   lightningATK: 0
-  craftMaterials:
-  - itemData: {fileID: 11400000, guid: 01360ff33c2469e4b90e89047e048cf6, type: 2}
-    stackSize: 3
+  craftMaterials: []

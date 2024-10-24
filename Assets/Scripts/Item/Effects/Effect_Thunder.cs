@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Thunder Effect", menuName = "Data/Item effect/Thunder")]
+/// <summary>
+/// 击中敌人时触发一道雷击
+/// </summary>
+[CreateAssetMenu(fileName = "Thunder Effect", menuName = "Data/Item Effect/Thunder")]
 public class Effect_Thunder : ItemEffect
 {
     [SerializeField] GameObject thunderPrefab;
 
-    public override void ExecuteEffect ()
+    public override void ExecuteEffect (Transform target)
     {
-        Player player = PlayerManager.instance.player;
-        GameObject newThunder = Instantiate(thunderPrefab, player.transform.position + 
-                                                           new Vector3(player.faceDir * 2, 0), Quaternion.identity);
+        base.ExecuteEffect (target);
+        GameObject newThunder = Instantiate(thunderPrefab, target.position, Quaternion.identity);
 
         Destroy(newThunder, 1);
     }

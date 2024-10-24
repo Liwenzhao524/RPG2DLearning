@@ -130,7 +130,7 @@ public class Skill_Sword_Controller : Skill_Controller
             if (Vector2.Distance(transform.position, _bounceTarget[_targetIndex].position) < 0.1f)
             {
                 if(_bounceTarget[_targetIndex].GetComponent<Enemy>()){
-                    player.stats.DoDamageTo(_bounceTarget[_targetIndex].GetComponent<CharacterStats>());
+                    DoSwordSkillDamage(_bounceTarget[_targetIndex].GetComponent<Enemy>());
                 }
                 _targetIndex++;
                 if (_targetIndex >= _bounceTarget.Count)
@@ -205,7 +205,7 @@ public class Skill_Sword_Controller : Skill_Controller
             if (_isSpinStopped)
             {
                 // 旋转时缓慢前移
-                transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + _spinDirection, transform.position.y), 1 * Time.deltaTime);
+                //transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + _spinDirection, transform.position.y), 1 * Time.deltaTime);
 
                 // 原地旋转
                 _spinTimer -= Time.deltaTime;
@@ -224,7 +224,7 @@ public class Skill_Sword_Controller : Skill_Controller
                     foreach (var hit in colliders)
                         if(hit.GetComponent<Enemy>())
                         {
-                            player.stats.DoMagicDamageTo(hit.GetComponent<CharacterStats>());
+                            DoSwordSkillDamage(hit.GetComponent<Enemy>());
                         }
                 }
             }
@@ -245,22 +245,29 @@ public class Skill_Sword_Controller : Skill_Controller
     #endregion
 
     #region Collision
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (_isReturn) return;
 
         if (collision.GetComponent<Enemy>())
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            enemy.StartCoroutine("FreezeTimerFor", _freezeDuration);
-            player.stats.DoDamageTo(collision.GetComponent<CharacterStats>());
+            DoSwordSkillDamage(enemy);
         }
-        
+
         // 可以弹射
         SetTargetForBounce(collision);
 
         // 不能弹射或不是敌人
         StuckIn(collision);
+    }
+
+    private void DoSwordSkillDamage (Enemy enemy)
+    {
+        enemy.StartCoroutine(enemy.FreezeTimerFor(_freezeDuration));
+        player.stats.DoDamageTo(enemy.GetComponent<CharacterStats>());
+
+        Inventory.instance.GetEquipmentByType(EquipmentType.Amulet)?.ExecuteEffects(enemy.transform);
     }
 
     /// <summary>

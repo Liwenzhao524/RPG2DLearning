@@ -65,6 +65,13 @@ public class Enemy : Entity
         moveSpeed = _defaultMoveSpeed;
     }
 
+
+    public virtual IEnumerator FreezeTimerFor(float time)
+    {
+        FreezeTime(true);
+        yield return new WaitForSeconds(time);
+        FreezeTime(false);
+    }
     public void FreezeTime(bool isFreeze)
     {
         if (isFreeze)
@@ -77,13 +84,6 @@ public class Enemy : Entity
             moveSpeed = _defaultMoveSpeed;
             anim.speed = 1;
         }
-    }
-
-    public virtual IEnumerator FreezeTimerFor(float time)
-    {
-        FreezeTime(true);
-        yield return new WaitForSeconds(time);
-        FreezeTime(false);
     }
 
     #endregion

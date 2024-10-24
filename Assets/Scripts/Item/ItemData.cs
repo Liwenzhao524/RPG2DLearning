@@ -10,7 +10,7 @@ public enum itemType
 /// <summary>
 /// 道具具体信息类
 /// </summary>
-[CreateAssetMenu(fileName = "new item", menuName = "Data/item")]
+[CreateAssetMenu(fileName = "new item", menuName = "Data/Item")]
 public class ItemData : ScriptableObject
 {
     public itemType itemType;

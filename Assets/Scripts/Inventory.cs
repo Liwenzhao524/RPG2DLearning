@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
@@ -19,7 +17,7 @@ public class Inventory : MonoBehaviour
 
     // 装备槽
     public List<InventoryItem> equipment = new();
-    public Dictionary<ItemData_Equipment, InventoryItem > equipmentDictionary = new();
+    public Dictionary<ItemData_Equipment, InventoryItem> equipmentDictionary = new();
 
     [Header("Slot UI")]
     [SerializeField] Transform inventorySlotParent;
@@ -30,7 +28,13 @@ public class Inventory : MonoBehaviour
     UI_ItemSlot[] stashSlots;
     UI_EquipmentSlot[] equipmentSlots;
 
-    private void Awake()
+
+    float _lastTimeUseFlask;
+    float _lastTimeUseArmor;
+    float _flaskCoolDown;
+    float _armorCoolDown;
+
+    private void Awake ()
     {
         if (instance == null)
             instance = this;
@@ -40,11 +44,11 @@ public class Inventory : MonoBehaviour
     {
         inventorySlots = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         stashSlots = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
-        equipmentSlots = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>(); 
+        equipmentSlots = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
 
-        foreach(var item in start)
+        foreach (var item in start)
         {
-            while(item.stackSize > 0)
+            while (item.stackSize > 0)
             {
                 AddItem(item.itemData);
                 item.RemoveStack();
@@ -62,13 +66,13 @@ public class Inventory : MonoBehaviour
         {
             stashSlots[i].CleanUpSlot();
         }
-        
+
 
         for (int i = 0; i < inventory.Count; i++)
         {
             inventorySlots[i].UpdateSlotUI(inventory[i]);
         }
-        for(int i = 0; i < stash.Count; i++)
+        for (int i = 0; i < stash.Count; i++)
         {
             stashSlots[i].UpdateSlotUI(stash[i]);
         }
@@ -83,10 +87,26 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
+    /// 根据装备类型 返回已装备的该类装备
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public ItemData_Equipment GetEquipmentByType (EquipmentType type)
+    {
+        ItemData_Equipment newEquip = null;
+        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> items in equipmentDictionary)
+        {
+            if (items.Key.equipmentType == type)
+                newEquip = items.Key;
+        }
+        return newEquip;
+    }
+
+    /// <summary>
     /// 装备 从inventory到equipment
     /// </summary>
     /// <param name="item"></param>
-    public void EquipItem(ItemData_Equipment item)
+    public void EquipItem (ItemData_Equipment item)
     {
         InventoryItem newEquipment = new(item);
 
@@ -128,36 +148,22 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 根据装备类型 返回已装备的该类装备
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    public ItemData_Equipment GetEquipmentByType(EquipmentType type)
-    {
-        ItemData_Equipment newEquip = null;
-        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> items in equipmentDictionary)
-        {
-            if (items.Key.equipmentType == type)
-                newEquip = items.Key;
-        }
-        return newEquip;
-    }
+    #region Basic Add Remove
 
     /// <summary>
     /// 根据物品类型 存到对应位置
     /// </summary>
     /// <param name="item"></param>
-    public void AddItem(ItemData item)
+    public void AddItem (ItemData item)
     {
-        if(item.itemType == itemType.Equipment)
+        if (item.itemType == itemType.Equipment)
         {
             AddToInventory(item);
 
         }
-        else if(item.itemType == itemType.Material)
+        else if (item.itemType == itemType.Material)
         {
-             AddToStash(item);
+            AddToStash(item);
         }
         UpdateAllSlotUI();
     }
@@ -166,13 +172,13 @@ public class Inventory : MonoBehaviour
     /// 查找所有库存 移除物品
     /// </summary>
     /// <param name="item"></param>
-    public void RemoveItem(ItemData item)
+    public void RemoveItem (ItemData item)
     {
         if (inventoryDictionary.ContainsKey(item))
         {
             inventoryDictionary[item].RemoveStack();
-            if (inventoryDictionary[item].stackSize <= 0) 
-            { 
+            if (inventoryDictionary[item].stackSize <= 0)
+            {
                 inventory.Remove(inventoryDictionary[item]);
                 inventoryDictionary.Remove(item);
             }
@@ -228,13 +234,15 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    #endregion
+
     /// <summary>
     /// 如果可以 则制造装备
     /// </summary>
     /// <param name="equipToCraft">待造装备</param>
     /// <param name="requireMaterial">需求列表</param>
     /// <returns>是否制造成功</returns>
-    public bool CanCraft(ItemData_Equipment equipToCraft, List<InventoryItem> requireMaterial)
+    public bool CanCraft (ItemData_Equipment equipToCraft, List<InventoryItem> requireMaterial)
     {
         // 暂存用到的材料
         List<InventoryItem> useMaterials = new();
@@ -279,4 +287,54 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
+    #region EffectEquip Use
+
+    /// <summary>
+    /// 检查冷却 并尝试使用药瓶技能
+    /// </summary>
+    public void UseFlask ()
+    {
+        ItemData_Equipment flask;
+        if (!GetEquipmentByType(EquipmentType.Flask)) return;
+            
+        flask = GetEquipmentByType(EquipmentType.Flask);
+
+        if (Time.time > _lastTimeUseFlask + _flaskCoolDown)
+        {
+            _flaskCoolDown = flask.effectCoolDown;
+            flask.ExecuteEffects(null);
+            _lastTimeUseFlask = Time.time;
+        }
+        else
+        {
+            Debug.Log("Flask In CoolDown");
+        }
+    }
+
+    /// <summary>
+    /// 检查盔甲技能冷却 与Flask执行逻辑不同
+    /// </summary>
+    /// <returns></returns>
+    public bool CanUseArmor ()
+    {
+        ItemData_Equipment armor;
+        if (!GetEquipmentByType(EquipmentType.Armor)) return false;
+
+        armor = GetEquipmentByType(EquipmentType.Armor);
+
+        if(Time.time > _lastTimeUseArmor + _armorCoolDown)
+        {
+            _armorCoolDown = armor.effectCoolDown;
+            //armor.ExecuteEffects(PlayerManager.instance.player.transform);
+            _lastTimeUseArmor = Time.time;
+            return true;
+        }
+        else
+        {
+            Debug.Log("Armor In CoolDown");
+        }
+        return false;
+    }
+
+    #endregion
 }

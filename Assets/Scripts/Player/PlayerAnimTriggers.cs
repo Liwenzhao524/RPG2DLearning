@@ -25,7 +25,7 @@ public class PlayerAnimTriggers : MonoBehaviour
                 _player.GetComponent<CharacterStats>().DoDamageTo(target);
                 //_player.GetComponent<CharacterStats>().DoMagicDamageTo(target);
 
-                Inventory.instance.GetEquipmentByType(EquipmentType.Weapon)?.ExecuteEffects();
+                Inventory.instance.GetEquipmentByType(EquipmentType.Weapon)?.ExecuteEffects(hit.transform);
             }
         }
     }

@@ -5,11 +5,14 @@ using UnityEngine;
 /// <summary>
 /// 特殊效果 词条
 /// </summary>
-[CreateAssetMenu(fileName = "new item effect", menuName = "Data/Item effect")]
+
 public class ItemEffect : ScriptableObject
 {
-    public virtual void ExecuteEffect ()
+    protected Player player;
+    protected PlayerStats stats;
+    public virtual void ExecuteEffect (Transform target)
     {
-
+        player = PlayerManager.instance.player;
+        stats = player.stats as PlayerStats;
     }
 }

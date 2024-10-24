@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThunderStrike_Controller : Skill_Controller
 {
-    protected virtual void OnTriggerEnter2D (Collider2D collision)
+    protected override void OnTriggerEnter2D (Collider2D collision)
     {
         if(collision.GetComponent<Enemy>() != null)
         {
@@ -12,8 +12,6 @@ public class ThunderStrike_Controller : Skill_Controller
             EnemyStats target = collision.GetComponent<EnemyStats>();
 
             stats.DoMagicDamageTo(target);
-
-            Destroy(gameObject, 0.5f);
         }
     }
 }

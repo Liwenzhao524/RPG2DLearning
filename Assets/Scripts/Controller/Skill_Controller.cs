@@ -46,4 +46,9 @@ public class Skill_Controller : MonoBehaviour
         }
         return target;  
     }
+
+    protected virtual void OnTriggerEnter2D (Collider2D collision)
+    {
+        
+    }
 }

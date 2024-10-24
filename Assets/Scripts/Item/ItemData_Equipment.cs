@@ -17,6 +17,7 @@ public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
     public List<ItemEffect> equipEffects;
+    public float effectCoolDown;
 
     [Header("Major Stats")]
     public float strength;
@@ -46,11 +47,12 @@ public class ItemData_Equipment : ItemData
     /// <summary>
     /// 执行装备上的特殊效果 词条
     /// </summary>
-    public void ExecuteEffects ()
+    /// <param name="target">待创建或待作用的对象</param>
+    public void ExecuteEffects (Transform target)
     {
         foreach (var effect in equipEffects)
         {
-            effect.ExecuteEffect();
+            effect.ExecuteEffect(target);
         }
     }
 

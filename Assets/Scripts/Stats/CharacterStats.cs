@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -90,46 +91,16 @@ public class CharacterStats : MonoBehaviour
         TakeIgniteDamage();
     }
 
-    
-
-    /// <summary>
-    /// 造成物伤
-    /// </summary>
-    /// <param name="target"></param>
-    public virtual void DoDamageTo(CharacterStats target)
+    public virtual void AddBuffToStats(Stats statsToBuff, float modifier, float duration)
     {
-        if (DoEvasion(target)) return;
-
-        float totalDamage = ATK.GetValue() + strength.GetValue();
-
-        totalDamage = DoCrit(totalDamage);
-        totalDamage = DoDefence(target, totalDamage);
-
-        // 之后取决于武器效果 可能会调用DoMagicDamageTo
-
-        target.TakeDamage(totalDamage);
+        StartCoroutine(StatsBuff(statsToBuff, modifier, duration));
     }
 
-
-    /// <summary>
-    /// 造成法伤
-    /// </summary>
-    /// <param name="target"></param>
-    public virtual void DoMagicDamageTo(CharacterStats target)
+    IEnumerator StatsBuff(Stats statsToBuff, float modifier, float duration)
     {
-        float _fireDamage = fireATK.GetValue();
-        float _iceDamage = iceATK.GetValue();
-        float _lightningDamage = lightningATK.GetValue();
-
-        float totalMagicDamage = _fireDamage + _iceDamage + _lightningDamage + intelligence.GetValue();
-
-        totalMagicDamage = DoMagicResistance(totalMagicDamage);
-
-        target.TakeDamage(totalMagicDamage);
-
-        if (Mathf.Max(_fireDamage, _iceDamage, _lightningDamage) <= 0) return;
-
-        TakeAilment(target, _fireDamage, _iceDamage, _lightningDamage);
+        statsToBuff.AddModifier(modifier);
+        yield return new WaitForSeconds(duration);
+        statsToBuff.RemoveModifier(modifier);
     }
 
     #region Aliment
@@ -342,11 +313,62 @@ public class CharacterStats : MonoBehaviour
 
     #endregion
 
+    #region Damage And HPChange
+
+    public virtual void IncreaseHP(float hp)
+    {
+        currentHP += hp;
+
+        currentHP = Mathf.Clamp(currentHP, 0, GetMaxHP());
+        
+        HPChange?.Invoke();
+    }
+
     protected virtual void DecreaseHP(float damage)
     {
         currentHP -= damage;
 
         HPChange?.Invoke();
+    }
+
+    /// <summary>
+    /// 造成物伤
+    /// </summary>
+    /// <param name="target"></param>
+    public virtual void DoDamageTo (CharacterStats target)
+    {
+        if (DoEvasion(target)) return;
+
+        float totalDamage = ATK.GetValue() + strength.GetValue();
+
+        totalDamage = DoCrit(totalDamage);
+        totalDamage = DoDefence(target, totalDamage);
+
+        target.TakeDamage(totalDamage);
+
+        // 根据个人喜好 是否同时附加法伤
+        //DoMagicDamageTo(target);
+    }
+
+    /// <summary>
+    /// 造成法伤
+    /// </summary>
+    /// <param name="target"></param>
+    public virtual void DoMagicDamageTo (CharacterStats target)
+    {
+        float _fireDamage = fireATK.GetValue();
+        float _iceDamage = iceATK.GetValue();
+        float _lightningDamage = lightningATK.GetValue();
+
+        float totalMagicDamage = _fireDamage + _iceDamage + _lightningDamage + intelligence.GetValue();
+
+        totalMagicDamage = DoMagicResistance(totalMagicDamage);
+
+        target.TakeDamage(totalMagicDamage);
+
+        if (Mathf.Max(_fireDamage, _iceDamage, _lightningDamage) <= 0) return;
+
+        TakeAilment(target, _fireDamage, _iceDamage, _lightningDamage);
     }
 
     /// <summary>
@@ -380,6 +402,8 @@ public class CharacterStats : MonoBehaviour
                 Die();
         }
     }
+
+    #endregion
 
     protected virtual void Die()
     {
