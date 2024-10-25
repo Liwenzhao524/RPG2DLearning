@@ -34,7 +34,7 @@ public class EnemyStats : CharacterStats
 
         ModifyStat(maxHP);
         ModifyStat(armor);
-        ModifyStat(magicResistence);
+        ModifyStat(magicResist);
 
         ModifyStat(iceATK);
         ModifyStat(fireATK);

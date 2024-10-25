@@ -164,6 +164,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: artdecoUI_PIPO_wb_2
+      rect:
+        serializedVersion: 2
+        x: 971
+        y: 446
+        width: 91
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 7, y: 7, z: 7, w: 7}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c30a029e1f9a6b74e9002241189eb552
+      internalID: 323680538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -177,6 +198,7 @@ TextureImporter:
     nameFileIdTable:
       artdecoUI_PIPO_wb_0: -1762947064
       artdecoUI_PIPO_wb_1: -1146079874
+      artdecoUI_PIPO_wb_2: 323680538
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

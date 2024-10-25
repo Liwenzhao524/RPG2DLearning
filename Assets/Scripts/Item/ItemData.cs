@@ -1,3 +1,4 @@
+using System.Text;
 using UnityEngine;
 
 public enum itemType 
@@ -19,4 +20,11 @@ public class ItemData : ScriptableObject
 
     [Range(0, 100)]
     public float dropChance;
+
+    public StringBuilder stringBuilder = new();
+
+    public virtual string GetDescription ()
+    {
+        return "";
+    }
 }

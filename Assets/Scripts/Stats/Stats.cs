@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class Stats
                 finalValue += modifier;
             }
         }
+        finalValue = (float)Math.Round(finalValue, 2);
         return finalValue; 
     }
 

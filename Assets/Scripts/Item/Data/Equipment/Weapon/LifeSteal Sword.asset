@@ -29,8 +29,8 @@ MonoBehaviour:
   evasion: 0
   magicResistence: 0
   ATK: 10
-  critChance: 10
-  critDamage: 0
+  critChance: 0.2
+  critDamage: 0.2
   fireATK: 0
   iceATK: 0
   lightningATK: 0

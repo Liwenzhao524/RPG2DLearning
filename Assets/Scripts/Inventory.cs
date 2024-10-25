@@ -23,11 +23,14 @@ public class Inventory : MonoBehaviour
     [SerializeField] Transform inventorySlotParent;
     [SerializeField] Transform stashSlotParent;
     [SerializeField] Transform equipmentSlotParent;
+    [SerializeField] Transform statsSlotParent;
 
     UI_ItemSlot[] inventorySlots;
     UI_ItemSlot[] stashSlots;
     UI_EquipmentSlot[] equipmentSlots;
+    UI_StatSlot[] statSlots;
 
+    UI mainUI;
 
     float _lastTimeUseFlask;
     float _lastTimeUseArmor;
@@ -45,6 +48,9 @@ public class Inventory : MonoBehaviour
         inventorySlots = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         stashSlots = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
         equipmentSlots = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+        statSlots = statsSlotParent.GetComponentsInChildren<UI_StatSlot>();
+
+        mainUI = inventorySlotParent.GetComponentInParent<UI>();
 
         foreach (var item in start)
         {
@@ -54,6 +60,8 @@ public class Inventory : MonoBehaviour
                 item.RemoveStack();
             }
         }
+
+        UpdateAllSlotUI();
     }
 
     void UpdateAllSlotUI ()
@@ -83,6 +91,10 @@ public class Inventory : MonoBehaviour
                 if (items.Key.equipmentType == equipmentSlots[i].equipmentType)
                     equipmentSlots[i].UpdateSlotUI(items.Value);
             }
+        }
+        for (int i = 0; i < statSlots.Length; i++)
+        {
+            statSlots[i].UpdateStatUI();
         }
     }
 
@@ -120,6 +132,7 @@ public class Inventory : MonoBehaviour
         RemoveItem(item);
 
         UpdateAllSlotUI();
+        mainUI.itemToolTip.HideToolTip(item);
     }
 
     /// <summary>
@@ -142,9 +155,12 @@ public class Inventory : MonoBehaviour
 
             equipmentToRemove.RemoveModifiers();
 
-            // 已装备槽移除
+            // 从已装备槽移除
             equipment.Remove(equipmentDictionary[equipmentToRemove]);
             equipmentDictionary.Remove(equipmentToRemove);
+
+            UpdateAllSlotUI();
+            mainUI.itemToolTip.HideToolTip(equipmentToRemove);
         }
     }
 
@@ -198,12 +214,23 @@ public class Inventory : MonoBehaviour
         UpdateAllSlotUI();
     }
 
+    public bool CanAddToInventory ()
+    {
+        return inventory.Count < inventorySlots.Length;
+    }
+
     /// <summary>
     /// 新物品 存到inventory
     /// </summary>
     /// <param name="item"></param>
     private void AddToInventory (ItemData item)
     {
+        if (!CanAddToInventory())
+        {
+            Debug.Log("No Space");
+            return;
+        }
+
         if (inventoryDictionary.ContainsKey(item))
         {
             inventoryDictionary[item].AddStack();

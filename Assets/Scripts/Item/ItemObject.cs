@@ -24,6 +24,13 @@ public class ItemObject : MonoBehaviour
 
     public void PickupItem ()
     {
+        if(itemData.itemType == itemType.Equipment && !Inventory.instance.CanAddToInventory())
+        {
+            Debug.Log("No Space");
+            _rb.velocity = new Vector2(0, 5);
+            return;
+        }
+
         Inventory.instance.AddItem(itemData);
         Destroy(gameObject);
     }

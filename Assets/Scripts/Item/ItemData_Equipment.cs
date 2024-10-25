@@ -33,6 +33,7 @@ public class ItemData_Equipment : ItemData
 
     [Header("Offense Stats")]
     public float ATK;
+    [Range(0f, 1f)]
     public float critChance;
     public float critDamage;
 
@@ -43,6 +44,8 @@ public class ItemData_Equipment : ItemData
 
     [Header("Craft")]
     public List<InventoryItem> craftMaterials;
+
+    int descriptionLineCount;
 
     /// <summary>
     /// 执行装备上的特殊效果 词条
@@ -72,7 +75,7 @@ public class ItemData_Equipment : ItemData
         playerStats.maxHP.AddModifier (maxHP);
         playerStats.armor.AddModifier (armor);
         playerStats.evasion.AddModifier (evasion);
-        playerStats.magicResistence.AddModifier (magicResistence);
+        playerStats.magicResist.AddModifier (magicResistence);
 
         playerStats.ATK.AddModifier(ATK);
         playerStats.critChance.AddModifier (critChance);
@@ -98,7 +101,7 @@ public class ItemData_Equipment : ItemData
 
         playerStats.maxHP.RemoveModifier (maxHP);
         playerStats.armor.RemoveModifier (armor);
-        playerStats.magicResistence.RemoveModifier(magicResistence);
+        playerStats.magicResist.RemoveModifier(magicResistence);
         playerStats.evasion.RemoveModifier (evasion);
 
         playerStats.ATK.RemoveModifier(ATK);
@@ -109,5 +112,56 @@ public class ItemData_Equipment : ItemData
         playerStats.iceATK.RemoveModifier(iceATK);
         playerStats.lightningATK.RemoveModifier(lightningATK);
 
+    }
+
+    public override string GetDescription ()
+    {
+
+        AddDescription(strength, "Strength");
+        AddDescription(agility, "Agility");
+        AddDescription(intelligence, "Intelligence");
+        AddDescription(vitality, "Vitality");
+        AddDescription(maxHP, "MaxHP");
+        AddDescription(armor, "Armor");
+        AddDescription(evasion, "Evasion");
+        AddDescription(magicResistence, "Magic Resist");
+        AddDescription(ATK, "ATK");
+        AddDescription(critChance, "Crit Chance");
+        AddDescription(critDamage, "Crit Damage");
+        AddDescription(fireATK, "Fire ATK");
+        AddDescription(iceATK, "Ice ATK");
+        AddDescription(lightningATK, "Lightning ATK");
+        
+        if(descriptionLineCount < 5)
+        {
+            for (int i = 0; i < 5 - descriptionLineCount; i++)
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.Append(" ");
+            }
+        }
+
+        return stringBuilder.ToString();
+    }
+
+    void AddDescription(float value, string name)
+    {
+        if(value != 0)
+        {
+            if(stringBuilder.Length > 0)
+                stringBuilder.AppendLine();
+
+            if(value > 0)
+            {
+                if(name == "Crit Chance")
+                    stringBuilder.Append( "+ " + value * 100 + "% " + name);
+                else if(name == "Crit Damage")
+                    stringBuilder.Append( "+ " + value * 100 + "% " + name);
+                else
+                    stringBuilder.Append( "+ " + value + " " + name);
+
+                descriptionLineCount++;
+            }
+        }
     }
 }

@@ -1,6 +1,29 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+
+public enum StatsType
+{
+    strength,
+    agility,
+    intelligence,
+    vitality,
+
+    maxHP,
+    armor,
+    evasion,
+    magicResist,
+
+    ATK,
+    critChance,
+    critDamage,
+
+    fireATK,
+    iceATK,
+    lightningATK
+}
 
 public class CharacterStats : MonoBehaviour
 {
@@ -14,7 +37,7 @@ public class CharacterStats : MonoBehaviour
     public Stats maxHP;
     public Stats armor;
     public Stats evasion;
-    public Stats magicResistence;
+    public Stats magicResist;
 
     [Header("Offense Stats")]
     public Stats ATK;
@@ -62,14 +85,23 @@ public class CharacterStats : MonoBehaviour
         currentHP = GetMaxHP();  // 此处可能要注意Start的执行顺序 可在Setting调整
     }
 
-    /// <summary>
-    /// 返回最大HP
-    /// </summary>
-    /// <returns></returns>
-    public float GetMaxHP()
-    {
-        return maxHP.GetValue() + vitality.GetValue() * 5;
-    }
+    #region Get Stats Influenced By Major Stats
+
+    public float GetMaxHP() => maxHP.GetValue() + vitality.GetValue() * 5;
+
+    public float GetATK () => ATK.GetValue() + strength.GetValue();
+
+    public float GetMagicResist () => magicResist.GetValue() + intelligence.GetValue() * 3;
+
+    public float GetCritChance () => critChance.GetValue() * 100 + agility.GetValue();
+
+    public float GetCritDamage () => critDamage.GetValue() + 0.02f * strength.GetValue();
+
+    public float GetEvasion () => evasion.GetValue() + agility.GetValue();
+
+    public float GetMagicDamage() => fireATK.GetValue() + iceATK.GetValue() + lightningATK.GetValue() + intelligence.GetValue();
+
+    #endregion
 
     // Update is called once per frame
     protected virtual void Update()
@@ -89,6 +121,43 @@ public class CharacterStats : MonoBehaviour
             _isshocked = false;
 
         TakeIgniteDamage();
+    }
+
+    /// <summary>
+    /// 从外部通过enum或字符串获取角色Stats
+    /// 以便在外部显示或修改
+    /// </summary>
+    /// <param name="statsType"></param>
+    /// <returns></returns>
+    public Stats GetStatsByType(StatsType statsType)
+    {
+        Dictionary<StatsType, Stats> _statsMap = new()
+        {
+            { StatsType.strength, strength },
+            { StatsType.agility, agility },
+            { StatsType.intelligence, intelligence },
+            { StatsType.vitality, vitality },
+            { StatsType.maxHP, maxHP },
+            { StatsType.armor, armor },
+            { StatsType.evasion, evasion },
+            { StatsType.magicResist, magicResist },
+            { StatsType.ATK, ATK },
+            { StatsType.critChance, critChance },
+            { StatsType.critDamage, critDamage },
+            { StatsType.fireATK, fireATK },
+            { StatsType.iceATK, iceATK },
+            { StatsType.lightningATK, lightningATK }
+        };
+
+        if (_statsMap.TryGetValue(statsType, out Stats statsByType))
+        {
+            return statsByType;
+        }
+        else
+        {
+            Debug.Log("No Such Stats");
+            return null;
+        }
     }
 
     public virtual void AddBuffToStats(Stats statsToBuff, float modifier, float duration)
@@ -250,7 +319,7 @@ public class CharacterStats : MonoBehaviour
     /// <returns>计算后法伤</returns>
     protected virtual float DoMagicResistance(float totalMagicDamage)
     {
-        totalMagicDamage -= magicResistence.GetValue() + intelligence.GetValue() * 3;
+        totalMagicDamage -= GetMagicResist();
         if (totalMagicDamage < 1) totalMagicDamage = 1;
         return totalMagicDamage;
     }
@@ -262,10 +331,10 @@ public class CharacterStats : MonoBehaviour
     /// <returns></returns>
     protected virtual float DoCrit(float totalDamage)
     {
-        float totalChance = critChance.GetValue() * 100 + agility.GetValue();
+        float totalChance = GetCritChance();
         if (UnityEngine.Random.Range(0, 100) < totalChance)
         {
-            totalDamage *= (1 + critDamage.GetValue() + 0.02f * strength.GetValue());
+            totalDamage *= (1 + GetCritDamage());
         }
 
         return totalDamage;
@@ -300,7 +369,7 @@ public class CharacterStats : MonoBehaviour
     {
         if (_isshocked) target.evasion.AddModifier(-20);
 
-        float totalEvasion = target.evasion.GetValue() + target.agility.GetValue();
+        float totalEvasion = target.GetEvasion();
 
         if (_isshocked) target.evasion.RemoveModifier(-20);
 
@@ -339,7 +408,7 @@ public class CharacterStats : MonoBehaviour
     {
         if (DoEvasion(target)) return;
 
-        float totalDamage = ATK.GetValue() + strength.GetValue();
+        float totalDamage = GetATK();
 
         totalDamage = DoCrit(totalDamage);
         totalDamage = DoDefence(target, totalDamage);
@@ -360,7 +429,7 @@ public class CharacterStats : MonoBehaviour
         float _iceDamage = iceATK.GetValue();
         float _lightningDamage = lightningATK.GetValue();
 
-        float totalMagicDamage = _fireDamage + _iceDamage + _lightningDamage + intelligence.GetValue();
+        float totalMagicDamage = GetMagicDamage();
 
         totalMagicDamage = DoMagicResistance(totalMagicDamage);
 
