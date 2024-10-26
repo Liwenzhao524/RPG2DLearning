@@ -43,6 +43,7 @@ public class ItemData_Equipment : ItemData
     public float lightningATK; 
 
     [Header("Craft")]
+    [Tooltip("不超过4种")]
     public List<InventoryItem> craftMaterials;
 
     int descriptionLineCount;
@@ -114,6 +115,10 @@ public class ItemData_Equipment : ItemData
 
     }
 
+    /// <summary>
+    /// 给ToolTip添加描述
+    /// </summary>
+    /// <returns></returns>
     public override string GetDescription ()
     {
 
@@ -141,9 +146,17 @@ public class ItemData_Equipment : ItemData
             }
         }
 
-        return stringBuilder.ToString();
+        string str = stringBuilder.ToString();
+        stringBuilder.Clear();
+
+        return str;
     }
 
+    /// <summary>
+    /// 对不为0的属性添加描述
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="name"></param>
     void AddDescription(float value, string name)
     {
         if(value != 0)

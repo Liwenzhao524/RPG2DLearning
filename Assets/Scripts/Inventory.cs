@@ -310,7 +310,7 @@ public class Inventory : MonoBehaviour
 
         AddItem(equipToCraft);
 
-        Debug.Log("Craft" + equipToCraft.itemName);
+        Debug.Log("Craft " + equipToCraft.itemName);
         return true;
     }
 

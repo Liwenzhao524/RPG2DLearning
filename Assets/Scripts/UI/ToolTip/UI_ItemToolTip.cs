@@ -19,7 +19,7 @@ public class UI_ItemToolTip : UI_ToolTip
 
     public override void HideToolTip(ItemData_Equipment item)
     {
-        item.stringBuilder.Clear();
+        item.stringBuilder?.Clear();
         base.HideToolTip(item);
     }
 }

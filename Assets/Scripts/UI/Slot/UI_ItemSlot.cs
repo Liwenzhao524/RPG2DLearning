@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     protected UI mainUI => GetComponentInParent<UI>();
-    protected Image itemIcon => GetComponent<Image>();
+    [SerializeField] protected Image itemIcon;
     protected TextMeshProUGUI itemUI => GetComponentInChildren<TextMeshProUGUI>();
 
     public InventoryItem item;

@@ -34,4 +34,6 @@ MonoBehaviour:
   fireATK: 5
   iceATK: 5
   lightningATK: 0
-  craftMaterials: []
+  craftMaterials:
+  - itemData: {fileID: 11400000, guid: 01360ff33c2469e4b90e89047e048cf6, type: 2}
+    stackSize: 30
