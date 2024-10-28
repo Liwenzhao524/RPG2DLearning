@@ -20,6 +20,7 @@ MonoBehaviour:
   equipEffects:
   - {fileID: 11400000, guid: d28f5bf8bc6912b49bf9b861842b8593, type: 2}
   effectCoolDown: 0
+  effectDescription: Create a ice-fire shockwave when your third attack hit enemy.
   strength: 0
   agility: 0
   intelligence: 0

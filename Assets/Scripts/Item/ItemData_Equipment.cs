@@ -16,8 +16,12 @@ public enum EquipmentType
 public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
+
+    [Header("Unique Effect")]
     public List<ItemEffect> equipEffects;
     public float effectCoolDown;
+    [TextArea]
+    public string effectDescription;
 
     [Header("Major Stats")]
     public float strength;
@@ -136,10 +140,19 @@ public class ItemData_Equipment : ItemData
         AddDescription(fireATK, "Fire ATK");
         AddDescription(iceATK, "Ice ATK");
         AddDescription(lightningATK, "Lightning ATK");
-        
-        if(descriptionLineCount < 5)
+
+        stringBuilder.AppendLine();
+
+        if (effectDescription.Length > 0)
         {
-            for (int i = 0; i < 5 - descriptionLineCount; i++)
+            stringBuilder.AppendLine();
+            stringBuilder.Append(effectDescription);
+            descriptionLineCount++;
+        }
+
+        if(descriptionLineCount < 4)
+        {
+            for (int i = 0; i < 4 - descriptionLineCount; i++)
             {
                 stringBuilder.AppendLine();
                 stringBuilder.Append(" ");

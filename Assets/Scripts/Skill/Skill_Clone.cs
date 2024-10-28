@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 冲刺留下残影 技能
@@ -11,17 +12,50 @@ public class Skill_Clone : Skill
     [Header("Clone Info")]
     [SerializeField] GameObject newClonePrefab;
     [SerializeField] float cloneDuration;
-    [SerializeField] bool canAttack;
+
+    [Header("Attack")]
+    bool _canAttack;
+    [SerializeField] UI_SkillTreeSlot attackUnlock;
 
     [Header("Skill Branch Info")]
-    [SerializeField] bool canCloneDashStart;
-    [SerializeField] bool canCloneDashEnd;
-    [SerializeField] bool canCloneCounterAttack;
-    [SerializeField] bool canCloneCrystalMirage;
+    [Header("Clone Dash Start")]
+    bool _canCloneDashStart;
+    [SerializeField] UI_SkillTreeSlot cloneDashStartUnlock;
 
-    [SerializeField] bool canDuplicate;
+    [Header("Clone Dash End")]
+    bool _canCloneDashEnd;
+    [SerializeField] UI_SkillTreeSlot cloneDashEndUnlock;
+
+    [Header("Clone Counter Attack")]
+    bool _canCloneCounterAttack;
+    [SerializeField] UI_SkillTreeSlot cloneCounterAttackUnlock;
+
+    [Header("Clone Crystal Blink")]
+    bool _canCloneCrystalBlink;
+    [SerializeField] UI_SkillTreeSlot cloneCrystalMirageUnlock;
+
+    [Header("Clone Duplicate")]
+    bool _canDuplicate;
+    [SerializeField] UI_SkillTreeSlot duplicateUnlock;
     [SerializeField] float duplicateChance;
-    [SerializeField] bool crystalInsteadClone;  
+
+    [Header("Crystal Instead Clone")]
+    bool _canCrystalInsteadClone;
+    [SerializeField] UI_SkillTreeSlot crystalInsteadCloneUnlock;
+
+    protected override void Start ()
+    {
+        base.Start();
+
+        attackUnlock.GetComponent<Button>().onClick.AddListener(AttackUnlock);
+        cloneDashStartUnlock.GetComponent<Button>().onClick.AddListener(CloneDashStartUnlock);
+        cloneDashEndUnlock.GetComponent<Button>().onClick.AddListener (CloneDashEndUnlock);
+        cloneCounterAttackUnlock.GetComponent<Button>().onClick.AddListener(CloneCounterAttackUnlock);
+        cloneCrystalMirageUnlock.GetComponent<Button>().onClick.AddListener(CloneCrystalMirageUnlock);
+        duplicateUnlock.GetComponent<Button>().onClick.AddListener(DuplicateUnlock);
+        crystalInsteadCloneUnlock.GetComponent<Button>().onClick.AddListener(CrystalInsteadCloneUnlock);
+
+    }
 
     /// <summary>
     /// 创建残影 有偏移量
@@ -30,13 +64,13 @@ public class Skill_Clone : Skill
     /// <param name="offset">位置偏移量</param>
     public void CreateClone(Transform targetPos, Vector3 offset)
     {
-        if (crystalInsteadClone)
+        if (_canCrystalInsteadClone)
         {
             SkillManager.instance.crystal.CreateCrystal(targetPos);
             return;
         }
         GameObject clone = Instantiate(newClonePrefab);
-        clone.GetComponent<Skill_Clone_Controller>().SetClone(targetPos, cloneDuration, canAttack, offset);
+        clone.GetComponent<Skill_Clone_Controller>().SetClone(targetPos, cloneDuration, _canAttack, offset);
     }
 
     /// <summary>
@@ -55,7 +89,7 @@ public class Skill_Clone : Skill
     /// </summary>
     public void CloneDashStart()
     {
-        if(canCloneDashStart)
+        if(_canCloneDashStart)
         {
             CreateClone(player.transform, new Vector3(0, 0, 0));
         }
@@ -66,7 +100,7 @@ public class Skill_Clone : Skill
     /// </summary>
     public void CloneDashEnd()
     {
-        if (canCloneDashEnd)
+        if (_canCloneDashEnd)
         {
             CreateClone(player.transform, new Vector3(0, 0, 0));
         }
@@ -78,18 +112,18 @@ public class Skill_Clone : Skill
     /// <param name="targetPos"></param>
     public void CloneCounterAttack(Transform targetPos)
     {
-        if (canCloneCounterAttack)
+        if (_canCloneCounterAttack)
         {
             StartCoroutine(CreateCloneDelay(targetPos, new Vector3(1.5f * player.faceDir, 0), 0.4f));
         }
     }
 
     /// <summary>
-    /// 水晶换位
+    /// 换位时在原位置生成crystal
     /// </summary>
-    public void CloneCrystalMirage()
+    public void CloneCrystalBlink()
     {
-        if(canCloneCrystalMirage)
+        if(_canCloneCrystalBlink)
         {
             CreateClone(player.transform, new Vector3(0, 0, 0));
         }
@@ -102,7 +136,7 @@ public class Skill_Clone : Skill
     /// <param name="faceDir"></param>
     public void CloneDuplicate(Transform targetPos, int faceDir = 1)
     {
-        if (canDuplicate)
+        if (_canDuplicate)
         {
             duplicateChance = Mathf.Clamp(duplicateChance, 0, 100);
             if (Random.Range(0, 100) < duplicateChance)
@@ -113,6 +147,48 @@ public class Skill_Clone : Skill
     }
 
     #endregion
+
+    void AttackUnlock ()
+    {
+        if (attackUnlock.unlocked)
+            _canAttack = true;
+    }
+
+    void CloneDashStartUnlock ()
+    {
+        if (cloneDashStartUnlock.unlocked)
+            _canCloneDashStart = true;
+    }
+
+    void CloneDashEndUnlock ()
+    {
+        if(cloneDashEndUnlock.unlocked)
+            _canCloneDashEnd = true;
+    }
+
+    void CloneCounterAttackUnlock ()
+    {
+        if (cloneCounterAttackUnlock.unlocked)
+            _canCloneCounterAttack = true;
+    }
+
+    void CloneCrystalMirageUnlock ()
+    {
+        if(cloneCrystalMirageUnlock.unlocked)
+            _canCloneCrystalBlink = true;
+    }
+
+    void DuplicateUnlock ()
+    {
+        if(duplicateUnlock.unlocked)
+            _canDuplicate = true;
+    }
+
+    void CrystalInsteadCloneUnlock ()
+    {
+        if(crystalInsteadCloneUnlock.unlocked)
+            _canCrystalInsteadClone = true;
+    }
 
     public IEnumerator CreateCloneDelay(Transform targetPos, Vector3 offset, float delay)
     {

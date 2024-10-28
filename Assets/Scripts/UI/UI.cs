@@ -6,6 +6,7 @@ public class UI : MonoBehaviour
 {
     public UI_ItemToolTip itemToolTip;
     public UI_StatToolTip statToolTip;
+    public UI_SkillToolTip skillToolTip;
     public UI_CraftWindow craftWindow;
 
     [SerializeField] GameObject characterUI;
@@ -18,6 +19,8 @@ public class UI : MonoBehaviour
     {
         itemToolTip.gameObject.SetActive(false);
         statToolTip.gameObject.SetActive(false);
+        skillToolTip.gameObject.SetActive(false);
+
         craftWindow.gameObject.SetActive(false);
 
         SwitchToMenu(null);

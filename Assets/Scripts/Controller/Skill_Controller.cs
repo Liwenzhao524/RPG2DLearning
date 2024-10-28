@@ -11,9 +11,9 @@ public class Skill_Controller : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        player = PlayerManager.instance.player;
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        player = PlayerManager.instance.player;
     }
 
     // Update is called once per frame

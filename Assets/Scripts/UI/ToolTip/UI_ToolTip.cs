@@ -12,7 +12,7 @@ public class UI_ToolTip : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public virtual void ShowToolTip(string text)
+    public virtual void ShowToolTip(string description, string name = null)
     {
         gameObject.SetActive(true);
     }

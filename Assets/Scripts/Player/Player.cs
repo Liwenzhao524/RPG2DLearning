@@ -49,7 +49,7 @@ public class Player : Entity
     protected override void Awake()
     {
         base.Awake();
-        skill = SkillManager.instance;
+        
         stateMachine = new PlayerStateMachine();
         idleState = new PlayerIdleState(this, stateMachine, "Idle");
         moveState = new PlayerMoveState(this, stateMachine, "Move");
@@ -71,6 +71,7 @@ public class Player : Entity
     {
         base.Start();
         stateMachine.Init(idleState);
+        skill = SkillManager.instance;
 
         _defaultMoveSpeed = moveSpeed;
         _defaultJumpForce = jumpForce;
@@ -165,6 +166,7 @@ public class Player : Entity
     public void CheckDashInput()
     {
         if (IsWallDetected() && !IsGroundDetected()) return;
+        if (!skill.dash.dashUnlock) return; 
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill())
         {

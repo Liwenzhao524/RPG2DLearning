@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class Skill_Sword_Controller : Skill_Controller
 {
-    
+
     Collider2D _col;
 
     bool _canRotate = true;  // 碰撞时 正确处理 剑插入敌人的方向为飞行方向
@@ -21,8 +20,9 @@ public class Skill_Sword_Controller : Skill_Controller
     float _bounceSpeed;
     List<Transform> _bounceTarget;
     int _targetIndex;
-    
+
     [Header("Pierce Info")]
+    bool _canPierce;
     int _pierceCount;
 
     [Header("Spin Info")]
@@ -41,23 +41,28 @@ public class Skill_Sword_Controller : Skill_Controller
     protected override void Start ()
     {
         base.Start();
+        //Debug.Log(rb);
         _col = GetComponent<Collider2D>();
     }
 
     /// <summary>
     /// 用于定时销毁
     /// </summary>
-    public void DestroySword()
+    public void DestroySword ()
     {
         Destroy(gameObject);
     }
 
     // 外部调用 初始化
-    public void SetUpSword(Vector2 dir, float gravity, Player player, float freezeDuration, float returnSpeed)
+    public void SetUpSword (Vector2 dir, float gravity, float freezeDuration, float returnSpeed)
     {
-        base.player = player;
+        // debuglog: 此处可能比Start先执行···？居然真是
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponentInChildren<Animator>();
+
         rb.velocity = dir;
         rb.gravityScale = gravity;
+
         _freezeDuration = freezeDuration;
         _returnSpeed = returnSpeed;
 
@@ -65,12 +70,12 @@ public class Skill_Sword_Controller : Skill_Controller
 
         _spinDirection = Mathf.Clamp(rb.velocity.x, -1, 1);
 
-        _bounceTarget = new List<Transform>();  // Debug: public和[serializeField]会自动new，private默认不new，需要手动 
+        _bounceTarget = new List<Transform>();
 
-        Invoke(nameof(DestroySword), 7);
+        Invoke(nameof(DestroySword), 5);
     }
 
-    void FixedUpdate()
+    void FixedUpdate ()
     {
 
         // 保证剑本体的飞行方向 朝向目标
@@ -86,19 +91,19 @@ public class Skill_Sword_Controller : Skill_Controller
         // 剑旋转
         SpinLogic();
     }
-    
+
     #region Return
     /// <summary>
     /// 触发 剑收回
     /// </summary>
-    public void ReturnSword()
+    public void ReturnSword ()
     {
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         transform.parent = null;
         _isReturn = true;
     }
 
-    private void ReturnLogic()
+    private void ReturnLogic ()
     {
         if (_isReturn)
         {
@@ -115,21 +120,22 @@ public class Skill_Sword_Controller : Skill_Controller
     #endregion
 
     #region Bounce
-    public void SetupBounce(bool canBounce, int bounceTime, float bounceSpeed)
+    public void SetupBounce (bool canBounce, int bounceTime, float bounceSpeed)
     {
         _canBounce = canBounce;
         _bounceCount = bounceTime;
         _bounceSpeed = bounceSpeed;
     }
 
-    private void BounceLogic()
+    private void BounceLogic ()
     {
         if (_canBounce && _bounceTarget.Count > 0)
         {
             transform.position = Vector2.MoveTowards(transform.position, _bounceTarget[_targetIndex].position, _bounceSpeed * Time.deltaTime);
             if (Vector2.Distance(transform.position, _bounceTarget[_targetIndex].position) < 0.1f)
             {
-                if(_bounceTarget[_targetIndex].GetComponent<Enemy>()){
+                if (_bounceTarget[_targetIndex].GetComponent<Enemy>())
+                {
                     DoSwordSkillDamage(_bounceTarget[_targetIndex].GetComponent<Enemy>());
                 }
                 _targetIndex++;
@@ -151,7 +157,7 @@ public class Skill_Sword_Controller : Skill_Controller
     /// 寻找可以弹射的目标
     /// </summary>
     /// <param name="collision"></param>
-    private void SetTargetForBounce(Collider2D collision)
+    private void SetTargetForBounce (Collider2D collision)
     {
         // 击中敌人时允许弹射
         if (collision.GetComponent<Enemy>() != null)
@@ -174,8 +180,9 @@ public class Skill_Sword_Controller : Skill_Controller
 
     #region Pierce
 
-    public void SetupPierce(int pierceCount)
+    public void SetupPierce (bool canPierce, int pierceCount)
     {
+        _canPierce = canPierce;
         _pierceCount = pierceCount;
     }
 
@@ -183,7 +190,7 @@ public class Skill_Sword_Controller : Skill_Controller
 
     #region Spin
 
-    public void SetupSpin(bool canSpin, float maxDistance, float spinDuration, float hitCoolDown)
+    public void SetupSpin (bool canSpin, float maxDistance, float spinDuration, float hitCoolDown)
     {
         _canSpin = canSpin;
         _spinDuration = spinDuration;
@@ -191,7 +198,7 @@ public class Skill_Sword_Controller : Skill_Controller
         _hitCoolDown = hitCoolDown;
     }
 
-    private void SpinLogic()
+    private void SpinLogic ()
     {
         if (_canSpin)
         {
@@ -217,12 +224,12 @@ public class Skill_Sword_Controller : Skill_Controller
 
                 // 定时造成伤害
                 _hitTimer -= Time.deltaTime;
-                if(_hitTimer < 0)
+                if (_hitTimer < 0)
                 {
                     _hitTimer = _hitCoolDown;
                     Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2);
                     foreach (var hit in colliders)
-                        if(hit.GetComponent<Enemy>())
+                        if (hit.GetComponent<Enemy>())
                         {
                             DoSwordSkillDamage(hit.GetComponent<Enemy>());
                         }
@@ -234,18 +241,18 @@ public class Skill_Sword_Controller : Skill_Controller
     /// <summary>
     /// 停下并旋转
     /// </summary>
-    private void SpinStop()
+    private void SpinStop ()
     {
         // 停止 同时旋转计时
         _isSpinStopped = true;
-        rb.constraints = RigidbodyConstraints2D.FreezePosition;
+        base.rb.constraints = RigidbodyConstraints2D.FreezePosition;
         _spinTimer = _spinDuration;
     }
 
     #endregion
 
     #region Collision
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D (Collider2D collision)
     {
         if (_isReturn) return;
 
@@ -274,19 +281,19 @@ public class Skill_Sword_Controller : Skill_Controller
     /// 插在最终碰撞物体上
     /// </summary>
     /// <param name="collision"></param>
-    private void StuckIn(Collider2D collision)
+    private void StuckIn (Collider2D collision)
     {
         // 穿透敌人
-        if (_pierceCount > 0 && collision.GetComponent<Enemy>() != null)
+        if (_canPierce && _pierceCount > 0 && collision.GetComponent<Enemy>() != null)
         {
             _pierceCount--;
             return;
         }
-        
+
         // 击中第一个 停下并旋转
         if (_canSpin)
         {
-            SpinStop();  
+            SpinStop();
             return;
         }
 

@@ -20,6 +20,7 @@ MonoBehaviour:
   equipEffects:
   - {fileID: 11400000, guid: 5081e438d8522bc4bb651c920f6df8b3, type: 2}
   effectCoolDown: 0
+  effectDescription: Sommon a thunder on enemy you hit.
   strength: 0
   agility: 0
   intelligence: 0

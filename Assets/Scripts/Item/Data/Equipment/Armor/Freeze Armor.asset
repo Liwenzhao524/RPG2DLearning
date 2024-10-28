@@ -20,6 +20,7 @@ MonoBehaviour:
   equipEffects:
   - {fileID: 11400000, guid: 3fb12ef62789da2478ddcb1558d3219a, type: 2}
   effectCoolDown: 0
+  effectDescription: Freeze enemies nearby when your HP is below 40%.
   strength: 0
   agility: 0
   intelligence: 0
