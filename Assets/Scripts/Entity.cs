@@ -48,7 +48,7 @@ public class Entity : MonoBehaviour
         fx = GetComponent<EntityFX>(); 
         stats = GetComponent<CharacterStats>();
     }
-
+    
     protected virtual void Update()
     {
 
