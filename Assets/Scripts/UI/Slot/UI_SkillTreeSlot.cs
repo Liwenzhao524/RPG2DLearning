@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UI_SkillTreeSlot : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
 {
-    public bool unlocked;
+    public bool unlocked {  get; private set; }
     UI _mainUI;
 
     [SerializeField] string skillName;
@@ -46,12 +46,13 @@ public class UI_SkillTreeSlot : MonoBehaviour , IPointerEnterHandler, IPointerEx
         {
             if (shouldBeLocked[i].unlocked)
             {
-                Debug.Log(shouldBeLocked[i].name + " should be locked");
+                Debug.Log("You Can Only Choose One Upgrade!");
                 return;
             }
         }
 
         unlocked = true;
+
         _skillImage.color = Color.white;
     }
 

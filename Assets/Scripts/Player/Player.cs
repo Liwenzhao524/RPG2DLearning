@@ -85,10 +85,8 @@ public class Player : Entity
         stateMachine.currentState.Update();
         CheckDashInput();
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
+        if (Input.GetKeyDown(KeyCode.F) && skill.crystal.canUseCrystal)
             skill.crystal.CanUseSkill();
-        }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -166,9 +164,9 @@ public class Player : Entity
     public void CheckDashInput()
     {
         if (IsWallDetected() && !IsGroundDetected()) return;
-        if (!skill.dash.dashUnlock) return; 
+        if (!skill.dash.canDash) return; 
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill())
+        if (Input.GetKeyDown(KeyCode.LeftShift) && skill.dash.CanUseSkill())
         {
 
             dashDir = Input.GetAxisRaw("Horizontal");

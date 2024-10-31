@@ -6,25 +6,25 @@ public class Skill_Crystal : Skill
 {
     GameObject _currentCrystal;
 
-    [SerializeField] GameObject crystalPrefab;
-    [SerializeField] float crystalDuration;
+    [SerializeField] GameObject _crystalPrefab;
+    [SerializeField] float _crystalDuration;
 
     [Header("Crystal Unlock")]
-    bool _canUseCrystal;
-    [SerializeField] UI_SkillTreeSlot crystalUnlock;
+    [SerializeField] UI_SkillTreeSlot _crystalUnlock;
+    public bool canUseCrystal { get; private set; }
 
     [Header("Explode Unlock")]
+    [SerializeField] UI_SkillTreeSlot _explodeUnlock;
     bool _canExplode;
-    [SerializeField] UI_SkillTreeSlot explodeUnlock;
 
     [Header("Move Unlock")]
+    [SerializeField] UI_SkillTreeSlot _moveUnlock;
     bool _canMove;
-    [SerializeField] UI_SkillTreeSlot moveUnlock;
     float _moveSpeed = 5;
 
     [Header("Multi Unlock")]
+    [SerializeField] UI_SkillTreeSlot _multiUnlock;
     bool _canUseMulti;
-    [SerializeField] UI_SkillTreeSlot multiUnlock;
 
     float _useSkillWindow = 5;
     int _crystalCount = 3;
@@ -35,10 +35,10 @@ public class Skill_Crystal : Skill
     {
         base.Start();
 
-        crystalUnlock.GetComponent<Button>().onClick.AddListener(CrystalUnlock);
-        explodeUnlock.GetComponent<Button>().onClick.AddListener(ExplodeUnlock);
-        moveUnlock.GetComponent<Button>().onClick.AddListener (MoveUnlock);
-        multiUnlock.GetComponent<Button>().onClick.AddListener(MultiUnlock);
+        _crystalUnlock.GetComponent<Button>().onClick.AddListener(CrystalUnlock);
+        _explodeUnlock.GetComponent<Button>().onClick.AddListener(ExplodeUnlock);
+        _moveUnlock.GetComponent<Button>().onClick.AddListener (MoveUnlock);
+        _multiUnlock.GetComponent<Button>().onClick.AddListener(MultiUnlock);
     }
 
     public override void UseSkill()
@@ -52,8 +52,7 @@ public class Skill_Crystal : Skill
             return;
         }
 
-        if(_canUseCrystal)
-            SingleLogic();
+        SingleLogic();
     }
 
     /// <summary>
@@ -61,9 +60,9 @@ public class Skill_Crystal : Skill
     /// </summary>
     public void CreateCrystal(Transform targetPos)
     {
-        _currentCrystal = Instantiate(crystalPrefab, targetPos.position, Quaternion.identity);
+        _currentCrystal = Instantiate(_crystalPrefab, targetPos.position, Quaternion.identity);
         Skill_Crystal_Controller ctrl = _currentCrystal.GetComponent<Skill_Crystal_Controller>();
-        ctrl.SetUpCrystal(crystalDuration, _canExplode, _canMove, _moveSpeed);
+        ctrl.SetUpCrystal(_crystalDuration, _canExplode, _canMove, _moveSpeed);
     }
 
     private void SingleLogic()
@@ -75,7 +74,6 @@ public class Skill_Crystal : Skill
         // 再按下 互换位置
         else
         {
-            //if (_canMove) return;
             if (Vector2.Distance(_currentCrystal.transform.position, player.transform.position) < 25)
             {
                 Vector2 playerPos = player.transform.position;
@@ -106,7 +104,7 @@ public class Skill_Crystal : Skill
             _crystalList.Remove(chosen);
 
             Skill_Crystal_Controller ctrl = newCrystal.GetComponent<Skill_Crystal_Controller>();
-            ctrl.SetUpCrystal(crystalDuration, _canExplode, _canMove, _moveSpeed);
+            ctrl.SetUpCrystal(_crystalDuration, _canExplode, _canMove, _moveSpeed);
         }
         // 冷却再装填
         if (_crystalList.Count <= 0)
@@ -121,7 +119,7 @@ public class Skill_Crystal : Skill
         _crystalList.Clear();
         for (int i = 0; i < _crystalCount; i++)
         {
-            _crystalList.Add(crystalPrefab);
+            _crystalList.Add(_crystalPrefab);
         }
     }
 
@@ -138,25 +136,25 @@ public class Skill_Crystal : Skill
 
     void CrystalUnlock ()
     {
-        if (crystalUnlock.unlocked)
-            _canUseCrystal = true;
+        if (_crystalUnlock.unlocked)
+            canUseCrystal = true;
     }
 
     void ExplodeUnlock ()
     {
-        if(explodeUnlock.unlocked)
+        if(_explodeUnlock.unlocked)
             _canExplode = true;
     }
 
     void MoveUnlock ()
     {
-        if(moveUnlock.unlocked)
+        if(_moveUnlock.unlocked)
             _canMove = true;
     }
 
     void MultiUnlock ()
     {
-        if(multiUnlock.unlocked)
+        if(_multiUnlock.unlocked)
             _canUseMulti = true;
     }
 

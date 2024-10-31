@@ -5,20 +5,21 @@ using UnityEngine.UI;
 
 public class Skill_Blackhole : Skill
 {
-    [SerializeField] GameObject blackholePrefab;
+    [Header("Blackhole Unlock")]
+    [SerializeField] UI_SkillTreeSlot _blackholeUnlock;
+    public bool canUseBlackhole{ get; private set;}
+
     [Header("Basic Info")]
-    [SerializeField] float blackholeDuration = 8;
-    [SerializeField] float maxSize = 15;
-    [SerializeField] float growSpeed = 5;
-    [SerializeField] float shrinkSpeed = 5;
+    [SerializeField] GameObject _blackholePrefab;
+    [SerializeField] float _blackholeDuration = 8;
+    [SerializeField] float _maxSize = 15;
+    [SerializeField] float _growSpeed = 5;
+    [SerializeField] float _shrinkSpeed = 5;
 
     [Header("Attack Info")]
-    [SerializeField] int cloneAttackCount;
-    [SerializeField] float cloneAttackCoolDown;
+    [SerializeField] int _cloneAttackCount = 5;
+    [SerializeField] float _cloneAttackCoolDown = 0.3f;
 
-    [Header("Blackhole Unlock")]
-    public bool canUseBlackhole;
-    [SerializeField] UI_SkillTreeSlot blackholeUnlock;
 
     Skill_Blackhole_Controller _ctrl;
     public override bool CanUseSkill()
@@ -30,17 +31,17 @@ public class Skill_Blackhole : Skill
     {
         base.UseSkill();
 
-        GameObject newBlackhole = Instantiate(blackholePrefab, player.transform.position, Quaternion.identity);
+        GameObject newBlackhole = Instantiate(_blackholePrefab, player.transform.position, Quaternion.identity);
 
         _ctrl = newBlackhole.GetComponent<Skill_Blackhole_Controller>();
-        _ctrl.SetUpBlackhole(maxSize, growSpeed, shrinkSpeed, cloneAttackCount, cloneAttackCoolDown, blackholeDuration);
+        _ctrl.SetUpBlackhole(_maxSize, _growSpeed, _shrinkSpeed, _cloneAttackCount, _cloneAttackCoolDown, _blackholeDuration);
     }
 
     protected override void Start()
     {
         base.Start();
 
-        blackholeUnlock.GetComponent<Button>().onClick.AddListener(BlackholeUnlock);
+        _blackholeUnlock.GetComponent<Button>().onClick.AddListener(BlackholeUnlock);
     }
 
     protected override void Update()
@@ -50,7 +51,7 @@ public class Skill_Blackhole : Skill
 
     void BlackholeUnlock ()
     {
-        if (blackholeUnlock.unlocked)
+        if (_blackholeUnlock.unlocked)
             canUseBlackhole = true;
     }
 

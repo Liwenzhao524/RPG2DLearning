@@ -9,13 +9,13 @@ using UnityEngine;
 [System.Serializable]
 public class Stats
 {
-    [SerializeField] float baseValue;
+    [SerializeField] float _baseValue;
 
-    List<float> _modifiers = new();
+    [SerializeField]List<float> _modifiers = new();
     
     public float GetValue() 
     {
-        float finalValue = baseValue;
+        float finalValue = _baseValue;
         if (_modifiers != null)
         {
             foreach (float modifier in _modifiers)
@@ -29,7 +29,7 @@ public class Stats
 
     public void SetDefaultValue(float value)
     {
-        baseValue = value;
+        _baseValue = value;
     }
 
     public void AddModifier(float modifier) { _modifiers.Add(modifier);}

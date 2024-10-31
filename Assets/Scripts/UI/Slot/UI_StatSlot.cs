@@ -42,7 +42,7 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 statValue.text = playerStats.GetMaxHP().ToString();
 
             if (statType == StatsType.evasion)
-                statValue.text = playerStats.GetEvasion().ToString();
+                statValue.text = playerStats.GetEvasion().ToString() + "%";
 
             if (statType == StatsType.magicResist)
                 statValue.text = playerStats.GetMagicResist().ToString();

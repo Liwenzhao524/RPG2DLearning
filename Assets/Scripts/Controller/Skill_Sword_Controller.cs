@@ -41,7 +41,7 @@ public class Skill_Sword_Controller : Skill_Controller
     protected override void Start ()
     {
         base.Start();
-        //Debug.Log(rb);
+
         _col = GetComponent<Collider2D>();
     }
 
@@ -56,9 +56,9 @@ public class Skill_Sword_Controller : Skill_Controller
     // 外部调用 初始化
     public void SetUpSword (Vector2 dir, float gravity, float freezeDuration, float returnSpeed)
     {
-        // debuglog: 此处可能比Start先执行···？居然真是
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponentInChildren<Animator>();
+        // debuglog: 此处可能比Start先执行···？ 已修复
+        //rb = GetComponent<Rigidbody2D>();
+        //anim = GetComponentInChildren<Animator>();
 
         rb.velocity = dir;
         rb.gravityScale = gravity;

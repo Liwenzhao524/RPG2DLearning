@@ -375,6 +375,10 @@ public class CharacterStats : MonoBehaviour
 
         if (UnityEngine.Random.Range(0, 100) < totalEvasion)
         {
+            if(target.GetComponent<Player>() != null)
+            {
+                PlayerManager.instance.player.skill.dodge.DodgeClone();
+            }
             return true;
         }
         return false;
@@ -417,6 +421,22 @@ public class CharacterStats : MonoBehaviour
 
         // 根据个人喜好 是否同时附加法伤
         //DoMagicDamageTo(target);
+    }
+
+    /// <summary>
+    /// 造成物伤
+    /// </summary>
+    /// <param name="target"></param>
+    public virtual void DoDamageTo (CharacterStats target, float cloneATK = 1)
+    {
+        if (DoEvasion(target)) return;
+
+        float totalDamage = GetATK() * cloneATK;
+
+        totalDamage = DoCrit(totalDamage);
+        totalDamage = DoDefence(target, totalDamage);
+
+        target.TakeDamage(totalDamage);
     }
 
     /// <summary>

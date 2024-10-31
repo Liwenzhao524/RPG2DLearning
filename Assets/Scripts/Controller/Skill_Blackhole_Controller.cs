@@ -94,7 +94,7 @@ public class Skill_Blackhole_Controller : Skill_Controller
         if(_playerCanTransparent)
         {
             _playerCanTransparent = false; 
-            PlayerManager.instance.player.fx.MakeTransparent(true);
+            player.fx.MakeTransparent(true);
         }
     }
 
@@ -107,7 +107,7 @@ public class Skill_Blackhole_Controller : Skill_Controller
             int randomIndex = Random.Range(0, _targets.Count);
             float xOffset = Random.Range(0, 100) > 50 ? 1 : -1;
 
-            SkillManager.instance.clone.CreateClone(_targets[randomIndex], new Vector2(xOffset, 0));
+            player.skill.clone.CreateClone(_targets[randomIndex], new Vector2(xOffset, 0));
 
             _cloneAttackCount--;
             if (_cloneAttackCount <= 0)
@@ -122,7 +122,7 @@ public class Skill_Blackhole_Controller : Skill_Controller
     {
         _canShrink = true;
         playerCanExitSkill = true;
-        PlayerManager.instance.player.fx.MakeTransparent(false);
+        player.fx.MakeTransparent(false);
         DestroyHotKey();
     }
 

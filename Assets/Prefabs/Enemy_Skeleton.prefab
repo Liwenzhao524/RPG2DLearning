@@ -859,44 +859,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strength:
-    baseValue: 0
+    _baseValue: 0
   agility:
-    baseValue: 0
+    _baseValue: 0
   intelligence:
-    baseValue: 0
+    _baseValue: 0
   vitality:
-    baseValue: 0
+    _baseValue: 0
   maxHP:
-    baseValue: 100
+    _baseValue: 1000
   armor:
-    baseValue: 0
+    _baseValue: 0
   evasion:
-    baseValue: 0
-  magicResistence:
-    baseValue: 0
+    _baseValue: 0
+  magicResist:
+    _baseValue: 0
   ATK:
-    baseValue: 10
+    _baseValue: 20
   critChance:
-    baseValue: 0
+    _baseValue: 0
   critDamage:
-    baseValue: 0
+    _baseValue: 0
   fireATK:
-    baseValue: 0
+    _baseValue: 0
   iceATK:
-    baseValue: 0
+    _baseValue: 0
   lightningATK:
-    baseValue: 0
+    _baseValue: 0
   currentHP: 0
   shockThunderPrefab: {fileID: 4979832629735912810, guid: 422b2cbb5dd4a864baf473b618c71035, type: 3}
-  dropAmount: 2
-  possibleDrops:
-  - {fileID: 11400000, guid: 634c76e1dc0360d42a5888847e3425cc, type: 2}
-  - {fileID: 11400000, guid: bf8ab9b568c945d4c8829cc428d8782d, type: 2}
-  - {fileID: 11400000, guid: a58e03625db82fd44a5e445c1d6be65f, type: 2}
-  - {fileID: 11400000, guid: 2d654fce6081d75479ff53a71a68c90f, type: 2}
-  - {fileID: 11400000, guid: 01360ff33c2469e4b90e89047e048cf6, type: 2}
-  level: 1
-  growPercentage: 0
+  _dropAmount: 0
+  _possibleDrops: []
+  _level: 1
+  _growPercentage: 0
 --- !u!114 &7013118683640076546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -910,4 +905,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropPrefab: {fileID: 6842104267358004998, guid: 028369769a72f0a4cb91575792c98008, type: 3}
-  item: {fileID: 0}

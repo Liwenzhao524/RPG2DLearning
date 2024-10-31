@@ -11,6 +11,7 @@ public class Skill_Clone_Controller : Skill_Controller
     [SerializeField] float attackRadius = 0.7f;
 
     int _faceDir = 1;
+    float _cloneATK = 0.3f;
 
     protected override void Start ()
     {
@@ -74,8 +75,14 @@ public class Skill_Clone_Controller : Skill_Controller
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                player.stats.DoDamageTo(hit.GetComponent<CharacterStats>());
-                SkillManager.instance.clone.CloneDuplicate(hit.transform, _faceDir);
+                if (player.skill.clone.beAggresive) 
+                { 
+                    _cloneATK = 0.8f;
+                    Inventory.instance.GetEquipmentByType(EquipmentType.Weapon)?.ExecuteEffects(hit.transform);
+                }
+
+                player.stats.DoDamageTo(hit.GetComponent<CharacterStats>(), _cloneATK);
+                player.skill.clone.CloneDuplicate(hit.transform, _faceDir);
             }
         }
     }

@@ -9,6 +9,9 @@ public class SkillManager : MonoBehaviour
     public Skill_Sword sword { get; private set; }
     public Skill_Blackhole blackhole { get; private set; }
     public Skill_Crystal crystal { get; private set; }
+    public Skill_CounterAttack parry { get; private set; }
+    public Skill_Dodge dodge { get; private set; }
+
     private void Awake()
     {
         if (instance == null)
@@ -22,6 +25,8 @@ public class SkillManager : MonoBehaviour
         sword = GetComponent<Skill_Sword>();
         blackhole = GetComponent<Skill_Blackhole>();
         crystal = GetComponent<Skill_Crystal>();
+        parry = GetComponent<Skill_CounterAttack>();
+        dodge = GetComponent<Skill_Dodge>();
     }
 
     // Update is called once per frame

@@ -8,13 +8,13 @@ public class EnemyStats : CharacterStats
     ItemObject_Drop _dropSystem;
 
     [Header("Drop Item")]
-    [SerializeField] int dropAmount;
-    [SerializeField] ItemData[] possibleDrops;
-    List<ItemData> dropList = new();
+    [SerializeField] int _dropAmount;
+    [SerializeField] ItemData[] _possibleDrops;
+    List<ItemData> _dropList = new();
 
     [Header("Level")]
-    [SerializeField] int level = 1;
-    [SerializeField] float growPercentage;
+    [SerializeField] int _level = 1;
+    [SerializeField] float _growPercentage;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -48,28 +48,28 @@ public class EnemyStats : CharacterStats
 
     public void ModifyStat (Stats stats)
     {
-        for(int i = 1; i < level; i ++)
+        for(int i = 1; i < _level; i ++)
         {
-            stats.AddModifier(stats.GetValue() * growPercentage);
+            stats.AddModifier(stats.GetValue() * _growPercentage);
         }
     }
 
     public void GenerateDrop ()
     {
-        for (int i = 0; i < possibleDrops.Length; i++)
+        for (int i = 0; i < _possibleDrops.Length; i++)
         {
-            if (Random.Range(0, 100) < possibleDrops[i].dropChance)
+            if (Random.Range(0, 100) < _possibleDrops[i].dropChance)
             {
-                dropList.Add(possibleDrops[i]);
+                _dropList.Add(_possibleDrops[i]);
             }
         }
 
-        for (int i = 0; i < dropAmount; i++)
+        for (int i = 0; i < _dropAmount; i++)
         {
-            if (dropList.Count <= 0) break;
-            ItemData randomDrop = dropList[Random.Range(0, dropList.Count - 1)];
+            if (_dropList.Count <= 0) break;
+            ItemData randomDrop = _dropList[Random.Range(0, _dropList.Count - 1)];
 
-            dropList.Remove(randomDrop);
+            _dropList.Remove(randomDrop);
             _dropSystem.DropItem(randomDrop);
         }
     }
@@ -86,6 +86,8 @@ public class EnemyStats : CharacterStats
 
     public override void TakeDamage(float damage)
     {
+        if (SkillManager.instance.sword.beVulnurable) damage *= 1.1f;
+
         base.TakeDamage(damage);
     }
 

@@ -14,6 +14,10 @@ public class UI : MonoBehaviour
     [SerializeField] GameObject craftUI;
     [SerializeField] GameObject optionUI;
 
+    private void Awake ()
+    {
+        SwitchToMenu(skillTreeUI);
+    }
     // Start is called before the first frame update
     void Start()
     {

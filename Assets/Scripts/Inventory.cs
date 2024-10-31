@@ -25,12 +25,12 @@ public class Inventory : MonoBehaviour
     [SerializeField] Transform equipmentSlotParent;
     [SerializeField] Transform statsSlotParent;
 
-    UI_ItemSlot[] inventorySlots;
-    UI_ItemSlot[] stashSlots;
-    UI_EquipmentSlot[] equipmentSlots;
-    UI_StatSlot[] statSlots;
+    UI_ItemSlot[] _inventorySlots;
+    UI_ItemSlot[] _stashSlots;
+    UI_EquipmentSlot[] _equipmentSlots;
+    UI_StatSlot[] _statSlots;
 
-    UI mainUI;
+    UI _mainUI;
 
     float _lastTimeUseFlask;
     float _lastTimeUseArmor;
@@ -45,12 +45,12 @@ public class Inventory : MonoBehaviour
 
     private void Start ()
     {
-        inventorySlots = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
-        stashSlots = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
-        equipmentSlots = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
-        statSlots = statsSlotParent.GetComponentsInChildren<UI_StatSlot>();
+        _inventorySlots = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
+        _stashSlots = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
+        _equipmentSlots = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+        _statSlots = statsSlotParent.GetComponentsInChildren<UI_StatSlot>();
 
-        mainUI = inventorySlotParent.GetComponentInParent<UI>();
+        _mainUI = inventorySlotParent.GetComponentInParent<UI>();
 
         foreach (var item in start)
         {
@@ -64,37 +64,43 @@ public class Inventory : MonoBehaviour
         UpdateAllSlotUI();
     }
 
-    void UpdateAllSlotUI ()
+    public void UpdateAllSlotUI ()
     {
-        for (int i = 0; i < inventorySlots.Length; i++)
+        for (int i = 0; i < _inventorySlots.Length; i++)
         {
-            inventorySlots[i].CleanUpSlot();
+            _inventorySlots[i].CleanUpSlot();
         }
-        for (int i = 0; i < stashSlots.Length; i++)
+        for (int i = 0; i < _stashSlots.Length; i++)
         {
-            stashSlots[i].CleanUpSlot();
+            _stashSlots[i].CleanUpSlot();
         }
 
 
         for (int i = 0; i < inventory.Count; i++)
         {
-            inventorySlots[i].UpdateSlotUI(inventory[i]);
+            _inventorySlots[i].UpdateSlotUI(inventory[i]);
         }
         for (int i = 0; i < stash.Count; i++)
         {
-            stashSlots[i].UpdateSlotUI(stash[i]);
+            _stashSlots[i].UpdateSlotUI(stash[i]);
         }
-        for (int i = 0; i < equipmentSlots.Length; i++)
+        for (int i = 0; i < _equipmentSlots.Length; i++)
         {
             foreach (KeyValuePair<ItemData_Equipment, InventoryItem> items in equipmentDictionary)
             {
-                if (items.Key.equipmentType == equipmentSlots[i].equipmentType)
-                    equipmentSlots[i].UpdateSlotUI(items.Value);
+                if (items.Key.equipmentType == _equipmentSlots[i].equipmentType)
+                    _equipmentSlots[i].UpdateSlotUI(items.Value);
             }
         }
-        for (int i = 0; i < statSlots.Length; i++)
+
+        UpdateStatsUI();
+    }
+
+    public void UpdateStatsUI ()
+    {
+        for (int i = 0; i < _statSlots.Length; i++)
         {
-            statSlots[i].UpdateStatUI();
+            _statSlots[i].UpdateStatUI();
         }
     }
 
@@ -132,7 +138,7 @@ public class Inventory : MonoBehaviour
         RemoveItem(item);
 
         UpdateAllSlotUI();
-        mainUI.itemToolTip.HideToolTip(item);
+        _mainUI.itemToolTip.HideToolTip(item);
     }
 
     /// <summary>
@@ -160,7 +166,7 @@ public class Inventory : MonoBehaviour
             equipmentDictionary.Remove(equipmentToRemove);
 
             UpdateAllSlotUI();
-            mainUI.itemToolTip.HideToolTip(equipmentToRemove);
+            _mainUI.itemToolTip.HideToolTip(equipmentToRemove);
         }
     }
 
@@ -216,7 +222,7 @@ public class Inventory : MonoBehaviour
 
     public bool CanAddToInventory ()
     {
-        return inventory.Count < inventorySlots.Length;
+        return inventory.Count < _inventorySlots.Length;
     }
 
     /// <summary>

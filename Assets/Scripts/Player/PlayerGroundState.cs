@@ -28,10 +28,10 @@ public class PlayerGroundState : PlayerState
         if(Input.GetMouseButtonDown(1) && HasNoSword())
             player.stateMachine.ChangeState(player.aimSwordState);
 
-        if(Input.GetKeyDown(KeyCode.Q)) 
+        if(Input.GetKeyDown(KeyCode.Q) && player.skill.parry.canParry && player.skill.parry.CanUseSkill()) 
             player.stateMachine.ChangeState(player.counterAttackState);
 
-        if(Input.GetMouseButton(0)) // Á¬°´
+        if(Input.GetMouseButton(0))
             player.stateMachine.ChangeState(player.primeAttackState);
         
         if(!player.IsGroundDetected())

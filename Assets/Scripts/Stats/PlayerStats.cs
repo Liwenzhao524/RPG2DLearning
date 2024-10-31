@@ -25,6 +25,11 @@ public class PlayerStats : CharacterStats
         base.DoDamageTo(target); 
     }
 
+    public override void DoDamageTo (CharacterStats target, float cloneATK = 1)
+    {
+        base.DoDamageTo(target, cloneATK);
+    }
+
     public override void DoMagicDamageTo(CharacterStats target)
     {
         base.DoMagicDamageTo(target);

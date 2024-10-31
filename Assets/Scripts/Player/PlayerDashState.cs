@@ -11,7 +11,7 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        SkillManager.instance.clone.CloneDashStart();
+        player.skill.dash.CloneDashStart();
         stateTimer = player.dashDuraTime;  // 冲刺持续时间
     }
 
@@ -19,7 +19,7 @@ public class PlayerDashState : PlayerState
     {
         base.Exit();
         player.SetVelocity(0, rb.velocity.y);
-        SkillManager.instance.clone.CloneDashEnd();
+        player.skill.dash.CloneDashEnd();
     }
 
     public override void Update()
