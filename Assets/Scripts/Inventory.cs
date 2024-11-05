@@ -34,7 +34,8 @@ public class Inventory : MonoBehaviour
 
     float _lastTimeUseFlask;
     float _lastTimeUseArmor;
-    float _flaskCoolDown;
+    public float flaskCoolDown { get; private set; }
+    public bool flaskUse { get; set; }
     float _armorCoolDown;
 
     private void Awake ()
@@ -332,9 +333,10 @@ public class Inventory : MonoBehaviour
             
         flask = GetEquipmentByType(EquipmentType.Flask);
 
-        if (Time.time > _lastTimeUseFlask + _flaskCoolDown)
+        if (Time.time > _lastTimeUseFlask + flaskCoolDown)
         {
-            _flaskCoolDown = flask.effectCoolDown;
+            flaskUse = true;
+            flaskCoolDown = flask.effectCoolDown;
             flask.ExecuteEffects(null);
             _lastTimeUseFlask = Time.time;
         }

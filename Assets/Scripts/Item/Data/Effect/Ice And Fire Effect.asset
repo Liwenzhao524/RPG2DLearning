@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a370555d086ea4594fb702ed714c23, type: 3}
   m_Name: Ice And Fire Effect
   m_EditorClassIdentifier: 
+  effectDescription: Create an ice-fire shockwave when hit enemy with 3rd attack.
   icefirePrefab: {fileID: 3467138812177006922, guid: 5914149b56cb48e43884c1637a457ece, type: 3}
   xVelocity: 15

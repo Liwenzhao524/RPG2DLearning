@@ -37,6 +37,7 @@ public class Skill_CounterAttack : Skill
     public override void UseSkill ()
     {
         base.UseSkill();
+        SkillManager.instance.parryUse = true;
     }
 
     public void ParryLogic ()

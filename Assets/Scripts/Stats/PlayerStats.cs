@@ -7,6 +7,9 @@ public class PlayerStats : CharacterStats
 {
     Player _player;
 
+    [Space]
+    public int currentMoney;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -53,5 +56,19 @@ public class PlayerStats : CharacterStats
         _player.Die();
     }
 
-    
+    public bool HasEnoughMoney(int price)
+    {
+        if(currentMoney < price)
+        {
+            Debug.Log("No Enough Money");
+            return false;
+        }
+        else
+        {
+            currentMoney -= price;
+            return true;
+        }
+    }
+
+    public int ReturnCurrentMoney() => currentMoney;
 }

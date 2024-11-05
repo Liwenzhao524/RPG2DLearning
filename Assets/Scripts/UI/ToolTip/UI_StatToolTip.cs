@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UI_StatToolTip : UI_ToolTip
 {
-    public override void ShowToolTip (string description, string name = null)
+    public override void ShowToolTip (string description, string name = null, string append = null)
     {
         base.description.text = description;
         base.ShowToolTip(description);

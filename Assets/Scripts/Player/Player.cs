@@ -86,7 +86,9 @@ public class Player : Entity
         CheckDashInput();
 
         if (Input.GetKeyDown(KeyCode.F) && skill.crystal.canUseCrystal)
+        {
             skill.crystal.CanUseSkill();
+        }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -168,7 +170,6 @@ public class Player : Entity
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && skill.dash.CanUseSkill())
         {
-
             dashDir = Input.GetAxisRaw("Horizontal");
 
             if (dashDir == 0) dashDir = faceDir;

@@ -8,10 +8,12 @@ public class UI_SkillTreeSlot : MonoBehaviour , IPointerEnterHandler, IPointerEx
 {
     public bool unlocked {  get; private set; }
     UI _mainUI;
+    PlayerStats _stats;
 
-    [SerializeField] string skillName;
+    [SerializeField] string _skillName;
     [TextArea]
-    [SerializeField] string skillDescription;
+    [SerializeField] string _skillDescription;
+    [SerializeField] int _skillCost;
 
     [SerializeField] UI_SkillTreeSlot[] shouldBeUnlocked;
     [SerializeField] UI_SkillTreeSlot[] shouldBeLocked;
@@ -22,13 +24,15 @@ public class UI_SkillTreeSlot : MonoBehaviour , IPointerEnterHandler, IPointerEx
     {
         _skillImage = GetComponent<Image>();
         _mainUI = GetComponentInParent<UI>();
+        _stats = PlayerManager.instance.player.stats as PlayerStats;
 
-        GetComponent<Button>().onClick.AddListener(UnlockSkill);
+        if (GetComponent<Button>().onClick.GetPersistentEventCount() == 0)
+            GetComponent<Button>().onClick.AddListener(UnlockSkill);
     }
 
     private void OnValidate ()
     {
-        gameObject.name = "Skill - " + skillName;
+        gameObject.name = "Skill - " + _skillName;
     }
 
     public void UnlockSkill ()
@@ -51,6 +55,8 @@ public class UI_SkillTreeSlot : MonoBehaviour , IPointerEnterHandler, IPointerEx
             }
         }
 
+        if (!_stats.HasEnoughMoney(_skillCost)) return;
+
         unlocked = true;
 
         _skillImage.color = Color.white;
@@ -58,32 +64,14 @@ public class UI_SkillTreeSlot : MonoBehaviour , IPointerEnterHandler, IPointerEx
 
     public void OnPointerEnter (PointerEventData eventData)
     {
-        _mainUI.skillToolTip.ShowToolTip(skillDescription, skillName);
-        _mainUI.skillToolTip.transform.position = SetToolTipPosition(eventData);
+        _mainUI.skillToolTip.ShowToolTip(_skillDescription, _skillName, _skillCost.ToString());
+        _mainUI.skillToolTip.transform.position = _mainUI.skillToolTip.SetToolTipPosition(eventData);
     }
 
 
     public void OnPointerExit (PointerEventData eventData)
     {
         _mainUI.skillToolTip.HideToolTip();
-    }
-
-    /// <summary>
-    /// 根据Slot位置 调整ToolTip位置
-    /// </summary>
-    /// <param name="eventData"></param>
-    /// <returns></returns>
-    public Vector2 SetToolTipPosition (PointerEventData eventData)
-    {
-        Vector2 mousePos = eventData.position;
-
-        float xOffset = 0;
-
-        if (mousePos.x > Screen.width / 2 ) xOffset = - Screen.width / 4;
-        else xOffset = Screen.width / 4;
-
-        Vector2 newPos = new(mousePos.x + xOffset, mousePos.y + 100);
-        return newPos;
     }
 
 }

@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5014dc2667a8074bb4d4b3691c59005, type: 3}
   m_Name: Thunder Effect
   m_EditorClassIdentifier: 
+  effectDescription: Sommon a thunderstrike when hit an enemy.
   thunderPrefab: {fileID: 6125309795820062047, guid: 801bef44976e7ad4c9f491d903c82fd3, type: 3}

@@ -9,14 +9,15 @@ public class UI : MonoBehaviour
     public UI_SkillToolTip skillToolTip;
     public UI_CraftWindow craftWindow;
 
-    [SerializeField] GameObject characterUI;
-    [SerializeField] GameObject skillTreeUI;
-    [SerializeField] GameObject craftUI;
-    [SerializeField] GameObject optionUI;
+    [SerializeField] GameObject _characterUI;
+    [SerializeField] GameObject _skillTreeUI;
+    [SerializeField] GameObject _craftUI;
+    [SerializeField] GameObject _optionUI;
+    [SerializeField] GameObject _gameUI;
 
     private void Awake ()
     {
-        SwitchToMenu(skillTreeUI);
+        SwitchToMenu(_skillTreeUI);
     }
     // Start is called before the first frame update
     void Start()
@@ -27,23 +28,36 @@ public class UI : MonoBehaviour
 
         craftWindow.gameObject.SetActive(false);
 
-        SwitchToMenu(null);
+        SwitchToMenu(_gameUI);
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.C))
-            SwitchWithKey(characterUI);
+            SwitchWithKey(_characterUI);
 
         if (Input.GetKeyDown(KeyCode.K))
-            SwitchWithKey(skillTreeUI);
+            SwitchWithKey(_skillTreeUI);
 
         if(Input.GetKeyDown(KeyCode.B))
-            SwitchWithKey(craftUI);
+            SwitchWithKey(_craftUI);
 
         if(Input.GetKeyDown(KeyCode.O))
-            SwitchWithKey(optionUI);
+            SwitchWithKey(_optionUI);
+    }
+
+
+    public void SwitchWithKey(GameObject menu)
+    {
+        if(menu != null && menu.activeSelf)
+        {
+            menu.SetActive(false);
+            _gameUI.SetActive(true);
+            return;
+        }
+
+        SwitchToMenu(menu);
     }
 
     public void SwitchToMenu(GameObject menu)
@@ -53,17 +67,10 @@ public class UI : MonoBehaviour
             transform.GetChild(i).gameObject.SetActive(false);
         }
 
-        menu?.SetActive(true);
-    }
+        if (menu != null)
+            menu.SetActive(true);
+        else 
+            _gameUI.SetActive(true);
 
-    public void SwitchWithKey(GameObject menu)
-    {
-        if(menu != null && menu.activeSelf)
-        {
-            menu.SetActive(false);
-            return;
-        }
-
-        SwitchToMenu(menu);
     }
 }

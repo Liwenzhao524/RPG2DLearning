@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd82ecc1f2d18b4fa642a20c0284a43, type: 3}
   m_Name: Heal Effect
   m_EditorClassIdentifier: 
+  effectDescription: Heal Yourself.
   healPercentage: 0.3

@@ -10,6 +10,10 @@ public class ItemEffect : ScriptableObject
 {
     protected Player player;
     protected PlayerStats stats;
+
+    [TextArea]
+    public string effectDescription;
+
     public virtual void ExecuteEffect (Transform target)
     {
         player = PlayerManager.instance.player;

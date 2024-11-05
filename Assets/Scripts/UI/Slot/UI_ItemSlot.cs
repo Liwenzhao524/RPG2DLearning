@@ -59,7 +59,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         if (item != null && item.itemData != null)
         {
             mainUI.itemToolTip.ShowToolTip(item.itemData as ItemData_Equipment);
-            mainUI.itemToolTip.transform.position = SetToolTipPosition(eventData);
+            mainUI.itemToolTip.transform.position = mainUI.itemToolTip.SetToolTipPosition(eventData);
         }
     }
 
@@ -67,24 +67,6 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     {
         if (item != null && item.itemData != null)
             mainUI.itemToolTip.HideToolTip(item.itemData as ItemData_Equipment);
-    }
-
-    /// <summary>
-    /// 根据Slot位置 调整ToolTip位置
-    /// </summary>
-    /// <param name="eventData"></param>
-    /// <returns></returns>
-    public Vector2 SetToolTipPosition (PointerEventData eventData)
-    {
-        Vector2 mousePos = eventData.position;
-
-        float xOffset = 0;
-
-        if (mousePos.x > Screen.width / 2) xOffset = -Screen.width / 6;
-        else xOffset = Screen.width / 6;
-
-        Vector2 newPos = new(mousePos.x + xOffset, mousePos.y + 200);
-        return newPos;
     }
 
 }

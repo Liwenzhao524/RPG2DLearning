@@ -45,6 +45,8 @@ public class Skill_Crystal : Skill
     {
         base.UseSkill();
 
+        SkillManager.instance.crystalUse = true;
+
         if (_canUseMulti)
         {
             if (_crystalList.Count <= 0) FillCrystalList();
@@ -84,6 +86,8 @@ public class Skill_Crystal : Skill
 
                 _currentCrystal.GetComponent<Skill_Crystal_Controller>().CrystalEnd();
                 _currentCrystal = null;
+
+                coolDownTimer = coolDown;
             }
         }
     }

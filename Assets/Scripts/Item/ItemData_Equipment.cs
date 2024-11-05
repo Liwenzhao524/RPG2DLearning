@@ -20,8 +20,6 @@ public class ItemData_Equipment : ItemData
     [Header("Unique Effect")]
     public List<ItemEffect> equipEffects;
     public float effectCoolDown;
-    [TextArea]
-    public string effectDescription;
 
     [Header("Major Stats")]
     public float strength;
@@ -143,11 +141,14 @@ public class ItemData_Equipment : ItemData
 
         stringBuilder.AppendLine();
 
-        if (effectDescription.Length > 0)
+        for(int i = 0; i < equipEffects.Count; i ++)
         {
-            stringBuilder.AppendLine();
-            stringBuilder.Append(effectDescription);
-            descriptionLineCount++;
+            if (equipEffects[i].effectDescription.Length > 0)
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.AppendLine("Unique Effect: " + equipEffects[i].effectDescription);
+                descriptionLineCount++; 
+            }
         }
 
         if(descriptionLineCount < 4)

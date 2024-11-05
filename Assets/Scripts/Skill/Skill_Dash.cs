@@ -23,6 +23,7 @@ public class Skill_Dash : Skill
     public override void UseSkill()
     {
         base.UseSkill();
+        SkillManager.instance.dashUse = true;
     }
 
     protected override void Start ()

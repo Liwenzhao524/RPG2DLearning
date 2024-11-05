@@ -60,7 +60,7 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter (PointerEventData eventData)
     {
         _mainUI.statToolTip.ShowToolTip(statDescription);
-        _mainUI.statToolTip.transform.position = SetToolTipPosition(eventData);
+        _mainUI.statToolTip.transform.position = _mainUI.statToolTip.SetToolTipPosition(eventData);
     }
 
     public void OnPointerExit (PointerEventData eventData)
@@ -68,21 +68,4 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
        _mainUI.statToolTip.HideToolTip();
     }
 
-    /// <summary>
-    /// 根据Slot位置 调整ToolTip位置
-    /// </summary>
-    /// <param name="eventData"></param>
-    /// <returns></returns>
-    public Vector2 SetToolTipPosition (PointerEventData eventData)
-    {
-        Vector2 mousePos = eventData.position;
-
-        float xOffset = 0;
-
-        if (mousePos.x > Screen.width / 2) xOffset = - Screen.width / 8;
-        else xOffset = Screen.width / 8;
-
-        Vector2 newPos = new(mousePos.x + xOffset, mousePos.y + 100);
-        return newPos;
-    }
 }

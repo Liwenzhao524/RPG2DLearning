@@ -20,7 +20,9 @@ MonoBehaviour:
   equipEffects:
   - {fileID: 11400000, guid: 31e6de980c548ef499deefe912e82905, type: 2}
   effectCoolDown: 5
-  effectDescription: Recover 30% of your HP.
+  effectDescription: 'Recover 30% of your HP.
+
+    Has a cooldown for 5 sec.'
   strength: 0
   agility: 0
   intelligence: 0

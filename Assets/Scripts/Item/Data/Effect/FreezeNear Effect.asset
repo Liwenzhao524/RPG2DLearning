@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e83ded822265640a0b49dbea225ce4, type: 3}
   m_Name: FreezeNear Effect
   m_EditorClassIdentifier: 
+  effectDescription: Freeze nearby enemies when Hp is low.
   duration: 3

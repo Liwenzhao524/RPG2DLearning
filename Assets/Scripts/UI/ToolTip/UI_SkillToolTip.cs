@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class UI_SkillToolTip : UI_ToolTip
 {
-    [SerializeField] TextMeshProUGUI skillName;
+    [SerializeField] TextMeshProUGUI _skillName;
+    [SerializeField] TextMeshProUGUI _skillCost;
 
-    public override void ShowToolTip (string skilldescription, string skillname = null)
+    public override void ShowToolTip (string skilldescription, string skillname = null, string skillcost = null)
     {
-        skillName.text = skillname;
+        _skillName.text = skillname;
         description.text = skilldescription;
+        _skillCost.text = "Skill Cost: " + skillcost;
         base.ShowToolTip(skilldescription, skillname);
     }
 
