@@ -29,7 +29,7 @@ public class Skill_Dash : Skill
     protected override void Start ()
     {
         base.Start();
-        _dashUnlock.GetComponent<Button>().onClick.AddListener(UnlockDash);
+        _dashUnlock.GetComponent<Button>().onClick.AddListener(DashUnlock);
         _cloneDashStartUnlock.GetComponent<Button>().onClick.AddListener(CloneDashStartUnlock);
         _cloneDashEndUnlock.GetComponent<Button>().onClick.AddListener(CloneDashEndUnlock);
     }
@@ -55,9 +55,14 @@ public class Skill_Dash : Skill
             player.skill.clone.CreateClone(player.transform, new Vector3(0, 0, 0));
         }
     }
+    protected override void LoadUnlock ()
+    {
+        DashUnlock();
+        CloneDashStartUnlock();
+        CloneDashEndUnlock();
+    }
 
-
-    void UnlockDash ()
+    void DashUnlock ()
     {
         if(_dashUnlock.unlocked)
             canDash = true;

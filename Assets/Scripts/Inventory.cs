@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, ISaveManager
 {
     public static Inventory instance;
 
@@ -38,6 +39,9 @@ public class Inventory : MonoBehaviour
     public bool flaskUse { get; set; }
     float _armorCoolDown;
 
+    [SerializeField] List<InventoryItem> _loadedItem = new();
+    [SerializeField] List<ItemData_Equipment> _loadedEquip = new();
+
     private void Awake ()
     {
         if (instance == null)
@@ -53,6 +57,28 @@ public class Inventory : MonoBehaviour
 
         _mainUI = inventorySlotParent.GetComponentInParent<UI>();
 
+        AddStartItem();
+        
+        UpdateAllSlotUI();
+    }
+
+    private void AddStartItem ()
+    {
+        if (_loadedItem.Count > 0 || _loadedEquip.Count > 0)
+        {
+            foreach (InventoryItem item in _loadedItem)
+            {
+                for (int i = 0; i < item.stackSize; i++)
+                    AddItem(item.itemData);
+            }
+            foreach(var equip in _loadedEquip)
+            {
+                EquipItem(equip);
+            }
+            return;
+        }
+
+
         foreach (var item in start)
         {
             while (item.stackSize > 0)
@@ -61,8 +87,6 @@ public class Inventory : MonoBehaviour
                 item.RemoveStack();
             }
         }
-
-        UpdateAllSlotUI();
     }
 
     public void UpdateAllSlotUI ()
@@ -212,7 +236,6 @@ public class Inventory : MonoBehaviour
             stashDictionary[item].RemoveStack();
             if (stashDictionary[item].stackSize <= 0)
             {
-
                 stash.Remove(stashDictionary[item]);
                 stashDictionary.Remove(item);
             }
@@ -287,10 +310,13 @@ public class Inventory : MonoBehaviour
             if (stashDictionary.ContainsKey(requireMaterial[i].itemData))
             {
                 // 检查数量
-                InventoryItem value = stashDictionary[requireMaterial[i].itemData];
-                if (value.stackSize >= requireMaterial[i].stackSize)
+                if (stashDictionary[requireMaterial[i].itemData].stackSize >= requireMaterial[i].stackSize)
                 {
-                    useMaterials.Add(value);
+                    InventoryItem item = new(requireMaterial[i].itemData)
+                    {
+                        stackSize = requireMaterial[i].stackSize
+                    };
+                    useMaterials.Add(item);
                 }
                 else
                 {
@@ -308,6 +334,7 @@ public class Inventory : MonoBehaviour
         // 制造成功 扣除材料
         for (int i = 0; i < useMaterials.Count; i++)
         {
+            Debug.Log(useMaterials[i].stackSize);
             while (useMaterials[i].stackSize > 0)
             {
                 RemoveItem(useMaterials[i].itemData);
@@ -371,5 +398,78 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+
     #endregion
+
+    public void LoadGame (GameData gameData)
+    {
+        foreach (var pair in gameData.saveInventory)
+        {
+            foreach (var item in FillItemDataBase())
+            {
+                if(item != null && item.itemID == pair.Key)
+                {
+                    InventoryItem itemToLoad = new(item);
+                    itemToLoad.stackSize = pair.Value;
+                    _loadedItem.Add(itemToLoad);
+                }
+            }
+        }
+
+        foreach (var equip in gameData.saveEquipment)
+        {
+            foreach (var item in FillItemDataBase())
+            {
+                if (item != null && item.itemID == equip)
+                {
+                    _loadedEquip.Add(item as ItemData_Equipment);
+                }
+            }
+        }
+    }
+
+    public void SaveGame (ref GameData gameData)
+    {
+        gameData.saveInventory.Clear();
+        gameData.saveEquipment.Clear();
+
+        foreach(var pair in inventoryDictionary)
+        {
+            gameData.saveInventory.Add(pair.Key.itemID, pair.Value.stackSize);
+        }
+
+        foreach (var pair in stashDictionary)
+        {
+            gameData.saveInventory.Add(pair.Key.itemID, pair.Value.stackSize);
+        }
+
+        foreach (var pair in equipmentDictionary)
+        {
+            gameData.saveEquipment.Add(pair.Key.itemID);
+        }
+    }
+
+    /// <summary>
+    /// 获取全部item
+    /// </summary>
+    /// <returns></returns>
+    List<ItemData> FillItemDataBase ()
+    {
+        List<ItemData> itemDataBase = new();
+        string[] assetNames = AssetDatabase.FindAssets("", new[] { "Assets/Data/Material",
+                                                           "Assets/Data/Equipment/Amulet",
+                                                           "Assets/Data/Equipment/Armor", 
+                                                           "Assets/Data/Equipment/Flask", 
+                                                           "Assets/Data/Equipment/Weapon"});
+
+        foreach (var name in assetNames)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(name);
+            var data = AssetDatabase.LoadAssetAtPath<ItemData>(path);
+            itemDataBase.Add(data);
+        }
+
+        return itemDataBase;
+    }
+
 }

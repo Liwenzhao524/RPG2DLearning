@@ -28,10 +28,11 @@ public class Skill_CounterAttack : Skill
         _parryCloneUnlock.GetComponent<Button>().onClick.AddListener(ParryCloneUnlock);
     }
 
-    // Update is called once per frame
-    protected override void Update()
+    protected override void LoadUnlock ()
     {
-       base.Update();
+        ParryUnlock();
+        RestoreUnlock();
+        ParryCloneUnlock();
     }
 
     public override void UseSkill ()

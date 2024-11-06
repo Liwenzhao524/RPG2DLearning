@@ -76,6 +76,15 @@ public class Skill_Sword : Skill
         _vulnurableUnlock.GetComponent<Button>().onClick.AddListener(VulnarableUnlock);
     }
 
+    protected override void LoadUnlock ()
+    {
+        TimeStopUnlock();
+        VulnarableUnlock();
+        BounceUnlock();
+        SpinUnlock();
+        PierceUnlock();
+    }
+
     /// <summary>
     /// 根据类型设定重力
     /// </summary>

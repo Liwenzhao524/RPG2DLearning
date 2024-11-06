@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class PlayerStats : CharacterStats
+public class PlayerStats : CharacterStats, ISaveManager
 {
     Player _player;
 
@@ -71,4 +71,14 @@ public class PlayerStats : CharacterStats
     }
 
     public int ReturnCurrentMoney() => currentMoney;
+
+    public void LoadGame (GameData gameData)
+    {
+        currentMoney = gameData.money;
+    }
+
+    public void SaveGame (ref GameData gameData)
+    {
+        gameData.money = currentMoney;
+    }
 }

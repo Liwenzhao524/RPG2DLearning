@@ -33,13 +33,13 @@ public class EntityFX : MonoBehaviour
     public IEnumerator FlashFX()
     {
         _sr.material = flashMat;
-        //Color _temp = _sr.color;
+        //Color _backGround = _sr.color;
         //_sr.color = Color.white;
 
         yield return new WaitForSeconds(flashDuration);
 
         _sr.material = originMat;
-        //_sr.color = _temp;
+        //_sr.color = _backGround;
     }
 
     public void RedBlink()

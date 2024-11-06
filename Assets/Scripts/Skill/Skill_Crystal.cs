@@ -138,6 +138,14 @@ public class Skill_Crystal : Skill
 
     #endregion
 
+    protected override void LoadUnlock ()
+    {
+        CrystalUnlock();
+        ExplodeUnlock();
+        MoveUnlock();
+        MultiUnlock();
+    }
+
     void CrystalUnlock ()
     {
         if (_crystalUnlock.unlocked)

@@ -14,11 +14,21 @@ public class Skill : MonoBehaviour
     protected virtual void Start()
     {
         player = PlayerManager.instance.player;
+
+        LoadUnlock();
     }
 
     protected virtual void Update()
     {
         coolDownTimer -= Time.deltaTime;
+    }
+
+    /// <summary>
+    /// 载入时检查技能是否解锁
+    /// </summary>
+    protected virtual void LoadUnlock ()
+    {
+
     }
 
     /// <summary>

@@ -32,6 +32,8 @@ public class UI_InGame : MonoBehaviour
 
     private void Update ()
     {
+        if (_stats.ReturnCurrentMoney() <= 0)
+            _currentMoney.text = "Money: 0";
         _currentMoney.text = "Money: " + _stats.ReturnCurrentMoney().ToString("#,#");
 
         if (_skill.dashUse)

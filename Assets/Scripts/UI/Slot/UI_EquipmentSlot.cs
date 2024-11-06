@@ -9,22 +9,18 @@ using UnityEngine.UI;
 public class UI_EquipmentSlot : UI_ItemSlot
 {
     public EquipmentType equipmentType;
-    Sprite _temp;
+    [SerializeField] Sprite _backGround;
 
     private void OnValidate ()
     {
         gameObject.name = "Equipment - " + equipmentType.ToString();
     }
 
-    private void Start ()
-    {
-        _temp = itemIcon.sprite;
-    }
-
     public override void CleanUpSlot ()
     {
         item = null;
-        itemIcon.sprite = _temp;
+        itemIcon.sprite = _backGround;
+
         itemUI.text = "";
     }
 
@@ -33,7 +29,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
         if (item == null || item.itemData == null) return;
 
         Inventory.instance.UnequipItem(item.itemData as ItemData_Equipment);
-        //Inventory.instance.AddItem(item.item as ItemData_Equipment);
+
         CleanUpSlot();
     }
 

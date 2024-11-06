@@ -7,7 +7,7 @@ public class Skill_Dodge : Skill
 {
     [Header("Basic")]
     [SerializeField] UI_SkillTreeSlot dodgeUnlock;
-    bool _canDodge = true;  //debuglog:见下
+    bool _canDodge;
     bool _evasionAdded;
 
     [Header("Dodge Clone")]
@@ -18,7 +18,6 @@ public class Skill_Dodge : Skill
     {
         base.Start();
 
-        // debuglog:Start()执行顺序又出问题UI_SkillTreeSlot dodgeUnlock
         dodgeUnlock.GetComponent<Button>().onClick.AddListener(DodgeUnlock);
 
         dodgeCloneUnlock.GetComponent<Button>().onClick.AddListener(DodgeColneUnlock);
@@ -41,6 +40,12 @@ public class Skill_Dodge : Skill
             Transform target = FindClosestEnemy();
             player.skill.clone.CreateClone(target, new Vector3(1.2f * player.faceDir, 0));
         }
+    }
+
+    protected override void LoadUnlock ()
+    {
+        DodgeUnlock();
+        DodgeColneUnlock();
     }
 
     void DodgeUnlock ()

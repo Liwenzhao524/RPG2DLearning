@@ -1,4 +1,5 @@
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 public enum itemType 
@@ -17,11 +18,20 @@ public class ItemData : ScriptableObject
     public itemType itemType;
     public string itemName;
     public Sprite icon;
+    public string itemID;
 
     [Range(0, 100)]
     public float dropChance;
 
     public StringBuilder stringBuilder = new();
+
+    private void OnValidate ()
+    {
+#if UNITY_EDITOR
+        string path = AssetDatabase.GetAssetPath(this);
+        itemID = AssetDatabase.AssetPathToGUID(path);
+#endif
+    }
 
     public virtual string GetDescription ()
     {

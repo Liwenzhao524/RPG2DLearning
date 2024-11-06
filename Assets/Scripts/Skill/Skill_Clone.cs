@@ -22,7 +22,7 @@ public class Skill_Clone : Skill
     public bool beAggresive {  get; private set; }
 
     [Header("Clone Crystal Blink")]
-    [SerializeField] UI_SkillTreeSlot _cloneCrystalMirageUnlock;
+    [SerializeField] UI_SkillTreeSlot _cloneCrystalBlinkUnlock;
     bool _canCloneCrystalBlink;
 
     [Header("Clone Duplicate")]
@@ -40,10 +40,19 @@ public class Skill_Clone : Skill
 
         _attackUnlock.GetComponent<Button>().onClick.AddListener(AttackUnlock);
         _aggresiveUnlock.GetComponent<Button>().onClick.AddListener(AggresiveUnlock);
-        _cloneCrystalMirageUnlock.GetComponent<Button>().onClick.AddListener(CloneCrystalMirageUnlock);
+        _cloneCrystalBlinkUnlock.GetComponent<Button>().onClick.AddListener(CloneCrystalBlinkUnlock);
         _duplicateUnlock.GetComponent<Button>().onClick.AddListener(DuplicateUnlock);
         _crystalInsteadCloneUnlock.GetComponent<Button>().onClick.AddListener(CrystalInsteadCloneUnlock);
 
+    }
+
+    protected override void LoadUnlock ()
+    {
+        AttackUnlock();
+        AggresiveUnlock();
+        CloneCrystalBlinkUnlock();
+        DuplicateUnlock();
+        CrystalInsteadCloneUnlock();
     }
 
     /// <summary>
@@ -117,9 +126,9 @@ public class Skill_Clone : Skill
             beAggresive = true;
     }
 
-    void CloneCrystalMirageUnlock ()
+    void CloneCrystalBlinkUnlock ()
     {
-        if(_cloneCrystalMirageUnlock.unlocked)
+        if(_cloneCrystalBlinkUnlock.unlocked)
             _canCloneCrystalBlink = true;
     }
 
