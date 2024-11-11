@@ -31,11 +31,13 @@ public class SaveManager : MonoBehaviour
     }
 
     [ContextMenu("Delete Savedata")]
-    void DeleteSaveData ()
+    public void DeleteSaveData ()
     {
         _dataHandler = new(Application.persistentDataPath, _saveFileName, _isEcrypt);
         _dataHandler.DeleteData();
     }
+
+    public bool HasSavedData() => _dataHandler.Load() != null;
 
     public void NewGame ()
     {

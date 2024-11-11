@@ -173,7 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Explode
   _skillDescription: Crystal can explode.
   _skillCost: 20
@@ -459,7 +458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Multiple Mirage
   _skillDescription: 'Mirage''s attack has a chance to spawn another mirage.
 
@@ -990,7 +988,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Dodge
   _skillDescription: Get 10% of evasion.
   _skillCost: 30
@@ -3511,7 +3508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Dash
   _skillDescription: 'You can dash to avoid damage.
 
@@ -4792,7 +4788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Active Mirage
   _skillDescription: 'Your mirage can attack targets.
 
@@ -5263,7 +5258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Aggresive Mirage
   _skillDescription: 'Your mirage has 80% of your ATK.
 
@@ -5367,6 +5361,162 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281743489}
   m_CullTransparentMesh: 1
+--- !u!1 &286860803
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 286860804}
+  - component: {fileID: 286860806}
+  - component: {fileID: 286860805}
+  - component: {fileID: 286860807}
+  m_Layer: 5
+  m_Name: Die Message
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &286860804
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286860803}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 307816969}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1.082, y: 0}
+  m_SizeDelta: {x: 860.0537, y: 491.4783}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &286860805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286860803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: You Died
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 84bdc42b70bb5e54aa18bb33c1fa834e, type: 2}
+  m_sharedMaterial: {fileID: -8065883861848785263, guid: 84bdc42b70bb5e54aa18bb33c1fa834e, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 80
+  m_fontSizeBase: 80
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &286860806
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286860803}
+  m_CullTransparentMesh: 1
+--- !u!95 &286860807
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286860803}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dadbc76d6e9655d4291c7743c81c513a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &287081094
 GameObject:
   m_ObjectHideFlags: 0
@@ -5637,6 +5787,9 @@ RectTransform:
   - {fileID: 1582067087}
   - {fileID: 646826965}
   - {fileID: 878383589}
+  - {fileID: 1076294199}
+  - {fileID: 286860804}
+  - {fileID: 1330231003}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5665,6 +5818,9 @@ MonoBehaviour:
   _craftUI: {fileID: 1582067084}
   _optionUI: {fileID: 646826964}
   _gameUI: {fileID: 878383588}
+  _fadeScreen: {fileID: 1076294200}
+  _endText: {fileID: 286860803}
+  _restartButton: {fileID: 1330230999}
 --- !u!1 &316097178
 GameObject:
   m_ObjectHideFlags: 0
@@ -7451,7 +7607,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Parry Mirage
   _skillDescription: Create a mirage after a successful parry.
   _skillCost: 150
@@ -8961,51 +9116,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 591498495}
   m_CullTransparentMesh: 1
---- !u!1 &596673108
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 596673110}
-  - component: {fileID: 596673109}
-  m_Layer: 0
-  m_Name: SaveManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &596673109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596673108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666a302cac0a5684d813f622e6878fd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _saveFileName: SaveData.txt
---- !u!4 &596673110
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596673108}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 821.11566, y: 466.1168, z: 5.589005}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &602925061
 GameObject:
   m_ObjectHideFlags: 0
@@ -9324,7 +9434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Dodge mirage
   _skillDescription: Create mirage when dodging.
   _skillCost: 50
@@ -9583,10 +9692,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDown: 0
   _newClonePrefab: {fileID: 141409661363275469, guid: fbfba9d93bdc2db4dad6f84a24221576, type: 3}
-  _cloneDuration: 1
+  _cloneDuration: 1.5
   _attackUnlock: {fileID: 263695523}
   _aggresiveUnlock: {fileID: 281743491}
-  _cloneCrystalMirageUnlock: {fileID: 2144949153}
+  _cloneCrystalBlinkUnlock: {fileID: 2144949153}
   _duplicateUnlock: {fileID: 12695570}
   _duplicateChance: 20
   _crystalInsteadCloneUnlock: {fileID: 871541407}
@@ -9735,7 +9844,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Crystal
   _skillDescription: 'Create crystal does magic damage.
 
@@ -11209,7 +11317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Restore
   _skillDescription: Restore a bit HP after a successful parry.
   _skillCost: 75
@@ -11861,6 +11968,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837413928}
   m_CullTransparentMesh: 1
+--- !u!1 &858036738
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 858036740}
+  - component: {fileID: 858036739}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &858036739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858036738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e00508d7f53c3f24a9bdb8ecb51c8423, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &858036740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858036738}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 736.6826, y: 496.65558, z: 5.1558785}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &861086166
 GameObject:
   m_ObjectHideFlags: 0
@@ -12040,7 +12191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Crystal Mirage
   _skillDescription: 'You create crystal instead of mirage with all crystal upgrade.
 
@@ -13225,7 +13375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Pierce Sword
   _skillDescription: 'Sword can pierce targets.
 
@@ -13401,7 +13550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Bounce Sword
   _skillDescription: 'Sword can bounce between enemies.
 
@@ -14541,6 +14689,103 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1053097546}
   m_CullTransparentMesh: 1
+--- !u!1001 &1054181820
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 307816969}
+    m_Modifications:
+    - target: {fileID: 1727840600058071498, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_Name
+      value: DarkScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
 --- !u!1 &1059145509
 GameObject:
   m_ObjectHideFlags: 0
@@ -14927,6 +15172,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1069810350}
   m_CullTransparentMesh: 1
+--- !u!224 &1076294199 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5122476727653576547, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+  m_PrefabInstance: {fileID: 1054181820}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1076294200 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9194637403838564719, guid: 2aa19e23b88e7864db6439877e6d09e6, type: 3}
+  m_PrefabInstance: {fileID: 1054181820}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13277d4490c699045a47bb62e3818c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1083350695
 GameObject:
   m_ObjectHideFlags: 0
@@ -15810,7 +16071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Time Stop
   _skillDescription: Stop enemy's time when hitted by sword
   _skillCost: 20
@@ -16346,6 +16606,140 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140375618}
+  m_CullTransparentMesh: 1
+--- !u!1 &1145448220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1145448221}
+  - component: {fileID: 1145448223}
+  - component: {fileID: 1145448222}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1145448221
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145448220}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1330231003}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1145448222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145448220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Restart
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 84bdc42b70bb5e54aa18bb33c1fa834e, type: 2}
+  m_sharedMaterial: {fileID: -8065883861848785263, guid: 84bdc42b70bb5e54aa18bb33c1fa834e, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4288386265
+  m_fontColor: {r: 0.8490566, g: 0.5793876, b: 0.60681087, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 48
+  m_fontSizeBase: 48
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1145448223
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145448220}
   m_CullTransparentMesh: 1
 --- !u!1001 &1163455932
 PrefabInstance:
@@ -19535,7 +19929,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: See Me
   _skillDescription: Leave mirage before you dash.
   _skillCost: 50
@@ -19770,6 +20163,139 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1328218085}
   m_CullTransparentMesh: 1
+--- !u!1 &1330230999
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1330231003}
+  - component: {fileID: 1330231002}
+  - component: {fileID: 1330231001}
+  - component: {fileID: 1330231000}
+  m_Layer: 5
+  m_Name: RestartButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1330231000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330230999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1330231001}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 307816970}
+        m_TargetAssemblyTypeName: UI, Assembly-CSharp
+        m_MethodName: RestartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1330231001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330230999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -879444615, guid: 288775d1aa25875418a3f3fd7acb01f5, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1330231002
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330230999}
+  m_CullTransparentMesh: 1
+--- !u!224 &1330231003
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330230999}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1145448221}
+  m_Father: {fileID: 307816969}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 4, y: -252}
+  m_SizeDelta: {x: 508.94, y: 200.9647}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1333813504
 GameObject:
   m_ObjectHideFlags: 0
@@ -20281,7 +20807,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Spin Sword
   _skillDescription: 'Sword can spin when hit enemy.
 
@@ -22502,7 +23027,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Vulnerable
   _skillDescription: Enemy hitted by sword take 10% more damage.
   _skillCost: 50
@@ -23846,7 +24370,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Controlled Destruction
   _skillDescription: 'Crystal moves towards nearby enemy.
 
@@ -24354,7 +24877,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Parry
   _skillDescription: You can counter enemy's attack.
   _skillCost: 20
@@ -28308,7 +28830,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Multiple Crystal
   _skillDescription: You can create 3 crystal at a time.
   _skillCost: 150
@@ -28828,7 +29349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Here I Am
   _skillDescription: Leave a mirage after you dash.
   _skillCost: 100
@@ -29840,7 +30360,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Sword Throw
   _skillDescription: Throw sword to enemy.
   _skillCost: 0
@@ -33180,7 +33699,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Blackhole
   _skillDescription: Create a blackhole to trap enemies and do tons of damage.
   _skillCost: 500
@@ -34294,7 +34812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f8919f8d08d6342a875221bc99a8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlocked: 0
   _skillName: Blink
   _skillDescription: 'Leave a mirage before teleport to your crystal.
 
@@ -34633,6 +35150,63 @@ MonoBehaviour:
     stackSize: 0
   equipmentType: 0
   _backGround: {fileID: 841295948, guid: 288775d1aa25875418a3f3fd7acb01f5, type: 3}
+--- !u!1001 &8037083741960348925
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4475035306626995833, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
+      propertyPath: m_Name
+      value: SaveManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381401913010077721, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 821.11566
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381401913010077721, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 466.1168
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381401913010077721, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.589005
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381401913010077721, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381401913010077721, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381401913010077721, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381401913010077721, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381401913010077721, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381401913010077721, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381401913010077721, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 71fb3c56b3f0764419ed3c0788a94a23, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -34642,8 +35216,9 @@ SceneRoots:
   - {fileID: 1664521917}
   - {fileID: 1619560209}
   - {fileID: 1383055669}
-  - {fileID: 596673110}
+  - {fileID: 8037083741960348925}
   - {fileID: 628884513}
+  - {fileID: 858036740}
   - {fileID: 377034050}
   - {fileID: 307816969}
   - {fileID: 1291229255}

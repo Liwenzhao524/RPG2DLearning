@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UI : MonoBehaviour
@@ -14,6 +15,11 @@ public class UI : MonoBehaviour
     [SerializeField] GameObject _craftUI;
     [SerializeField] GameObject _optionUI;
     [SerializeField] GameObject _gameUI;
+
+    [Header("EndScreen")]
+    [SerializeField] UI_DarkScreen _fadeScreen;
+    [SerializeField] GameObject _endText;
+    [SerializeField] GameObject _restartButton;
 
     private void Awake ()
     {
@@ -64,7 +70,9 @@ public class UI : MonoBehaviour
     {
         for(int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(false);
+            bool fadeScreen = transform.GetChild(i).GetComponent<UI_DarkScreen>() != null;
+            if(fadeScreen == false)
+                transform.GetChild(i).gameObject.SetActive(false);
         }
 
         if (menu != null)
@@ -73,4 +81,20 @@ public class UI : MonoBehaviour
             _gameUI.SetActive(true);
 
     }
+
+    public void SwitchToEndScreen ()
+    {
+        _fadeScreen.FadeIn();
+        StartCoroutine(EndScreen());
+    }
+
+    IEnumerator EndScreen ()
+    {
+        yield return new WaitForSeconds(1);
+        _endText.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        _restartButton.SetActive(true);
+    }
+
+    public void RestartGame() => GameManager.instance.RestartScene();
 }
