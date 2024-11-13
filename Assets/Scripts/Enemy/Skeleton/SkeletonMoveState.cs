@@ -12,17 +12,20 @@ public class SkeletonMoveState : SkeletonGroundState
     public override void Enter()
     {
         base.Enter();
+        AudioManager.instance.PlaySFX("SkeletonWalk", enemy.transform);
     }
 
     public override void Exit()
     {
         base.Exit();
+        AudioManager.instance.StopSFX("SkeletonWalk");
     }
 
     public override void Update()
     {
         base.Update();
-
+        
+        
         enemy.SetVelocity(enemy.moveSpeed * enemy.faceDir, rb.velocity.y);
 
         if(!enemy.IsGroundDetected() || enemy.IsWallDetected())

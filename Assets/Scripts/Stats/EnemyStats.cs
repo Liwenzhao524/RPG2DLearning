@@ -11,6 +11,7 @@ public class EnemyStats : CharacterStats
     [SerializeField] int _dropAmount;
     [SerializeField] ItemData[] _possibleDrops;
     List<ItemData> _dropList = new();
+    [SerializeField] Stats _dropMoney;
 
     [Header("Level")]
     [SerializeField] int _level = 1;
@@ -19,6 +20,7 @@ public class EnemyStats : CharacterStats
     // Start is called before the first frame update
     protected override void Start()
     {
+        _dropMoney.SetDefaultValue(100);
         LevelGrowth();
 
         base.Start();
@@ -39,6 +41,8 @@ public class EnemyStats : CharacterStats
         ModifyStat(iceATK);
         ModifyStat(fireATK);
         ModifyStat(lightningATK);
+
+        ModifyStat(_dropMoney);
     }
 
     protected override void Update()
@@ -95,6 +99,9 @@ public class EnemyStats : CharacterStats
     {
         base.Die();
         _enemy.Die();
+
+        PlayerStats stats = PlayerManager.instance.player.stats as PlayerStats;
+        stats.currentMoney += (int)_dropMoney.GetValue();
         Destroy(gameObject, 5);
         if(_enemy.stats.isDead)
             GenerateDrop();

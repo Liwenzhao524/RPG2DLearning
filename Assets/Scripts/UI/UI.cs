@@ -21,9 +21,12 @@ public class UI : MonoBehaviour
     [SerializeField] GameObject _endText;
     [SerializeField] GameObject _restartButton;
 
+    bool _allowSFX;
+
     private void Awake ()
     {
         SwitchToMenu(_skillTreeUI);
+        _fadeScreen.gameObject.SetActive(true);
     }
     // Start is called before the first frame update
     void Start()
@@ -35,6 +38,7 @@ public class UI : MonoBehaviour
         craftWindow.gameObject.SetActive(false);
 
         SwitchToMenu(_gameUI);
+        _allowSFX = true;
     }
 
     // Update is called once per frame
@@ -76,7 +80,10 @@ public class UI : MonoBehaviour
         }
 
         if (menu != null)
+        {
             menu.SetActive(true);
+            if(_allowSFX) AudioManager.instance.PlaySFX("MenuOpen");
+        }
         else 
             _gameUI.SetActive(true);
 

@@ -27,7 +27,7 @@ public class Entity : MonoBehaviour
     public Rigidbody2D rb { get; private set; }
     public Collider2D col { get; private set; }
     public EntityFX fx { get; private set; }
-    public CharacterStats stats { get; private set; }
+    public CharacterStats stats { get; protected set; }
     #endregion
 
     /// <summary>

@@ -11,11 +11,23 @@ public class GameData
     public DictionarySerialized<string, int> saveInventory;
     public List<string> saveEquipment;
 
+    public DictionarySerialized<string, bool> checkpoints;
+    public string closestCheckpointID;
+
+    public float bgmValue;
+    public float sfxValue;
+
     public GameData ()
     {
         money = 0;
         saveSkillTree = new();
         saveInventory = new();
-        saveEquipment = new List<string>(); 
+        saveEquipment = new(); 
+
+        closestCheckpointID = string.Empty;
+        checkpoints = new();
+
+        bgmValue = 1; 
+        sfxValue = 1;
     }
 }

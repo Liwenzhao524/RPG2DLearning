@@ -20,6 +20,8 @@ public class PlayerBlackholeState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        AudioManager.instance.PlaySFX("Blackhole");
         _defaultGravity = rb.gravityScale;
 
         _skillUsed = false;

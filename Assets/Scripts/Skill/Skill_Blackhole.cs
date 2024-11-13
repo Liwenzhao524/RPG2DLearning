@@ -11,7 +11,7 @@ public class Skill_Blackhole : Skill
 
     [Header("Basic Info")]
     [SerializeField] GameObject _blackholePrefab;
-    [SerializeField] float _blackholeDuration = 8;
+    [SerializeField] float _blackholeDuration = 5;
     [SerializeField] float _maxSize = 15;
     [SerializeField] float _growSpeed = 5;
     [SerializeField] float _shrinkSpeed = 5;

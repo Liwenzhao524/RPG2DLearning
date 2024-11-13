@@ -70,6 +70,7 @@ public class Player : Entity
     protected override void Start()
     {
         base.Start();
+        stats = stats as PlayerStats;
         stateMachine.Init(idleState);
         skill = SkillManager.instance;
 

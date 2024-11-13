@@ -525,7 +525,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -616931909
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -85727878, guid: 687df074731fbf744b668d2275dbb675, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -642,7 +642,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -616931909
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: -1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0.627451}
@@ -860,38 +860,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   strength:
     _baseValue: 0
+    _modifiers: []
   agility:
     _baseValue: 0
+    _modifiers: []
   intelligence:
     _baseValue: 0
+    _modifiers: []
   vitality:
     _baseValue: 0
+    _modifiers: []
   maxHP:
     _baseValue: 1000
+    _modifiers: []
   armor:
     _baseValue: 0
+    _modifiers: []
   evasion:
     _baseValue: 0
+    _modifiers: []
   magicResist:
     _baseValue: 0
+    _modifiers: []
   ATK:
     _baseValue: 20
+    _modifiers: []
   critChance:
     _baseValue: 0
+    _modifiers: []
   critDamage:
     _baseValue: 0
+    _modifiers: []
   fireATK:
     _baseValue: 0
+    _modifiers: []
   iceATK:
     _baseValue: 0
+    _modifiers: []
   lightningATK:
     _baseValue: 0
+    _modifiers: []
   currentHP: 0
   shockThunderPrefab: {fileID: 4979832629735912810, guid: 422b2cbb5dd4a864baf473b618c71035, type: 3}
   _dropAmount: 0
   _possibleDrops: []
+  _dropMoney:
+    _baseValue: 0
+    _modifiers: []
   _level: 1
-  _growPercentage: 0
+  _growPercentage: 0.05
 --- !u!114 &7013118683640076546
 MonoBehaviour:
   m_ObjectHideFlags: 0

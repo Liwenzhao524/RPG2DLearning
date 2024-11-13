@@ -22,7 +22,7 @@ public class PlayerGroundState : PlayerState
     {
         base.Update();
 
-        if(Input.GetKeyDown(KeyCode.R) && player.skill.blackhole.canUseBlackhole) 
+        if(Input.GetKeyDown(KeyCode.R) && player.skill.blackhole.canUseBlackhole && player.skill.blackhole.coolDownTimer < 0) 
             player.stateMachine.ChangeState(player.blackholeState);
 
         if(Input.GetMouseButtonDown(1) && HasNoSword())

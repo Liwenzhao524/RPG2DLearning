@@ -16,7 +16,10 @@ public class UI_InGame : MonoBehaviour
     [SerializeField] Image _parryImage;
     [SerializeField] Image _blackholeImage;
     [SerializeField] Image _flaskImage;
+
     [SerializeField] TextMeshProUGUI _currentMoney;
+    [SerializeField] float _increaseRate = 10000;
+    float _moneyAmount;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,23 +35,23 @@ public class UI_InGame : MonoBehaviour
 
     private void Update ()
     {
-        if (_stats.ReturnCurrentMoney() == 0)
-            _currentMoney.text = "Money: 0";
-        _currentMoney.text = "Money: " + _stats.ReturnCurrentMoney().ToString("#,#");
+        UpdateMoneyUI();
+
+        _currentMoney.text = "Money: " + ( (int)_moneyAmount ).ToString("#,#");
 
         if (_skill.dashUse)
         {
-            SetCoolDown(_dashImage); 
+            SetCoolDown(_dashImage);
             _skill.dashUse = false;
         }
 
-        if(_skill.crystalUse)
+        if (_skill.crystalUse)
         {
             SetCoolDown(_crystalImage);
             _skill.crystalUse = false;
         }
 
-        if(_skill.parryUse)
+        if (_skill.parryUse)
         {
             SetCoolDown(_parryImage);
             _skill.parryUse = false;
@@ -73,6 +76,13 @@ public class UI_InGame : MonoBehaviour
         CheckCoolDown(_flaskImage, Inventory.instance.flaskCoolDown);
     }
 
+    private void UpdateMoneyUI ()
+    {
+        if (_moneyAmount < _stats.ReturnCurrentMoney())
+            _moneyAmount += Time.deltaTime * _increaseRate;
+        else
+            _moneyAmount = _stats.ReturnCurrentMoney();
+    }
 
     private void UpdateHealthUI ()
     {
