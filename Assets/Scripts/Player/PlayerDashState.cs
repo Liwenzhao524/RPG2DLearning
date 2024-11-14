@@ -11,6 +11,7 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        player.stats.isInvensible = true;
         player.skill.dash.CloneDashStart();
         stateTimer = player.dashDuraTime;  // 冲刺持续时间
     }
@@ -20,6 +21,7 @@ public class PlayerDashState : PlayerState
         base.Exit();
         player.SetVelocity(0, rb.velocity.y);
         player.skill.dash.CloneDashEnd();
+        player.stats.isInvensible = false;  
     }
 
     public override void Update()

@@ -83,6 +83,9 @@ public class Player : Entity
     protected override void Update()
     {
         base.Update();
+
+        if (Time.timeScale == 0) return;
+
         stateMachine.currentState.Update();
         CheckDashInput();
 
@@ -115,6 +118,11 @@ public class Player : Entity
         moveSpeed = _defaultMoveSpeed;
         jumpForce = _defaultJumpForce;
         dashSpeed = _defaultDashSpeed;
+    }
+
+    public override void SetKnockDistance (Vector2 distance)
+    {
+        knockDistance = distance;
     }
 
     #region Skill Ctrl

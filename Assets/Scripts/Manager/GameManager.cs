@@ -24,16 +24,18 @@ public class GameManager : MonoBehaviour, ISaveManager
         SceneManager.LoadScene(scene.name);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void GamePause(bool pause)
     {
-        
+        if (pause)
+            Time.timeScale = 0;
+        else
+            Time.timeScale = 1;
     }
 
     private void Update ()
     {
-        if(Input.GetKeyDown(KeyCode.M))
-            RestartScene();
+        //if(Input.GetKeyDown(KeyCode.M))
+        //    RestartScene();
     }
 
     public void LoadGame (GameData gameData)
@@ -49,7 +51,6 @@ public class GameManager : MonoBehaviour, ISaveManager
 
         _checkpointID = gameData.closestCheckpointID;
         PlacePlayerAtCheckpoint();
-        //Invoke(nameof(PlacePlayerAtCheckpoint), 0.1f);
     }
 
     public void SaveGame (ref GameData gameData)

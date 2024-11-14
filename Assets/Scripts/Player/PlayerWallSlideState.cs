@@ -27,7 +27,7 @@ public class PlayerWallSlideState : PlayerState
         else player.SetVelocity(0, rb.velocity.y * 0.7f);
 
         // 提前反向移动 或 落地，进入待机
-        if(xinput * player.faceDir < 0 || player.IsGroundDetected())
+        if(xinput * player.faceDir < 0 || player.IsGroundDetected() || !player.IsWallDetected())
             player.stateMachine.ChangeState(player.idleState);
 
         // 蹬墙跳

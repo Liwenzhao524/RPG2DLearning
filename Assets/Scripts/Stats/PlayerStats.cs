@@ -40,12 +40,21 @@ public class PlayerStats : CharacterStats, ISaveManager
 
     public override void TakeDamage(float damage)
     {
+        if (damage > GetMaxHP() * 0.3f && !isDead)
+        {
+            _player.SetKnockDistance(new Vector2(8, 4));
+            AudioManager.instance.PlaySFX("PlayerHitted");
+        }
+
         base.TakeDamage(damage);
+            
+            _player.SetKnockDistance(Vector2.zero);
     }
 
     protected override void DecreaseHP (float damage)
     {
         base.DecreaseHP(damage);
+
 
         Inventory.instance.GetEquipmentByType(EquipmentType.Armor)?.ExecuteEffects(transform);
     }

@@ -15,6 +15,8 @@ public class UI : MonoBehaviour
     [SerializeField] GameObject _craftUI;
     [SerializeField] GameObject _optionUI;
     [SerializeField] GameObject _gameUI;
+    [Space]
+    [SerializeField] GameObject _pauseUI;
 
     [Header("EndScreen")]
     [SerializeField] UI_DarkScreen _fadeScreen;
@@ -55,6 +57,13 @@ public class UI : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.O))
             SwitchWithKey(_optionUI);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SwitchWithKey(_pauseUI);
+            GameManager.instance.GamePause(_pauseUI.activeSelf);
+        }
+
     }
 
 
@@ -86,6 +95,14 @@ public class UI : MonoBehaviour
         }
         else 
             _gameUI.SetActive(true);
+
+        if(GameManager.instance != null)
+        {
+            if (menu == _gameUI)
+                GameManager.instance.GamePause(false);
+            else
+                GameManager.instance.GamePause(true);
+        }
 
     }
 

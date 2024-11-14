@@ -5,10 +5,12 @@ using UnityEngine;
 public class EnemyStateMachine
 {
     public EnemyState currentState { get; private set; }
+    public EnemyState defaultState { get; private set; }
 
     public void Init(EnemyState state)
     {
         currentState = state;
+        defaultState = state;
         currentState.Enter();
     }
 

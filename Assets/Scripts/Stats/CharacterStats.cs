@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public enum StatsType
@@ -65,7 +64,10 @@ public class CharacterStats : MonoBehaviour
     float _thunderDamage;
 
     public float currentHP;
-    public bool isDead {  get; private set; }
+    public bool isDead { get; private set; }
+
+    public bool isInvensible {  get; set; }
+
     /// <summary>
     /// 仅当HP变化时调用
     /// </summary>
@@ -76,7 +78,7 @@ public class CharacterStats : MonoBehaviour
     [SerializeField] GameObject shockThunderPrefab;
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected virtual void Start ()
     {
         fx = GetComponent<EntityFX>();
         entity = GetComponent<Entity>();
@@ -87,7 +89,7 @@ public class CharacterStats : MonoBehaviour
 
     #region Get Stats Influenced By Major Stats
 
-    public float GetMaxHP() => maxHP.GetValue() + vitality.GetValue() * 5;
+    public float GetMaxHP () => maxHP.GetValue() + vitality.GetValue() * 5;
 
     public float GetATK () => ATK.GetValue() + strength.GetValue();
 
@@ -99,12 +101,12 @@ public class CharacterStats : MonoBehaviour
 
     public float GetEvasion () => evasion.GetValue() + agility.GetValue();
 
-    public float GetMagicDamage() => fireATK.GetValue() + iceATK.GetValue() + lightningATK.GetValue() + intelligence.GetValue();
+    public float GetMagicDamage () => fireATK.GetValue() + iceATK.GetValue() + lightningATK.GetValue() + intelligence.GetValue();
 
     #endregion
 
     // Update is called once per frame
-    protected virtual void Update()
+    protected virtual void Update ()
     {
         _ignitedTimer -= Time.deltaTime;
         _chillTimer -= Time.deltaTime;
@@ -129,7 +131,7 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     /// <param name="statsType"></param>
     /// <returns></returns>
-    public Stats GetStatsByType(StatsType statsType)
+    public Stats GetStatsByType (StatsType statsType)
     {
         Dictionary<StatsType, Stats> _statsMap = new()
         {
@@ -160,12 +162,12 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    public virtual void AddBuffToStats(Stats statsToBuff, float modifier, float duration)
+    public virtual void AddBuffToStats (Stats statsToBuff, float modifier, float duration)
     {
         StartCoroutine(StatsBuff(statsToBuff, modifier, duration));
     }
 
-    IEnumerator StatsBuff(Stats statsToBuff, float modifier, float duration)
+    IEnumerator StatsBuff (Stats statsToBuff, float modifier, float duration)
     {
         statsToBuff.AddModifier(modifier);
         yield return new WaitForSeconds(duration);
@@ -181,7 +183,7 @@ public class CharacterStats : MonoBehaviour
     /// <param name="_fireDamage">最终火伤</param>
     /// <param name="_iceDamage">最终冰伤</param>
     /// <param name="_lightningDamage">最终雷伤</param>
-    private void TakeAilment(CharacterStats target, float _fireDamage, float _iceDamage, float _lightningDamage)
+    private void TakeAilment (CharacterStats target, float _fireDamage, float _iceDamage, float _lightningDamage)
     {
         // 选择一种效果
         bool fireAliment, iceAliment, lightningAliment;
@@ -202,7 +204,7 @@ public class CharacterStats : MonoBehaviour
     /// <param name="fireAliment"></param>
     /// <param name="iceAliment"></param>
     /// <param name="lightningAliment"></param>
-    private void ChooseWhichAilment(float _fireDamage, float _iceDamage, float _lightningDamage, out bool fireAliment, out bool iceAliment, out bool lightningAliment)
+    private void ChooseWhichAilment (float _fireDamage, float _iceDamage, float _lightningDamage, out bool fireAliment, out bool iceAliment, out bool lightningAliment)
     {
         fireAliment = _fireDamage > _iceDamage && _fireDamage > _lightningDamage;
         iceAliment = _iceDamage > _fireDamage && _iceDamage > _lightningDamage;
@@ -235,7 +237,7 @@ public class CharacterStats : MonoBehaviour
     /// <param name="ignite"></param>
     /// <param name="chill"></param>
     /// <param name="shock"></param>
-    public void TakeWhichAilment(bool ignite, bool chill, bool shock)
+    public void TakeWhichAilment (bool ignite, bool chill, bool shock)
     {
         // 有不同条件 不能用
         //if (_isshocked || _isignited || _ischilled) return;
@@ -264,7 +266,7 @@ public class CharacterStats : MonoBehaviour
         if (shock && canGetShock)
         {
             // 主目标
-            if(!_isshocked)
+            if (!_isshocked)
             {
                 ApplyShock(shock);
             }
@@ -281,7 +283,7 @@ public class CharacterStats : MonoBehaviour
     /// 同上面chill等 主要为了Thunder_Controller调用视觉效果
     /// </summary>
     /// <param name="shock"></param>
-    public void ApplyShock(bool shock)
+    public void ApplyShock (bool shock)
     {
         if (_isshocked) return;
         _isshocked = shock;
@@ -292,7 +294,7 @@ public class CharacterStats : MonoBehaviour
     /// <summary>
     /// 对附近敌人降下落雷
     /// </summary>
-    private void ThunderOnNearEnemy()
+    private void ThunderOnNearEnemy ()
     {
         GameObject thunder = Instantiate(shockThunderPrefab, transform.position, Quaternion.identity);
         Thunder_Controller ctrl = thunder.GetComponent<Thunder_Controller>();
@@ -305,8 +307,8 @@ public class CharacterStats : MonoBehaviour
         ctrl.SetUp(_thunderDamage, target.GetComponent<CharacterStats>());
     }
 
-    public void SetIgniteDamage(float damage) => _ignitedDamage = damage;
-    public void SetThunderDamage(float damage) => _thunderDamage = damage;
+    public void SetIgniteDamage (float damage) => _ignitedDamage = damage;
+    public void SetThunderDamage (float damage) => _thunderDamage = damage;
 
     #endregion
 
@@ -317,7 +319,7 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     /// <param name="totalMagicDamage">计算前法伤</param>
     /// <returns>计算后法伤</returns>
-    protected virtual float DoMagicResistance(float totalMagicDamage)
+    protected virtual float DoMagicResistance (float totalMagicDamage)
     {
         totalMagicDamage -= GetMagicResist();
         if (totalMagicDamage < 1) totalMagicDamage = 1;
@@ -329,12 +331,12 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     /// <param name="totalDamage"></param>
     /// <returns></returns>
-    protected virtual float DoCrit(float totalDamage)
+    protected virtual float DoCrit (float totalDamage)
     {
         float totalChance = GetCritChance();
         if (UnityEngine.Random.Range(0, 100) < totalChance)
         {
-            totalDamage *= (1 + GetCritDamage());
+            totalDamage *= ( 1 + GetCritDamage() );
         }
 
         return totalDamage;
@@ -346,7 +348,7 @@ public class CharacterStats : MonoBehaviour
     /// <param name="target">受击对象</param>
     /// <param name="totalDamage">计算前伤害</param>
     /// <returns>计算后伤害</returns>
-    protected virtual float DoDefence(CharacterStats target, float totalDamage)
+    protected virtual float DoDefence (CharacterStats target, float totalDamage)
     {
         float oringinArmor = target.armor.GetValue();
 
@@ -365,7 +367,7 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     /// <param name="target">受击对象</param>
     /// <returns>受击对象能否回避伤害</returns>
-    protected virtual bool DoEvasion(CharacterStats target)
+    protected virtual bool DoEvasion (CharacterStats target)
     {
         if (_isshocked) target.evasion.AddModifier(-20);
 
@@ -375,7 +377,7 @@ public class CharacterStats : MonoBehaviour
 
         if (UnityEngine.Random.Range(0, 100) < totalEvasion)
         {
-            if(target.GetComponent<Player>() != null)
+            if (target.GetComponent<Player>() != null)
             {
                 PlayerManager.instance.player.skill.dodge.DodgeClone();
             }
@@ -388,16 +390,16 @@ public class CharacterStats : MonoBehaviour
 
     #region Damage And HPChange
 
-    public virtual void IncreaseHP(float hp)
+    public virtual void IncreaseHP (float hp)
     {
         currentHP += hp;
 
         currentHP = Mathf.Clamp(currentHP, 0, GetMaxHP());
-        
+
         HPChange?.Invoke();
     }
 
-    protected virtual void DecreaseHP(float damage)
+    protected virtual void DecreaseHP (float damage)
     {
         currentHP -= damage;
 
@@ -410,13 +412,14 @@ public class CharacterStats : MonoBehaviour
     /// <param name="target"></param>
     public virtual void DoDamageTo (CharacterStats target)
     {
-        if (DoEvasion(target)) return;
+        if (target.isInvensible || DoEvasion(target)) return;
 
         float totalDamage = GetATK();
 
         totalDamage = DoCrit(totalDamage);
         totalDamage = DoDefence(target, totalDamage);
 
+        target.GetComponent<Entity>().SetKnockDirection(transform);
         target.TakeDamage(totalDamage);
 
         // 根据个人喜好 是否同时附加法伤
@@ -429,7 +432,7 @@ public class CharacterStats : MonoBehaviour
     /// <param name="target"></param>
     public virtual void DoDamageTo (CharacterStats target, float cloneATK = 1)
     {
-        if (DoEvasion(target)) return;
+        if (target.isInvensible || DoEvasion(target)) return;
 
         float totalDamage = GetATK() * cloneATK;
 
@@ -445,6 +448,8 @@ public class CharacterStats : MonoBehaviour
     /// <param name="target"></param>
     public virtual void DoMagicDamageTo (CharacterStats target)
     {
+        if(target.isInvensible) return;
+
         float _fireDamage = fireATK.GetValue();
         float _iceDamage = iceATK.GetValue();
         float _lightningDamage = lightningATK.GetValue();
@@ -464,7 +469,7 @@ public class CharacterStats : MonoBehaviour
     /// 承受伤害
     /// </summary>
     /// <param name="damage"></param>
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage (float damage)
     {
         DecreaseHP(damage);
 
@@ -479,22 +484,24 @@ public class CharacterStats : MonoBehaviour
     /// <summary>
     /// 承受燃烧DOT
     /// </summary>
-    private void TakeIgniteDamage()
+    private void TakeIgniteDamage ()
     {
+        if (isInvensible) return;
+
         if (_ignitedDamageTimer < 0 && _isignited)
         {
             _ignitedDamageTimer = _ignitedDamageCoolDown;
 
             DecreaseHP(_ignitedDamage);
 
-            if (currentHP <= 0 && !isDead) 
+            if (currentHP <= 0 && !isDead)
                 Die();
         }
     }
 
     #endregion
 
-    protected virtual void Die()
+    protected virtual void Die ()
     {
         if (isDead) return;
         isDead = true;
@@ -502,4 +509,11 @@ public class CharacterStats : MonoBehaviour
         _ischilled = false;
         _isshocked = false;
     }
+
+    public virtual void KillEntity ()
+    {
+        if (!isDead)
+            Die();
+    }
+
 }

@@ -16,9 +16,10 @@ public class Entity : MonoBehaviour
     [SerializeField] protected LayerMask GroundLayer;
 
     [Header("Knockdown Info")]
-    [SerializeField] protected Vector2 knockDirection;
+    [SerializeField] protected Vector2 knockDistance;
     [SerializeField] protected float knockDuration;
     protected bool isKnocked;
+    int _knockDir = 1;
 
     public float faceDir { get; private set; } = 1;
 
@@ -70,6 +71,19 @@ public class Entity : MonoBehaviour
         StartCoroutine(HitKnock());
     }
 
+    public virtual void SetKnockDirection(Transform dmgFrom)
+    {
+        if (dmgFrom.position.x < transform.position.x)
+            _knockDir = 1;
+        else
+            _knockDir = -1;
+    }
+
+    public virtual void SetKnockDistance(Vector2 distance)
+    {
+
+    }
+
     /// <summary>
     /// ÊÜ»÷Ó²Ö±»÷ÍË
     /// </summary>
@@ -78,7 +92,7 @@ public class Entity : MonoBehaviour
     {
         isKnocked = true;
 
-        rb.velocity = new Vector2(knockDirection.x * -faceDir, knockDirection.y);
+        rb.velocity = new Vector2(knockDistance.x * _knockDir, knockDistance.y);
         yield return new WaitForSeconds(knockDuration);
         isKnocked = false;
     }

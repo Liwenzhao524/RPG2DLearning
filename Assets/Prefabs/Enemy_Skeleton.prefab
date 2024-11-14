@@ -410,7 +410,7 @@ Transform:
   m_GameObject: {fileID: 3847055989251827186}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.171, y: -0.311, z: 0}
+  m_LocalPosition: {x: 1.518, y: -0.311, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -742,7 +742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCheck: {fileID: 7985827248140531442}
-  attackRadius: 0.78
+  attackRadius: 0.6
   groundCheck: {fileID: 7408946896421076054}
   groundCheckDis: 0.8
   wallCheck: {fileID: 5228694462584230689}
@@ -750,7 +750,7 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
-  knockDirection: {x: 2, y: 2}
+  knockDistance: {x: 2, y: 1}
   knockDuration: 0.5
   stunDuration: 1
   stunDirection: {x: 3, y: 3}

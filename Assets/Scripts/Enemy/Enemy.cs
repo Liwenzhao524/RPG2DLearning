@@ -22,7 +22,7 @@ public class Enemy : Entity
 
     [Header("Attack Info")]
     public float attackDistance = 2f;
-    public float attackCoolDown = 0.5f;
+    public float attackCoolDown = 1f;
     [SerializeField] protected LayerMask playerLayer;
     [HideInInspector] public float lastAttackTime = 0;
 
@@ -99,7 +99,8 @@ public class Enemy : Entity
     /// <returns></returns>
     public bool CanAttack()
     {
-        return Time.time > lastAttackTime + attackCoolDown;
+        float atkCD = Random.Range(attackCoolDown * 0.8f, attackCoolDown * 1.2f);
+        return Time.time > lastAttackTime + atkCD;
     }
 
     #region Counter Attack

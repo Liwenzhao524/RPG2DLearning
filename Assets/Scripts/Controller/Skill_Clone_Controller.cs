@@ -70,6 +70,7 @@ public class Skill_Clone_Controller : Skill_Controller
 
     private void AttackTrigger()
     {
+        AudioManager.instance.PlaySFX("PlayerPrimeAttack");
         Collider2D[] colliders = Physics2D.OverlapCircleAll(attackCheck.position, attackRadius);
         foreach (var hit in colliders)
         {
