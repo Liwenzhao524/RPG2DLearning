@@ -15,4 +15,5 @@ MonoBehaviour:
   itemType: 0
   itemName: water
   icon: {fileID: 974898800, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  dropChance: 0
+  itemID: 80dac3771906be740ae98967a9bd700e
+  dropChance: 75.4

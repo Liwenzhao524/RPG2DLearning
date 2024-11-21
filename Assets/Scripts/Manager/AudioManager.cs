@@ -1,6 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -8,11 +7,11 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
 
     Dictionary<string, AudioSource> _sfx = new();
-    [SerializeField] List<AudioSource> _bgm = new();
+    Dictionary<string, AudioSource> _bgm = new();
 
     [SerializeField] int _sfxMinDistance;
     public bool isBGMPlay;
-    int _bgmIndex;
+    string _bgmName = string.Empty;
 
     private void Awake ()
     {
@@ -36,17 +35,17 @@ public class AudioManager : MonoBehaviour
 
         for (int i = 0; i < bgm.childCount; i++)
         {
-            _bgm.Add(bgm.GetChild(i).GetComponent<AudioSource>());
+            _bgm.Add(bgm.GetChild(i).name, bgm.GetChild(i).GetComponent<AudioSource>());
         }
     }
 
     private void Update ()
     {
-        if(isBGMPlay == false)
+        if (isBGMPlay == false)
             StopAllBGM();
         else
         {
-            if (_bgm[_bgmIndex].isPlaying == false)
+            if (_bgm.TryGetValue(_bgmName, out AudioSource value) && value.isPlaying == false)
                 PlayRandomBGM();
         }
     }
@@ -58,7 +57,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     /// <param name="name">音效名</param>
     /// <param name="target">如要应用衰减时，输入音源位置</param>
-    public void PlaySFX(string name, Transform target = null)
+    public void PlaySFX (string name, Transform target = null)
     {
         if (target != null)
         {
@@ -67,21 +66,21 @@ public class AudioManager : MonoBehaviour
                 return;
         }
 
-        if(_sfx.TryGetValue(name, out var audio))
+        if (_sfx.TryGetValue(name, out var audio))
         {
             audio.pitch = Random.Range(0.8f, 1.2f);
             audio.Play();
         }
-        
+
     }
 
     /// <summary>
     /// 停止音效
     /// </summary>
     /// <param name="name">如不传 默认停止全部音效</param>
-    public void StopSFX(string name = null)
+    public void StopSFX (string name = null)
     {
-        if(name == null)
+        if (name == null)
         {
             foreach (var pair in _sfx)
             {
@@ -91,9 +90,8 @@ public class AudioManager : MonoBehaviour
         }
 
         if (_sfx.TryGetValue(name, out var audio))
-        {
             audio.Stop();
-        }
+
 
     }
 
@@ -103,23 +101,26 @@ public class AudioManager : MonoBehaviour
 
     public void PlayRandomBGM ()
     {
-        int index = Random.Range(0, _bgm.Count); 
-        PlayBGM(index);
+        if (_bgm.Count == 0) return;
+        string _bgmName = _bgm.Keys.ElementAt(Random.Range(0, _bgm.Count));
+
+        PlayBGM(_bgmName);
     }
 
-    public void PlayBGM(int index)
+    public void PlayBGM (string name)
     {
-        _bgmIndex = index;
+        _bgmName = name;
         StopAllBGM();
 
-        _bgm[_bgmIndex].Play();
+        _bgm[_bgmName].Play();
     }
 
     private void StopAllBGM ()
     {
-        for (int i = 0; i < _bgm.Count; i++)
+        if (_bgm.Count == 0) return;
+        foreach (var pair in _bgm)
         {
-            _bgm[i].Stop();
+            pair.Value.Stop();
         }
     }
 

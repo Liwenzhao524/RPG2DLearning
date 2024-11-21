@@ -32,7 +32,7 @@ public class Skill_Blackhole : Skill
         base.UseSkill();
 
         SkillManager.instance.blackholeUse = true;
-        GameObject newBlackhole = Instantiate(_blackholePrefab, player.transform.position, Quaternion.identity);
+        GameObject newBlackhole = Instantiate(_blackholePrefab, player.transform.position + new Vector3(0, 3), Quaternion.identity);
 
         _ctrl = newBlackhole.GetComponent<Skill_Blackhole_Controller>();
         _ctrl.SetUpBlackhole(_maxSize, _growSpeed, _shrinkSpeed, _cloneAttackCount, _cloneAttackCoolDown, _blackholeDuration);

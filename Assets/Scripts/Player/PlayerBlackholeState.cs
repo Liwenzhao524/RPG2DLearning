@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBlackholeState : PlayerState
 {
     bool _skillUsed;
-    readonly float _flyTime = 0.2f;
+    float _flyTime = 0.2f;
 
     float _defaultGravity;
     public PlayerBlackholeState(Player player, PlayerStateMachine playerStateMachine, string aniBoolName) : base(player, playerStateMachine, aniBoolName)
@@ -49,7 +49,7 @@ public class PlayerBlackholeState : PlayerState
             rb.velocity = new Vector2(0, -0.1f);
             if (!_skillUsed)
             {
-                if (SkillManager.instance.blackhole.CanUseSkill())
+                //if (SkillManager.instance.blackhole.CanUseSkill())
                     _skillUsed = true;
             }
             else if (SkillManager.instance.blackhole.BlackholeEnd())

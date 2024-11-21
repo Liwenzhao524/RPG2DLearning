@@ -59,10 +59,7 @@ public class UI : MonoBehaviour
             SwitchWithKey(_optionUI);
 
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
             SwitchWithKey(_pauseUI);
-            GameManager.instance.GamePause(_pauseUI.activeSelf);
-        }
 
     }
 
@@ -73,6 +70,7 @@ public class UI : MonoBehaviour
         {
             menu.SetActive(false);
             _gameUI.SetActive(true);
+            GameManager.instance.GamePause(false);
             return;
         }
 
@@ -97,12 +95,7 @@ public class UI : MonoBehaviour
             _gameUI.SetActive(true);
 
         if(GameManager.instance != null)
-        {
-            if (menu == _gameUI)
-                GameManager.instance.GamePause(false);
-            else
-                GameManager.instance.GamePause(true);
-        }
+            GameManager.instance.GamePause(!_gameUI.activeSelf);
 
     }
 

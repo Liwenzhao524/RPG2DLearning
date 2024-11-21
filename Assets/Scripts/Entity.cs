@@ -71,6 +71,10 @@ public class Entity : MonoBehaviour
         StartCoroutine(HitKnock());
     }
 
+    /// <summary>
+    /// 受击方向确定
+    /// </summary>
+    /// <param name="dmgFrom"></param>
     public virtual void SetKnockDirection(Transform dmgFrom)
     {
         if (dmgFrom.position.x < transform.position.x)

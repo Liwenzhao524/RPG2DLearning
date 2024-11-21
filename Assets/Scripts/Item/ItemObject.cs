@@ -26,8 +26,8 @@ public class ItemObject : MonoBehaviour
     {
         if(itemData.itemType == itemType.Equipment && !Inventory.instance.CanAddToInventory())
         {
-            Debug.Log("No Space");
-            _rb.velocity = new Vector2(0, 5);
+            PlayerManager.instance.player.fx.CreatePopText("No Enough Space");
+            _rb.velocity = new Vector2(0, 7);
             return;
         }
 

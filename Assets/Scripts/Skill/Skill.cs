@@ -39,6 +39,7 @@ public class Skill : MonoBehaviour
     {
         if(coolDownTimer > 0 || player.stateMachine.currentState == player.deadState)
         {
+            player.fx.CreatePopText("Skill In Cooldown");
             return false;
         }
 

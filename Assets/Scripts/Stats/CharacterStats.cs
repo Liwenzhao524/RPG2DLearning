@@ -162,10 +162,7 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    public virtual void AddBuffToStats (Stats statsToBuff, float modifier, float duration)
-    {
-        StartCoroutine(StatsBuff(statsToBuff, modifier, duration));
-    }
+    public virtual void AddBuffToStats (Stats statsToBuff, float modifier, float duration) => StartCoroutine(StatsBuff(statsToBuff, modifier, duration));
 
     IEnumerator StatsBuff (Stats statsToBuff, float modifier, float duration)
     {
@@ -471,6 +468,9 @@ public class CharacterStats : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void TakeDamage (float damage)
     {
+        if (damage > 0)
+            fx.CreatePopText(damage.ToString());
+
         DecreaseHP(damage);
 
         if (currentHP <= 0 && !isDead)
@@ -492,6 +492,7 @@ public class CharacterStats : MonoBehaviour
         {
             _ignitedDamageTimer = _ignitedDamageCoolDown;
 
+            fx.CreatePopText(_ignitedDamage.ToString(), Color.red);
             DecreaseHP(_ignitedDamage);
 
             if (currentHP <= 0 && !isDead)
