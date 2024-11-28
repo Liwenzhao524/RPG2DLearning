@@ -1,9 +1,7 @@
 using UnityEngine;
 
-public class SkillManager : MonoBehaviour
+public class SkillManager : SingletonMono<SkillManager>
 {
-    public static SkillManager instance;
-
     public Skill_Dash dash { get; private set; }
     public bool dashUse {  get; set; }
     public Skill_Clone clone { get; private set; }
@@ -16,13 +14,6 @@ public class SkillManager : MonoBehaviour
     public bool parryUse { get; set; }
     public Skill_Dodge dodge { get; private set; }
 
-
-
-    private void Awake()
-    {
-        if (instance == null)
-            instance = this;
-    }
     // Start is called before the first frame update
     void Start()
     {
@@ -33,11 +24,5 @@ public class SkillManager : MonoBehaviour
         crystal = GetComponent<Skill_Crystal>();
         parry = GetComponent<Skill_CounterAttack>();
         dodge = GetComponent<Skill_Dodge>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

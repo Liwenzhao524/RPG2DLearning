@@ -2,15 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : SingletonMono<PlayerManager>
 {
-    public static PlayerManager instance;
     public Player player;
-
-    private void Awake()
-    {
-        if (instance == null)
-            instance = this;
-    }
-
 }

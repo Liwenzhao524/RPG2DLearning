@@ -4,16 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour, ISaveManager
+public class GameManager : SingletonMono<GameManager>, ISaveManager
 {
-    public static GameManager instance;
     [SerializeField] CheckPoint[] checkPoints;
     [SerializeField] string _checkpointID;
 
-    private void Awake ()
+    protected override void Awake ()
     {
-        if (instance == null)
-            instance = this;
+        base.Awake ();
         checkPoints = FindObjectsOfType<CheckPoint>();
     }
 
@@ -30,12 +28,6 @@ public class GameManager : MonoBehaviour, ISaveManager
             Time.timeScale = 0;
         else
             Time.timeScale = 1;
-    }
-
-    private void Update ()
-    {
-        //if(Input.GetKeyDown(KeyCode.M))
-        //    RestartScene();
     }
 
     public void LoadGame (GameData gameData)

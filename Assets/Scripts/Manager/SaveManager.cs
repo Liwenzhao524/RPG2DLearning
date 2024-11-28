@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class SaveManager : MonoBehaviour
+public class SaveManager : SingletonMono<SaveManager>
 {
-    public static SaveManager instance;
-
     GameData _gameData;
 
     /// <summary>
@@ -16,12 +14,6 @@ public class SaveManager : MonoBehaviour
     DataHandler _dataHandler;
     [SerializeField] string _saveFileName = "SaveData.txt";
     [SerializeField] bool _isEcrypt;
-
-    private void Awake ()
-    {
-        if (instance == null)
-            instance = this;
-    }
 
     private void Start ()
     {
@@ -39,10 +31,7 @@ public class SaveManager : MonoBehaviour
 
     public bool HasSavedData() => _dataHandler.Load() != null;
 
-    public void NewGame ()
-    {
-        _gameData = new GameData();
-    }
+    public void NewGame () => _gameData = new GameData();
 
     public void LoadGame ()
     {
@@ -71,10 +60,7 @@ public class SaveManager : MonoBehaviour
         _dataHandler.Save(_gameData);
     }
 
-    private void OnApplicationQuit ()
-    {
-        SaveGame();
-    }
+    private void OnApplicationQuit () => SaveGame();
 
     List<ISaveManager> FindAllSave ()
     {
@@ -82,4 +68,5 @@ public class SaveManager : MonoBehaviour
 
         return new List<ISaveManager> (save);
     }
+
 }

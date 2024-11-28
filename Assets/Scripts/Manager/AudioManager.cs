@@ -2,22 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : SingletonMono<AudioManager>
 {
-    public static AudioManager instance;
-
     Dictionary<string, AudioSource> _sfx = new();
     Dictionary<string, AudioSource> _bgm = new();
 
     [SerializeField] int _sfxMinDistance;
     public bool isBGMPlay;
     string _bgmName = string.Empty;
-
-    private void Awake ()
-    {
-        if (instance == null)
-            instance = this;
-    }
 
     private void Start ()
     {

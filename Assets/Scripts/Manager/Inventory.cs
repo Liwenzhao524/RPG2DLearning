@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour, ISaveManager
+public class Inventory : SingletonMono<Inventory>, ISaveManager
 {
-    public static Inventory instance;
-
     public List<InventoryItem> start = new();
 
     // ×°±¸¿â´æ
@@ -41,12 +39,6 @@ public class Inventory : MonoBehaviour, ISaveManager
 
     [SerializeField] List<InventoryItem> _loadedItem = new();
     [SerializeField] List<ItemData_Equipment> _loadedEquip = new();
-
-    private void Awake ()
-    {
-        if (instance == null)
-            instance = this;
-    }
 
     private void Start ()
     {
@@ -387,7 +379,7 @@ public class Inventory : MonoBehaviour, ISaveManager
         if(Time.time > _lastTimeUseArmor + _armorCoolDown)
         {
             _armorCoolDown = armor.effectCoolDown;
-            //armor.ExecuteEffects(PlayerManager.instance.player.transform);
+            //armor.ExecuteEffects(PlayerManager._instance.player.transform);
             _lastTimeUseArmor = Time.time;
             return true;
         }

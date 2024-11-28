@@ -49,7 +49,7 @@ public class PlayerBlackholeState : PlayerState
             rb.velocity = new Vector2(0, -0.1f);
             if (!_skillUsed)
             {
-                //if (SkillManager.instance.blackhole.CanUseSkill())
+                //if (SkillManager._instance.blackhole.CanUseSkill())
                     _skillUsed = true;
             }
             else if (SkillManager.instance.blackhole.BlackholeEnd())
