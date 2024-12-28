@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
+
+public enum HitType
+{
+    Primary,
+    Critical,
+    Crystal,
+}
 
 /// <summary>
 /// ÌØÐ§
@@ -28,6 +36,11 @@ public class EntityFX : MonoBehaviour
     [Header("Pop Text")]
     [SerializeField] GameObject _popTextPrefab;
 
+    [Header("Hit FX")]
+    [SerializeField] GameObject _primaryHitFX;
+    [SerializeField] GameObject _criticalHitFX;
+    [SerializeField] GameObject _crystalHitFX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,8 +50,8 @@ public class EntityFX : MonoBehaviour
 
     public void CreatePopText(string text, Color color)
     {
-        float xOffset = Random.Range(-1, 2);
-        float yOffset = Random.Range(1, 4);
+        float xOffset = Random.Range(-1, 1);
+        float yOffset = Random.Range(1, 2);
 
         Vector3 posOffset = new Vector3(xOffset, yOffset, 0);
 
@@ -127,4 +140,39 @@ public class EntityFX : MonoBehaviour
             _sr.color = Color.white;
         }
     }
+
+    public void CreateHitFX(Transform target, HitType hitType)
+    {
+        GameObject hitFX = _primaryHitFX;
+
+        Vector2 position = new(target.position.x + Random.Range(-0.5f, 0.5f), target.position.y + Random.Range(-0.5f, 0.5f));
+        Vector3 rotation = new(0, 0, Random.Range(-90, 90));
+
+        switch (hitType)
+        {
+            case HitType.Critical: 
+                { 
+                    hitFX = _criticalHitFX;
+                    float yRotation = 0;
+                    float zRotation = Random.Range(-45, 45);
+
+                    if (GetComponent<Entity>().faceDir == -1) yRotation = 180;
+                    rotation = new Vector3(0, yRotation, zRotation);
+                } 
+                break;
+            case HitType.Crystal: 
+                { 
+                    hitFX = _crystalHitFX; 
+                } 
+                break;
+            default: break;
+        }
+
+        GameObject newHitFX = Instantiate(hitFX, position, Quaternion.identity);
+        newHitFX.transform.Rotate(rotation);
+
+        Destroy(newHitFX, 1);
+
+    }
+
 }

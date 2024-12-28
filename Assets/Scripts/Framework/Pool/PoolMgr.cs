@@ -195,7 +195,7 @@ public class PoolMgr : BaseManager<PoolMgr>
         {
             //动态创建对象
             //没有的时候 通过资源加载 去实例化出一个GameObject
-            obj = GameObject.Instantiate(Resources.Load<GameObject>(name));
+            obj = Object.Instantiate(Resources.Load<GameObject>(name));
             //避免实例化出来的对象 默认会在名字后面加一个(Clone)
             //我们重命名过后 方便往里面放
             obj.name = name;

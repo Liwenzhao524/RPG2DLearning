@@ -77,6 +77,7 @@ public class Skill_Crystal_Controller : Skill_Controller
             if (hit.GetComponent<Enemy>() != null)
             {
                 player.stats.DoMagicDamageTo(hit.GetComponent<CharacterStats>());
+                player.fx.CreateHitFX(hit.transform, HitType.Crystal);
                 Inventory.instance.GetEquipmentByType(EquipmentType.Amulet)?.ExecuteEffects(hit.transform);
 
                 SkillManager.instance.clone.CloneDuplicate(hit.transform);

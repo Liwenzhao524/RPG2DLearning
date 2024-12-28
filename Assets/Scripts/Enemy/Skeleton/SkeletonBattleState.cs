@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonBattleState : EnemyState
+public class SkeletonBattleState : EnemyBattleState
 {
-    Transform _player;
     Enemy_Skeleton _enemy;
-    int _moveDir;
     public SkeletonBattleState(Enemy enemyBase, EnemyStateMachine enemyStateMachine, string aniBoolName) : base(enemyBase, enemyStateMachine, aniBoolName)
     {
         _enemy = enemyBase as Enemy_Skeleton;
@@ -15,7 +13,7 @@ public class SkeletonBattleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        _player = PlayerManager.instance.player.transform;
+
         if(_player.GetComponent<PlayerStats>().isDead) 
             _enemy.stateMachine.ChangeState(_enemy.moveState);
     }
@@ -28,13 +26,6 @@ public class SkeletonBattleState : EnemyState
     public override void Update()
     {
         base.Update();
-
-        if (_player.position.x > rb.position.x)
-            _moveDir = 1;
-        else if(_player.position.x < rb.position.x)
-            _moveDir = -1;
-
-        _enemy.SetVelocity(_enemy.moveSpeed * _moveDir, rb.velocity.y);
         
         if (_enemy.IsPlayerDetected())
         {

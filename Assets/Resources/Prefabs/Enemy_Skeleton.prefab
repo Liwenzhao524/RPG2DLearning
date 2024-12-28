@@ -15343,6 +15343,9 @@ MonoBehaviour:
   _chillFX: {fileID: 1729823463872699219}
   _shockFX: {fileID: 4212732256851495509}
   _popTextPrefab: {fileID: 689197495245583054, guid: 0b33058c685e3874895fb58e64f9e976, type: 3}
+  _primaryHitFX: {fileID: 5065946223089519497, guid: c2420b29215b3cb4ab33707ca15f88d9, type: 3}
+  _criticalHitFX: {fileID: 4928123083305695874, guid: 55ed8bad61dd94b4f8374aae15520ddc, type: 3}
+  _crystalHitFX: {fileID: 0}
 --- !u!114 &404200921230451470
 MonoBehaviour:
   m_ObjectHideFlags: 0

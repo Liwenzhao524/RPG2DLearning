@@ -10,7 +10,7 @@ public class PopTextFX : MonoBehaviour
     float _speed = 1;
     float _fadeSpeed = 5;
     float _colorFadeSpeed = 10;
-    [SerializeField] float _lifeTime;
+    [SerializeField] float _lifeTime; 
 
     float _timer;
 

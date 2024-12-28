@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -36,36 +34,36 @@ public class Entity : MonoBehaviour
     /// </summary>
     public Action OnFlip;
 
-    protected virtual void Awake()
+    protected virtual void Awake ()
     {
 
     }
 
-    protected virtual void Start()
+    protected virtual void Start ()
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
-        fx = GetComponent<EntityFX>(); 
+        fx = GetComponent<EntityFX>();
         stats = GetComponent<CharacterStats>();
     }
-    
-    protected virtual void Update()
+
+    protected virtual void Update ()
     {
 
     }
 
-    public virtual void SlowEntitySpeed(float slowPercentage, float duration)
+    public virtual void SlowEntitySpeed (float slowPercentage, float duration)
     {
 
     }
 
-    public virtual void ReturnDefaultSpeed()
+    public virtual void ReturnDefaultSpeed ()
     {
         anim.speed = 1;
     }
 
-    public virtual void DamageEffect()
+    public virtual void DamageEffect ()
     {
         fx.StartCoroutine(fx.FlashFX());
         StartCoroutine(HitKnock());
@@ -75,7 +73,7 @@ public class Entity : MonoBehaviour
     /// 受击方向确定
     /// </summary>
     /// <param name="dmgFrom"></param>
-    public virtual void SetKnockDirection(Transform dmgFrom)
+    public virtual void SetKnockDirection (Transform dmgFrom)
     {
         if (dmgFrom.position.x < transform.position.x)
             _knockDir = 1;
@@ -83,7 +81,7 @@ public class Entity : MonoBehaviour
             _knockDir = -1;
     }
 
-    public virtual void SetKnockDistance(Vector2 distance)
+    public virtual void SetKnockDistance (Vector2 distance)
     {
 
     }
@@ -92,7 +90,7 @@ public class Entity : MonoBehaviour
     /// 受击硬直击退
     /// </summary>
     /// <returns></returns>
-    public IEnumerator HitKnock()
+    public IEnumerator HitKnock ()
     {
         isKnocked = true;
 
@@ -103,29 +101,29 @@ public class Entity : MonoBehaviour
 
     #region Velocity
 
-   /// <summary>
-   /// 设置速度 包含翻转控制
-   /// </summary>
-   /// <param name="x"></param>
-   /// <param name="y"></param>
-    public virtual void SetVelocity(float x, float y)
+    /// <summary>
+    /// 设置速度 包含翻转控制
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    public virtual void SetVelocity (float x, float y)
     {
         if (isKnocked) return;
         rb.velocity = new Vector2(x, y);
         FlipController(x);
     }
 
-    public virtual void SetZeroVelocity()
+    public virtual void SetZeroVelocity ()
     {
         SetVelocity(0, 0);
     }
     #endregion
 
     #region Collision
-    public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDis, GroundLayer);
-    public bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * faceDir, wallCheckDis, GroundLayer);
+    public bool IsGroundDetected () => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDis, GroundLayer);
+    public bool IsWallDetected () => Physics2D.Raycast(wallCheck.position, Vector2.right * faceDir, wallCheckDis, GroundLayer);
 
-    protected virtual void OnDrawGizmos()
+    protected virtual void OnDrawGizmos ()
     {
         Gizmos.DrawLine(groundCheck.position,
                         new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDis));
@@ -140,7 +138,7 @@ public class Entity : MonoBehaviour
     /// <summary>
     /// 翻转180
     /// </summary>
-    protected virtual void Flip()
+    protected virtual void Flip ()
     {
         faceDir *= -1;
         transform.Rotate(0, 180, 0);
@@ -152,7 +150,7 @@ public class Entity : MonoBehaviour
     /// 根据传入的值与当前面朝向 决定是否翻转
     /// </summary>
     /// <param name="x"></param>
-    public virtual void FlipController(float x)
+    public virtual void FlipController (float x)
     {
         if (x * faceDir < 0)
         {
@@ -161,7 +159,7 @@ public class Entity : MonoBehaviour
     }
     #endregion
 
-    public virtual void Die()
+    public virtual void Die ()
     {
 
     }

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(EnemyStats))]
+[RequireComponent(typeof(EntityFX))]
+[RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(ItemObject_Drop))]
 /// <summary>
 /// µ–»À ª˘¿‡
 /// </summary>
@@ -28,6 +33,7 @@ public class Enemy : Entity
 
     public EnemyStateMachine stateMachine { get; private set; }
 
+    public EnemyBattleState battleState { get; protected set; }
     public string lastAniName {  get; private set; }
 
     protected override void Awake()

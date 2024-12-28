@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public enum StatsType
@@ -328,16 +329,10 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     /// <param name="totalDamage"></param>
     /// <returns></returns>
-    protected virtual float DoCrit (float totalDamage)
-    {
-        float totalChance = GetCritChance();
-        if (UnityEngine.Random.Range(0, 100) < totalChance)
-        {
-            totalDamage *= ( 1 + GetCritDamage() );
-        }
+    protected virtual float DoCrit (float totalDamage) => totalDamage *= ( 1 + GetCritDamage() );
 
-        return totalDamage;
-    }
+    protected bool CanCrit () => UnityEngine.Random.Range(0, 100) < GetCritChance();
+
 
     /// <summary>
     /// º∆À„∑¿”˘
@@ -413,8 +408,15 @@ public class CharacterStats : MonoBehaviour
 
         float totalDamage = GetATK();
 
-        totalDamage = DoCrit(totalDamage);
+        HitType hitType = HitType.Primary;
+        if (CanCrit()) 
+        {
+            hitType = HitType.Critical;
+            totalDamage = DoCrit(totalDamage);
+        }
         totalDamage = DoDefence(target, totalDamage);
+
+        fx.CreateHitFX(target.transform, hitType);
 
         target.GetComponent<Entity>().SetKnockDirection(transform);
         target.TakeDamage(totalDamage);
@@ -433,8 +435,15 @@ public class CharacterStats : MonoBehaviour
 
         float totalDamage = GetATK() * cloneATK;
 
-        totalDamage = DoCrit(totalDamage);
+        HitType hitType = HitType.Primary;
+        if (CanCrit())
+        {
+            hitType = HitType.Critical;
+            totalDamage = DoCrit(totalDamage);
+        }
         totalDamage = DoDefence(target, totalDamage);
+
+        fx.CreateHitFX(target.transform, hitType);
 
         target.TakeDamage(totalDamage);
     }

@@ -37,6 +37,7 @@ public class Inventory : SingletonMono<Inventory>, ISaveManager
     public bool flaskUse { get; set; }
     float _armorCoolDown;
 
+    [SerializeField] List<ItemData> _itemDataBase = new();
     [SerializeField] List<InventoryItem> _loadedItem = new();
     [SerializeField] List<ItemData_Equipment> _loadedEquip = new();
 
@@ -397,7 +398,7 @@ public class Inventory : SingletonMono<Inventory>, ISaveManager
     {
         foreach (var pair in gameData.saveInventory)
         {
-            foreach (var item in FillItemDataBase())
+            foreach (var item in _itemDataBase)
             {
                 if(item != null && item.itemID == pair.Key)
                 {
@@ -410,7 +411,7 @@ public class Inventory : SingletonMono<Inventory>, ISaveManager
 
         foreach (var equip in gameData.saveEquipment)
         {
-            foreach (var item in FillItemDataBase())
+            foreach (var item in _itemDataBase)
             {
                 if (item != null && item.itemID == equip)
                 {
@@ -441,6 +442,10 @@ public class Inventory : SingletonMono<Inventory>, ISaveManager
         }
     }
 
+#if UNITY_EDITOR
+    [ContextMenu("Fill Item Data Base:每次创建新item时必做")]
+    void GetItemDataBase() => _itemDataBase = FillItemDataBase();
+
     /// <summary>
     /// 获取全部item
     /// </summary>
@@ -463,5 +468,7 @@ public class Inventory : SingletonMono<Inventory>, ISaveManager
 
         return itemDataBase;
     }
+
+#endif
 
 }

@@ -7,7 +7,7 @@ public class Enemy_Skeleton : Enemy
     #region State
     public SkeletonIdleState idleState {  get; private set; }
     public SkeletonMoveState moveState {  get; private set; }
-    public SkeletonBattleState battleState { get; private set; }
+    //public SkeletonBattleState battleState { get; private set; }
     public SkeletonAttackState attackState { get; private set; }
     public SkeletonStunState stunState { get; private set; }
     public SkeletonDeadState deadState { get; private set; }

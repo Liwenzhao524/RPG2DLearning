@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class UI_MainMenu : MonoBehaviour
 {
@@ -13,7 +10,7 @@ public class UI_MainMenu : MonoBehaviour
 
     private void Start ()
     {
-        if(SaveManager.instance.HasSavedData() == false)
+        if (SaveManager.instance.HasSavedData() == false)
             _continueButton.SetActive(false);
     }
 
@@ -30,8 +27,8 @@ public class UI_MainMenu : MonoBehaviour
 
     public void ExitGame ()
     {
-        Debug.Log("Exit");
-        //Application.Quit();
+        //Debug.Log("Exit");
+        Application.Quit();
     }
 
     IEnumerator LoadGameWithDarkScreen (float delay)

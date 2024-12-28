@@ -22,7 +22,7 @@ public class UI_ToolTip : MonoBehaviour
         if (mousePos.x > Screen.width / 2) xOffset = -Screen.width / 6;
         else xOffset = Screen.width / 6;
 
-        Vector2 newPos = new(mousePos.x + xOffset, mousePos.y + 100);
+        Vector2 newPos = new(mousePos.x + xOffset, mousePos.y + Screen.height / 8);
         return newPos;
     }
 
