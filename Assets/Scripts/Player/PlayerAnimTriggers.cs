@@ -27,7 +27,7 @@ public class PlayerAnimTriggers : MonoBehaviour
                 enemy.stateMachine.ChangeState(enemy.stateMachine.defaultState);
                 EnemyStats target = hit.GetComponent<EnemyStats>(); 
                 _player.GetComponent<CharacterStats>().DoDamageTo(target);
-                //_player.GetComponent<CharacterStats>().DoMagicDamageTo(target);
+                //player.GetComponent<CharacterStats>().DoMagicDamageTo(target);
 
                 Inventory.instance.GetEquipmentByType(EquipmentType.Weapon)?.ExecuteEffects(hit.transform);
             }

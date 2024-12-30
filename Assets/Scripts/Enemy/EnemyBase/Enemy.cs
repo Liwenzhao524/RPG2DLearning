@@ -33,7 +33,16 @@ public class Enemy : Entity
 
     public EnemyStateMachine stateMachine { get; private set; }
 
+    #region State
+    public EnemyGroundState groundState { get; protected set; }
+    public EnemyMoveState moveState { get; protected set; }
+    public EnemyIdleState idleState { get; protected set; }
     public EnemyBattleState battleState { get; protected set; }
+    public EnemyAttackState attackState { get; protected set; }
+    public EnemyStunState stunState { get; protected set; }
+    public EnemyDeadState deadState { get; protected set; }
+    #endregion
+
     public string lastAniName {  get; private set; }
 
     protected override void Awake()

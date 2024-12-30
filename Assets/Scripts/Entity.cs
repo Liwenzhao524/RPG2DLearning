@@ -94,7 +94,7 @@ public class Entity : MonoBehaviour
     {
         isKnocked = true;
 
-        rb.velocity = new Vector2(knockDistance.x * _knockDir, knockDistance.y);
+        rb.velocity = new Vector2(UnityEngine.Random.Range(knockDistance.x, 2 * knockDistance.x)* _knockDir, knockDistance.y);
         yield return new WaitForSeconds(knockDuration);
         isKnocked = false;
     }

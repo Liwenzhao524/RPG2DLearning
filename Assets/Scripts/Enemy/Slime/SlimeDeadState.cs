@@ -2,17 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeDeadState : MonoBehaviour
+public class SlimeDeadState : EnemyDeadState
 {
-    // Start is called before the first frame update
-    void Start()
+    public SlimeDeadState (Enemy enemyBase, EnemyStateMachine enemyStateMachine, string aniBoolName) : base(enemyBase, enemyStateMachine, aniBoolName)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void AnimFinishTrigger ()
     {
-        
+        base.AnimFinishTrigger();
+    }
+
+    public override void Enter ()
+    {
+        base.Enter();
+    }
+
+    public override void Exit ()
+    {
+        base.Exit();
+    }
+
+    public override void Update ()
+    {
+        base.Update();
     }
 }
