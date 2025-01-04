@@ -26,11 +26,11 @@ public class EnemyBattleState : EnemyState
         else if (player.position.x < rb.position.x)
             _moveDir = -1;
 
-        enemyBase.SetVelocity(enemyBase.moveSpeed * _moveDir, rb.velocity.y);
-
         if (enemyBase.IsPlayerDetected())
         {
             stateTimer = enemyBase.battleTime;
+            
+
             if (enemyBase.IsPlayerDetected().distance < enemyBase.attackDistance)
             {
                 enemyBase.SetZeroVelocity();
@@ -43,6 +43,10 @@ public class EnemyBattleState : EnemyState
             if (stateTimer < 0 || Vector2.Distance(player.position, enemyBase.transform.position) > enemyBase.attackDistance * 3f)
                 enemyBase.stateMachine.ChangeState(enemyBase.idleState);
         }
+
+        if (enemyBase.IsPlayerDetected() && enemyBase.IsPlayerDetected().distance < enemyBase.attackDistance - 0.1f)
+            return;
+        enemyBase.SetVelocity(enemyBase.moveSpeed * _moveDir, rb.velocity.y);
     }
 
     public override void Exit ()

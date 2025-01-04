@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeGroundState : EnemyGroundState
+public class BossDeadState : EnemyDeadState
 {
-    public SlimeGroundState (Enemy enemyBase, EnemyStateMachine enemyStateMachine, string aniBoolName) : base(enemyBase, enemyStateMachine, aniBoolName)
+    public BossDeadState (Enemy enemyBase, EnemyStateMachine enemyStateMachine, string aniBoolName) : base(enemyBase, enemyStateMachine, aniBoolName)
     {
+    }
+
+    public override void AnimFinishTrigger ()
+    {
+        base.AnimFinishTrigger();
     }
 
     public override void Enter ()
