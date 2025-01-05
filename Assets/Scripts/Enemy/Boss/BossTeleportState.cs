@@ -31,7 +31,7 @@ public class BossTeleportState : EnemyState
 
         if (anitrigger)
         {
-            if (_enemy.CanCast())
+            if (_enemy.CanCast_CoolDown())
                 _enemy.stateMachine.ChangeState(_enemy.castState);
             else
                 _enemy.stateMachine.ChangeState(_enemy.battleState);

@@ -15,8 +15,8 @@ public class Enemy_Boss : Enemy
     [Header("Cast Info")]
     [SerializeField] GameObject _castPrefab;
     [SerializeField] float _castCooldown;
-    [SerializeField] int _defaultAmountOfcast = 3;
-    public int amountOfCast {  get; set; }
+    public int castInterval = 2;
+    public int castAmount = 3;
     public float lastCastTime { get; set; }
 
     public BossCastState castState {  get; private set; }
@@ -46,9 +46,7 @@ public class Enemy_Boss : Enemy
         base.Start();
         stateMachine.Init(idleState);
         teleportChance = _defaultTeleportChance;
-        amountOfCast = _defaultAmountOfcast;
 
-        _castPrefab.GetComponent<BossCast_Controller>().SetupCast(GetComponent<EnemyStats>());
     }
 
     protected override void Update ()
@@ -56,10 +54,16 @@ public class Enemy_Boss : Enemy
         base.Update();
     }
 
-    public bool CanCast ()
+    public bool CanCast_CoolDown () => Time.time > lastCastTime + _castCooldown;
+    
+    public void CreateCast ()
     {
-        float castCD = Random.Range(_castCooldown * 0.8f, _castCooldown * 1.2f);
-        return (Time.time > lastCastTime + castCD) && (amountOfCast > 0);
+        Player player = PlayerManager.instance.player;
+        Vector2 target = player.transform.position;
+        Vector2 offset = new(player.rb.velocity.x * 0.5f + 0.2f, 1.5f);
+
+        GameObject newCast = Instantiate(_castPrefab, new Vector2(target.x + offset.x, target.y + offset.y), Quaternion.identity);
+        newCast.GetComponent<BossCast_Controller>().SetupCast(GetComponent<CharacterStats>());
     }
 
     public bool CanTeleport ()
@@ -82,10 +86,7 @@ public class Enemy_Boss : Enemy
         transform.position = new Vector2(transform.position.x, transform.position.y - GroundBelowCheck().distance + ( col.bounds.size.y / 2 ));
 
         if(!GroundBelowCheck() || SurroundingCheck())
-        {
             FindPosition();
-            Debug.Log("Find New Position");
-        }
     }
 
     RaycastHit2D GroundBelowCheck () => Physics2D.Raycast(transform.position, Vector2.down, 100, GroundLayer);

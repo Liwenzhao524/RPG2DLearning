@@ -13,12 +13,13 @@ public class BossIdleState : EnemyIdleState
     public override void Enter ()
     {
         base.Enter();
+        stateTimer = _enemy.idleTime;
     }
 
     public override void Exit ()
     {
         base.Exit();
-        AudioManager.instance.PlaySFX("BossIdle", enemyBase.transform);
+        AudioManager.instance.PlaySFX("BossIdle", _enemy.transform);
     }
 
     public override void Update ()
@@ -27,6 +28,9 @@ public class BossIdleState : EnemyIdleState
 
         if (Input.GetKeyDown(KeyCode.V))
             _enemy.stateMachine.ChangeState(_enemy.teleportState);
+
+        if(stateTimer < 0 && Vector2.Distance(player.position, _enemy.transform.position) < _enemy.attackDistance * 3f)
+            _enemy.stateMachine.ChangeState(_enemy.battleState);
 
     }
 }

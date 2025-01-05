@@ -19,8 +19,8 @@ public class BossCast_Controller : MonoBehaviour
         {
             if (hit.GetComponent<Player>() != null)
             {
-                //hit.GetComponent<Entity>().SetKnockDirection(transform);
-                //_stats.DoDamageTo(hit.GetComponent<CharacterStats>());
+                hit.GetComponent<Entity>().SetKnockDirection(transform);
+                _stats.DoDamageTo(hit.GetComponent<CharacterStats>());
             }
         }
     }

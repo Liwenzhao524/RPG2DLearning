@@ -44,8 +44,8 @@ public class EnemyBattleState : EnemyState
                 enemyBase.stateMachine.ChangeState(enemyBase.idleState);
         }
 
-        if (enemyBase.IsPlayerDetected() && enemyBase.IsPlayerDetected().distance < enemyBase.attackDistance - 0.1f)
-            return;
+        //if (enemyBase.IsPlayerDetected() && enemyBase.IsPlayerDetected().distance < enemyBase.attackDistance - 0.1f)
+        //    return;
         enemyBase.SetVelocity(enemyBase.moveSpeed * _moveDir, rb.velocity.y);
     }
 

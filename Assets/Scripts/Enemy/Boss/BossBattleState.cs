@@ -20,7 +20,6 @@ public class BossBattleState : EnemyBattleState
 
     public override void Update ()
     {
-        //stateTimer -= Time.deltaTime;
         if (player.position.x > rb.position.x)
             _moveDir = 1;
         else if (player.position.x < rb.position.x)
@@ -30,12 +29,13 @@ public class BossBattleState : EnemyBattleState
 
         if (enemyBase.IsPlayerDetected())
         {
-            //stateTimer = enemyBase.battleTime;
             if (enemyBase.IsPlayerDetected().distance < enemyBase.attackDistance)
             {
                 enemyBase.SetZeroVelocity();
                 if (enemyBase.CanAttack())
                     enemyBase.stateMachine.ChangeState(enemyBase.attackState);
+                else
+                    enemyBase.stateMachine.ChangeState(enemyBase.idleState);
             }
         }
         
