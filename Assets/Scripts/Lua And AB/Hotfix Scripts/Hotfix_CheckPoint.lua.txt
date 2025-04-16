@@ -1,0 +1,8 @@
+xlua.hotfix(CS.CheckPoint, 'ActiveCheckPoint', function ( self )
+	local anim = self._anim
+	local isActive = self.isActive
+
+	isActive = true
+	anim.SetBool('Active', true)
+end
+)

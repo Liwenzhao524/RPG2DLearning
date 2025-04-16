@@ -1,0 +1,25 @@
+xlua.hotfix(CS.PopTextFX, 'ColorTrans', function(self)
+    -- 获取颜色组件（保持与原C#属性相同的获取方式）
+    local text = self._text
+    if text == nil then return end  
+    
+    local new_alpha = text.color.a - self._colorFadeSpeed * CS.UnityEngine.Time.deltaTime
+    
+    local new_color = CS.UnityEngine.Color(
+        text.color.r,
+        text.color.g,
+        text.color.b,
+        math.max(new_alpha, 0)  -- 防止alpha负数
+    )
+    
+    -- 应用新颜色
+    text.color = new_color
+    
+    if new_color.a < 50 then
+        self._speed = self._fadeSpeed
+    end
+    
+    if new_color.a <= 0 then
+        CS.UnityEngine.Object.Destroy(self.gameObject)
+    end
+end)

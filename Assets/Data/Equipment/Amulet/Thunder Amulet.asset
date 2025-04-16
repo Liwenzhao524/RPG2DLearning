@@ -15,12 +15,12 @@ MonoBehaviour:
   itemType: 1
   itemName: Thunder Amulet
   icon: {fileID: -245851270, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemID: 2bf8f700a76edc041851641a8ad6dc01
   dropChance: 0
   equipmentType: 2
   equipEffects:
   - {fileID: 11400000, guid: 5081e438d8522bc4bb651c920f6df8b3, type: 2}
   effectCoolDown: 0
-  effectDescription: Sommon a thunder on enemy you hit by magic.
   strength: 0
   agility: 0
   intelligence: 0
@@ -35,4 +35,6 @@ MonoBehaviour:
   fireATK: 0
   iceATK: 0
   lightningATK: 10
-  craftMaterials: []
+  craftMaterials:
+  - itemData: {fileID: 11400000, guid: 634c76e1dc0360d42a5888847e3425cc, type: 2}
+    stackSize: 1

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XLua;
 
+[LuaCallCSharp]
 public class CheckPoint : MonoBehaviour
 {
     Animator _anim => GetComponent<Animator>();
@@ -23,6 +25,7 @@ public class CheckPoint : MonoBehaviour
         }
     }
 
+    [Hotfix]
     public void ActiveCheckPoint ()
     {
         isActive = true;

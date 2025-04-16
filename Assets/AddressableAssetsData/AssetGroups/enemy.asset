@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: enemy
+  m_EditorClassIdentifier: 
+  m_GroupName: enemy
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d266cde18b6a38141bcf1bf0bac19708
+  m_SerializeEntries:
+  - m_GUID: 0e4e9e307a6097a4cbd21f66b7bdf986
+    m_Address: Assets/Graphics/Enemies/Briner of Death/Bringer-of-Death-SpritSheet.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e22098e0a2a0bb4393e38a71bbdf28f
+    m_Address: Assets/Graphics/Enemies/Necro/Necromancer_creativekind-Sheet.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e82644eceb07e4d479b96d4178c1c02a
+    m_Address: Assets/Graphics/Enemies/Night born/NightBorne.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72264843b65415c408f9f5462fa9c46f
+    m_Address: Assets/Graphics/Enemies/Night born/NightBorne_attack.gif
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 922aedfc8a7a6774281604b5774ff06c
+    m_Address: Assets/Graphics/Enemies/Night born/NightBorne_death..gif
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fafd6fddc84ac4e4fb6b366f664f2c4c
+    m_Address: Assets/Graphics/Enemies/Night born/NightBorne_hurt.gif
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ec748b68345af54e80865bdc5496d8c
+    m_Address: Assets/Graphics/Enemies/Night born/NightBorne_idle.gif
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 254fcd2c528ed4d41a1a108735628fbc
+    m_Address: Assets/Graphics/Enemies/Night born/NightBorne_run.gif
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7eb81348dc564e844a4ecbc74050b300
+    m_Address: Assets/Graphics/Enemies/Red Hood/red hood itch free Copy-Sheet.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc71415bc56e07742a0bede3d4be6d2f
+    m_Address: Assets/Graphics/Enemies/Skeleton/Skeleton Attack.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd70b1804d155494298c8bda75e5b72d
+    m_Address: Assets/Graphics/Enemies/Skeleton/Skeleton Dead.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a6a6ae2cc6e3414da6daaaf2fa35359
+    m_Address: Assets/Graphics/Enemies/Skeleton/Skeleton Hit.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 687df074731fbf744b668d2275dbb675
+    m_Address: Assets/Graphics/Enemies/Skeleton/Skeleton Idle.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b18afc18b9424d04ba154fb477dffd3b
+    m_Address: Assets/Graphics/Enemies/Skeleton/Skeleton React.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4509734409304c84b8f787528d855437
+    m_Address: Assets/Graphics/Enemies/Skeleton/Skeleton Walk.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b37f7e31a19796489c254db0005907c
+    m_Address: Assets/Graphics/Enemies/Slime/slime-Sheet.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 7e157fac9a159154e832173f8ba3ec78, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7790b6973cc29b0498f44a100e5bcd2b, type: 2}
+    - {fileID: 11400000, guid: 7de7ed662e10ba04dacfeddba2103648, type: 2}

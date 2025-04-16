@@ -1,0 +1,37 @@
+ManifestFileVersion: 0
+CRC: 2973279313
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5382475ca695ceaebba7fd7bb0ee077c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2d8df09e698f722ada1caa03d3413830
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 5382475ca695ceaebba7fd7bb0ee077c
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Graphics/Enemies/Skeleton/Skeleton Idle.png
+- Assets/Graphics/Enemies/Night born/NightBorne_hurt.gif
+- Assets/Graphics/Enemies/Night born/NightBorne.png
+- Assets/Graphics/Enemies/Night born/NightBorne_attack.gif
+- Assets/Graphics/Enemies/Night born/NightBorne_run.gif
+- Assets/Graphics/Enemies/Night born/NightBorne_death..gif
+- Assets/Graphics/Enemies/Slime/slime-Sheet.png
+- Assets/Graphics/Enemies/Skeleton/Skeleton React.png
+- Assets/Graphics/Enemies/Red Hood/red hood itch free Copy-Sheet.png
+- Assets/Graphics/Enemies/Skeleton/Skeleton Hit.png
+- Assets/Graphics/Enemies/Night born/NightBorne_idle.gif
+- Assets/Graphics/Enemies/Briner of Death/Bringer-of-Death-SpritSheet.png
+- Assets/Graphics/Enemies/Skeleton/Skeleton Attack.png
+- Assets/Graphics/Enemies/Skeleton/Skeleton Dead.png
+- Assets/Graphics/Enemies/Skeleton/Skeleton Walk.png
+- Assets/Graphics/Enemies/Necro/Necromancer_creativekind-Sheet.png
+Dependencies: []

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System;
 
 /// <summary>
 /// 序列化 存取文件
@@ -44,6 +46,39 @@ public class DataHandler
         }
     }
 
+    public void SaveByBF(GameData data)
+    {
+        string fullPath = Path.Combine(_dataDirPath, _dataFileName);
+
+        try
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+
+            // BinaryFormatter序列化
+            BinaryFormatter formatter = new BinaryFormatter();
+            string dataToStore;
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                formatter.Serialize(memoryStream, data);
+                byte[] bytes = memoryStream.ToArray();
+                dataToStore = Convert.ToBase64String(bytes); // 转为Base64字符串
+            }
+
+            if (_isEncrypt)
+                dataToStore = EncryptDecrypt(dataToStore); 
+
+            using (FileStream fileStream = new FileStream(fullPath, FileMode.Create))
+            using (StreamWriter writer = new StreamWriter(fileStream))
+            {
+                writer.Write(dataToStore);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Save Error: {e.Message}");
+        }
+    }
+
     public GameData Load ()
     {
         string fullPath = Path .Combine(_dataDirPath, _dataFileName);
@@ -67,6 +102,42 @@ public class DataHandler
         catch (System.Exception)
         {
             Debug.LogError("Errow on load gamedata");
+        }
+
+        return loadData;
+    }
+
+    public GameData LoadByBF ()
+    {
+        string fullPath = Path.Combine(_dataDirPath, _dataFileName);
+        GameData loadData = null;
+
+        try
+        {
+            if (File.Exists(fullPath))
+            {
+                string dataToLoad;
+                using (FileStream fileStream = new FileStream(fullPath, FileMode.Open))
+                using (StreamReader reader = new StreamReader(fileStream))
+                {
+                    dataToLoad = reader.ReadToEnd();
+                }
+
+                if (_isEncrypt)
+                    dataToLoad = EncryptDecrypt(dataToLoad);
+
+                // Base64解码并反序列化
+                byte[] bytes = Convert.FromBase64String(dataToLoad);
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (MemoryStream memoryStream = new MemoryStream(bytes))
+                {
+                    loadData = (GameData)formatter.Deserialize(memoryStream);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Load Error: {e.Message}");
         }
 
         return loadData;
